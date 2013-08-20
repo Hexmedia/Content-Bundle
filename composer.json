@@ -1,9 +1,9 @@
 {
-	"name": "hexmedia/user-bundle",
+	"name": "hexmedia/content-bundle",
 	"type": "symfony-bundle",
 	"description": "HexmediaUser for panel",
-	"keywords": ["user", "administrator", "cms", "panel", "admin panel"],
-	"homepage": "http://www.hexmedia.pl/symfony/user",
+	"keywords": ["content", "media", "area", "block", "page", "image", "administrator", "cms", "panel", "admin panel"],
+	"homepage": "http://www.hexmedia.pl/symfony/content",
 	"license": "MIT",
 	"authors": [
 		{
@@ -24,10 +24,10 @@
 	},
 	"autoload": {
 		"psr-0": {
-			"Hexmedia\\AdministratorBundle": ""
+			"Hexmedia\\ContentBundle": ""
 		}
 	},
-	"target-dir": "Hexmedia/AdministratorBundle",
+	"target-dir": "Hexmedia/ContentBundle",
 	"repositories": [
 		{
 			"type": "vcs",
