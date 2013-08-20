@@ -1,0 +1,44 @@
+{% extends "HexmediaContentBundle::admin.html.twig" %}
+
+{% block title %}HexmediaContentBundle:Media:library{% endblock %}
+
+{% block head_script %}
+	{% javascripts output='js/media.js'
+			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/vendor/jquery.ui.widget.js'
+			'@HexmediaContentBundle/Resources/public/JavaScript-Load-Image/load-image.min.js'
+			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.iframe-transport.js'
+			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload.js'
+			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-process.js'
+			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-image.js'
+			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-audio.js'
+			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-video.js'
+			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-validate.js'
+			'@HexmediaContentBundle/Resources/public/js/file-upload.js'
+		%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+{% endblock %}
+{% block body %}
+
+<div class="row">
+	<div class="span3">
+		<input type="text" name="search" placeholder="Search for ..." class="search-query" />
+		<button type="submit" class="btn">Search</button>
+	</div>
+	<div class="span2">
+		<a href="#" class="icon-list btn"></a>
+		<a href="#" class="icon-th btn"></a>
+	</div>
+
+	<div class="span5">
+		<span class="btn btn-success fileinput-button">
+			<i class="icon-plus icon-white"></i>
+			<span>Add files...</span>
+			<!-- The file input field used as target for the file upload widget -->
+			<input id="fileupload" type="file" name="files[]" multiple>
+		</span>
+	</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,10 @@
+parameters:
+#    hexmedia_content.example.class: Hexmedia\ContentBundle\Example
+
+services:
+services:
+    hexmedia_media.content.menu.subscriber:
+        class: Hexmedia\ContentBundle\Menu\Subscriber
+        arguments: [ "@translator" ]
+        tags:
+            - { name: kernel.event_subscriber }

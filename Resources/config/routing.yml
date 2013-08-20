@@ -1,0 +1,3 @@
+hexMedia_Content_Media:
+    resource: "@HexmediaContentBundle/Resources/config/routing_media.yml"
+    prefix:   /media/

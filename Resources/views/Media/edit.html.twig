@@ -1,0 +1,52 @@
+{% extends "HexmediaContentBundle::admin.html.twig" %}
+
+{% block title %}HexmediaContentBundle:Media:add{% endblock %}
+
+{% block head_script %}
+	{% javascripts output='js/mediaList.js'
+			'@HexmediaContentBundle/Resources/public/js/mediaEdit.js'
+			'@HexmediaAdministratorBundle/Resources/public/js/bootstrap-datepicker.js'
+			'@HexmediaAdministratorBundle/Resources/public/js/wysihtml.js'
+			'@HexmediaAdministratorBundle/Resources/public/js/bootstrap-wysihtml.js'
+		%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block head_style %}
+		{% stylesheets filter='assetsurl,less,?yui_css' output='css/media-edit.css'
+			'@HexmediaAdministratorBundle/Resources/public/less/bootstrap-wysihtml.less'
+		%}
+<link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
+		{% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+
+{{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
+<div class="buttons-bar">
+	<button class="btn btn-primary" data-loading-text="{{'Saving...'|trans}}" type="submit" value="save">{{'Save'|trans}}</button>
+	<button class="btn btn-danger" data-loading-text="{{'Deleting...'|trans}}" type="submit" value="delete">{{'Delete'|trans}}</button>
+</div>
+
+<div class="content edit-content">
+	<div class="row-fluid">
+		<div class="span8">
+			<fieldset class="box main-content">
+				<legend>{{'Additional Data'|trans}}</legend>
+
+					{{form_row(form.name)}}
+
+					{{form_widget(form.description)}}
+			</fieldset>
+		</div>
+		<div class="span4">
+			<fieldset class="box">
+				<legend>Image View</legend>
+				<img src="{{ vich_uploader_asset(media, 'file')|imagine_filter('big_admin_square')  }}" alt="" />
+			</fieldset>
+		</div>
+	</div>
+</div>
+{{form_end(form)}}
+{% endblock %}

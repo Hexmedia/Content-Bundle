@@ -1,0 +1,24 @@
+{% extends "HexmediaUserBundle::admin.html.twig" %}
+
+{% block title %}{% trans %}admin.list{% endtrans %}{% endblock %}
+
+{% block head_script %}
+	{% javascripts output='js/admins.js'
+			'@HexmediaContentBundle/Resources/public/js/library.js'
+		%}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block body %}
+<div class="content data-area-list">
+	<table class="table table-hover" data-bind="table: list, headerTemplate: 'list_table_header', itemTemplate: 'list_table_items'">
+	</table>
+
+	<div data-bind="pagination: pagination"></div>
+</div>
+
+{% include "HexmediaKnockoutBootstrapBundle:Table:list_table_header.html.twig" with {'addRouteName' : 'HexMediaMediaAdd'} %}
+{% include "HexmediaKnockoutBootstrapBundle:Table:list_table_items.html.twig" with {'editRouteName' : 'HexMediaMediaEdit', 'removeRouteName' : 'HexMediaMediaRemove'} %}
+
+{% endblock %}

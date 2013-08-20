@@ -1,0 +1,37 @@
+{
+	"name": "hexmedia/user-bundle",
+	"type": "symfony-bundle",
+	"description": "HexmediaUser for panel",
+	"keywords": ["user", "administrator", "cms", "panel", "admin panel"],
+	"homepage": "http://www.hexmedia.pl/symfony/user",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Krystian Kuczek",
+			"email": "krystian@hexmedia.pl",
+			"homepage": "http://www.hexmedia.pl"
+		}
+	],
+	"minimum-stability": "dev",
+	"require": {
+		"php": ">=5.3.2",
+		"symfony/framework-bundle": ">=2.3",
+		"twig/twig": ">=1.13",
+		"hexmedia/administrator-bundle": "dev-master"
+	},
+	"required-dev": {
+		"twig/twig": "@stable"
+	},
+	"autoload": {
+		"psr-0": {
+			"Hexmedia\\AdministratorBundle": ""
+		}
+	},
+	"target-dir": "Hexmedia/AdministratorBundle",
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "git@gitlab.hexmedia.pl:symfony-2/administrator-bundle.git"
+		}
+	]
+}

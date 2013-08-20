@@ -1,0 +1,67 @@
+HexMediaMediaAdd:
+    pattern: /add
+    defaults: { _controller: HexmediaContentBundle:Media:add }
+    options:
+        expose: true
+
+HexMediaMediaEdit:
+    pattern: /edit/{id}
+    defaults: { _controller: HexmediaContentBundle:Media:edit }
+    options:
+        expose: true
+
+HexMediaMediaRemove:
+    pattern: /delete/{id}
+    defaults: { _controller: HexmediaContentBundle:Media:delete }
+    options:
+        expose: true
+
+HexMediaMediaLibrary:
+    pattern: /library
+    defaults: { _controller: HexmediaContentBundle:Media:list }
+    options:
+        expose: true
+
+HexMediaMediaCustomize:
+    pattern: /customize
+    defaults: { _controller: HexmediaContentBundle:Attach:customize }
+
+HexMediaMediaAttach:
+    pattern: /attach
+    defaults: { _controller: HexmediaContentBundle:Attach:attach }
+
+HexMediaMediaUpload:
+  pattern: /upload
+  defaults: { _controller: HexmediaContentBundle:Upload:upload }
+  options:
+    expose: true
+
+HexMediaMediaGalleryAdd:
+  pattern: /gallery/add
+  defaults: { _controller: HexmediaContentBundle:Gallery:add }
+  options:
+    expose: true
+
+HexMediaMediaGalleryEdit:
+  pattern: /gallery/edit
+  defaults: { _controller: HexmediaContentBundle:Gallery:edit }
+  options:
+    expose: true
+
+HexMediaMediaGalleryDelete:
+  pattern: /gallery/delete
+  defaults: { _controller: HexmediaContentBundle:Gallery:delete }
+  options:
+    expose: true
+
+HexMediaMediaGalleryList:
+  pattern: /gallery/list
+  defaults: { _controller: HexmediaContentBundle:Gallery:list }
+  options:
+    expose: true
+
+HexMediaMediaAttach:
+  pattern: /attach
+  defaults: { _controller: HexmediaContentBundle:Media:attach }
+  options:
+    expose: true
