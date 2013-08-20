@@ -18,7 +18,8 @@
 		"symfony/framework-bundle": ">=2.3",
 		"twig/twig": ">=1.13",
 		"hexmedia/administrator-bundle": "dev-master",
-		"knplabs/knp-gaufrette-bundle": "dev-master"
+		"knplabs/knp-gaufrette-bundle": "dev-master",
+		"vich/uploader-bundle": "dev-master"
 	},
 	"required-dev": {
 		"twig/twig": "@stable"
