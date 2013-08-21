@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfony\Bridge\Twig\Node;
+namespace Hexmedia\ContentBundle\Twig\Node;
 
 /**
  * @author Krystian Kuczek <krystian@hexmedia.pl>
