@@ -1,66 +1,66 @@
-HexMediaMediaAdd:
+HexMediaContentMediaAdd:
     pattern: /add
     defaults: { _controller: HexmediaContentBundle:Media:add }
     options:
         expose: true
 
-HexMediaMediaEdit:
+HexMediaContentMediaEdit:
     pattern: /edit/{id}
     defaults: { _controller: HexmediaContentBundle:Media:edit }
     options:
         expose: true
 
-HexMediaMediaRemove:
+HexMediaContentMediaRemove:
     pattern: /delete/{id}
     defaults: { _controller: HexmediaContentBundle:Media:delete }
     options:
         expose: true
 
-HexMediaMediaLibrary:
+HexMediaContentMediaLibrary:
     pattern: /library
     defaults: { _controller: HexmediaContentBundle:Media:list }
     options:
         expose: true
 
-HexMediaMediaCustomize:
+HexMediaContentMediaCustomize:
     pattern: /customize
     defaults: { _controller: HexmediaContentBundle:Attach:customize }
 
-HexMediaMediaAttach:
+HexMediaContentMediaAttach:
     pattern: /attach
     defaults: { _controller: HexmediaContentBundle:Attach:attach }
 
-HexMediaMediaUpload:
+HexMediaContentMediaUpload:
   pattern: /upload
   defaults: { _controller: HexmediaContentBundle:Upload:upload }
   options:
     expose: true
 
-HexMediaMediaGalleryAdd:
+HexMediaContentMediaGalleryAdd:
   pattern: /gallery/add
   defaults: { _controller: HexmediaContentBundle:Gallery:add }
   options:
     expose: true
 
-HexMediaMediaGalleryEdit:
+HexMediaContentMediaGalleryEdit:
   pattern: /gallery/edit
   defaults: { _controller: HexmediaContentBundle:Gallery:edit }
   options:
     expose: true
 
-HexMediaMediaGalleryDelete:
+HexMediaContentMediaGalleryDelete:
   pattern: /gallery/delete
   defaults: { _controller: HexmediaContentBundle:Gallery:delete }
   options:
     expose: true
 
-HexMediaMediaGalleryList:
+HexMediaContentMediaGalleryList:
   pattern: /gallery/list
   defaults: { _controller: HexmediaContentBundle:Gallery:list }
   options:
     expose: true
 
-HexMediaMediaAttach:
+HexMediaContentMediaAttach:
   pattern: /attach
   defaults: { _controller: HexmediaContentBundle:Media:attach }
   options:

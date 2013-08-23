@@ -1,0 +1,23 @@
+HexMediaContentAreaAdd:
+    pattern: /add
+    defaults: { _controller: HexmediaContentBundle:Area:add }
+    options:
+        expose: true
+
+HexMediaContentAreaEdit:
+    pattern: /edit/{id}
+    defaults: { _controller: HexmediaContentBundle:Area:edit }
+    options:
+        expose: true
+
+HexMediaContentAreaRemove:
+    pattern: /delete/{id}
+    defaults: { _controller: HexmediaContentBundle:Area:delete }
+    options:
+        expose: true
+
+HexMediaContentArea:
+    pattern: /
+    defaults: { _controller: HexmediaContentBundle:Area:list }
+    options:
+        expose: true

@@ -13,9 +13,12 @@ class Subscriber extends SubscriberAbstract implements EventSubscriberInterface
 	public function addPositions(MenuEvent $event)
 	{
 
-		$menu = $event->getMenu()->addChild($this->translator->trans("Media Library"), array('route' => 'HexMediaMediaLibrary', 'id' => 'HexMediaMediaLibrary'));
-//		$menu->addChild($this->translator->trans("Media"), array('route' => 'HexMediaMediaLibrary', 'under' => 'HexMediaMediaLibrary'));
-		$menu->addChild($this->translator->trans("Add"), array('route' => 'HexMediaMediaAdd', 'under' => 'HexMediaMediaLibrary'));
+		$menu = $event->getMenu()->addChild($this->translator->trans("Media Library"), array('route' => 'HexMediaContentMediaLibrary', 'id' => 'HexMediaContentMediaLibrary'));
+//		$menu->addChild($this->translator->trans("Media"), array('route' => 'HexMediaContentMediaLibrary', 'under' => 'HexMediaContentMediaLibrary'));
+		$menu->addChild($this->translator->trans("Add"), array('route' => 'HexMediaContentMediaAdd', 'under' => 'HexMediaContentMediaLibrary'));
+
+
+		$menu = $event->getMenu()->addChild($this->translator->trans("Area"), array('route' => 'HexMediaContentArea', 'id' => 'HexMediaContentArea'));
 
 		return $event->getMenu();
 	}

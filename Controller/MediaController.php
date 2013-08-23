@@ -6,8 +6,8 @@ use Hexmedia\AdministratorBundle\ControllerInterface\BreadcrumbsInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController as Controller;
 use Hexmedia\AdministratorBundle\ControllerInterface\ListController as ListControllerInterface;
-use Hexmedia\ContentBundle\Form\MediaEditType;
-use Hexmedia\ContentBundle\Form\MediaAddType;
+use Hexmedia\ContentBundle\Form\Type\MediaEditType;
+use Hexmedia\ContentBundle\Form\Type\MediaAddType;
 use Hexmedia\ContentBundle\Entity\Media;
 
 class MediaController extends Controller implements ListControllerInterface, BreadcrumbsInterface
@@ -25,7 +25,8 @@ class MediaController extends Controller implements ListControllerInterface, Bre
 	{
 		$this->breadcrumbs = $this->get("white_october_breadcrumbs");
 
-		$this->breadcrumbs->addItem($this->get('translator')->trans("Media Library"), $this->get('router')->generate('HexMediaMediaLibrary'));
+		$this->breadcrumbs->addItem($this->get('translator')->trans("Content"));
+		$this->breadcrumbs->addItem($this->get('translator')->trans("Media Library"), $this->get('router')->generate('HexMediaContentMediaLibrary'));
 
 		return $this->breadcrumbs;
 	}

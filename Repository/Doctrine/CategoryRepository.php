@@ -1,6 +1,6 @@
 <?php
 
-namespace Hexmedia\ContentBundle\Doctrine\Repository;
+namespace Hexmedia\ContentBundle\Repository\Doctrine;
 
 use Doctrine\ORM\EntityRepository;
 use Hexmedia\ContentBundle\Repository\CategoryRepositoryInterface;
