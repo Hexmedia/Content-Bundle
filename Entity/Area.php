@@ -124,5 +124,10 @@ class Area
 		return $this->content;
 	}
 
+	public function getSluggableFields()
+	{
+		return array('name');
+	}
+
 }
 
