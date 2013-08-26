@@ -3,20 +3,20 @@
 {% block title %}HexmediaContentBundle:Media:library{% endblock %}
 
 {% block head_script %}
-	{% javascripts output='js/media.js'
-			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/vendor/jquery.ui.widget.js'
-			'@HexmediaContentBundle/Resources/public/JavaScript-Load-Image/load-image.min.js'
-			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.iframe-transport.js'
-			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload.js'
-			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-process.js'
-			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-image.js'
-			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-audio.js'
-			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-video.js'
-			'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-validate.js'
-			'@HexmediaContentBundle/Resources/public/js/file-upload.js'
-		%}
+{#% javascripts output='js/media.js'
+'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/vendor/jquery.ui.widget.js'
+'@HexmediaContentBundle/Resources/public/JavaScript-Load-Image/load-image.min.js'
+'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.iframe-transport.js'
+'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload.js'
+'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-process.js'
+'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-image.js'
+'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-audio.js'
+'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-video.js'
+'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-validate.js'
+'@HexmediaContentBundle/Resources/public/js/file-upload.js'
+%}
 <script type="text/javascript" src="{{ asset_url }}"></script>
-		{% endjavascripts %}
+		{% endjavascripts %#}
 {% endblock %}
 {% block body %}
 

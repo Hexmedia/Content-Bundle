@@ -1,6 +1,6 @@
 {% extends "HexmediaContentBundle::admin.html.twig" %}
 
-{% block title %}{% trans %}admin.list{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Media Library{% endtrans %}{% endblock %}
 
 {% block head_script %}
 	{% javascripts output='js/admins.js'
@@ -18,7 +18,7 @@
 	<div data-bind="pagination: pagination"></div>
 </div>
 
-{% include "HexmediaKnockoutBootstrapBundle:Table:list_table_header.html.twig" with {'addRouteName' : 'HexMediaMediaAdd'} %}
-{% include "HexmediaKnockoutBootstrapBundle:Table:list_table_items.html.twig" with {'editRouteName' : 'HexMediaMediaEdit', 'removeRouteName' : 'HexMediaMediaRemove'} %}
+{% include "HexmediaKnockoutBootstrapBundle:Table:list_table_header.html.twig" with {'addRouteName' : 'HexMediaContentMediaAdd'} %}
+{% include "HexmediaKnockoutBootstrapBundle:Table:list_table_items.html.twig" with {'editRouteName' : 'HexMediaContentMediaEdit', 'removeRouteName' : 'HexMediaContentMediaRemove'} %}
 
 {% endblock %}

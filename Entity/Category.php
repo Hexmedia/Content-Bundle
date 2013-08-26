@@ -3,28 +3,15 @@
 namespace Hexmedia\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Hexmedia\ContentBundle\Locale\Entity as LocaleEntity;
 
 /**
  * Category
  *
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="Hexmedia\ContentBundle\Repository\Doctrine\CategoryRepository")
- *
- * @Gedmo\Loggable
  */
-class Category implements LocaleEntity
+class Category
 {
-
-	/**
-	 * Default locale
-	 *
-	 * @var string
-	 *
-	 * @Gedmo\Locale
-	 */
-	private $locale = 'pl';
 
 	/**
 	 * @var integer
@@ -39,7 +26,6 @@ class Category implements LocaleEntity
 	 * @var string
 	 *
 	 * @ORM\Column(name="name", type="string", length=255)
-	 * @Gedmo\Translatable
 	 */
 	private $name;
 
@@ -47,8 +33,6 @@ class Category implements LocaleEntity
 	 * @var string
 	 *
 	 * @ORM\Column(name="slug", type="string", length=255)
-	 * @Gedmo\Slug(fields={"name"})
-	 * @Gedmo\Translatable
 	 */
 	private $slug;
 
@@ -56,7 +40,6 @@ class Category implements LocaleEntity
 	 * @var string
 	 *
 	 * @ORM\Column(name="description", type="string", length=255)
-	 * @Gedmo\Translatable
 	 */
 	private $description;
 
@@ -64,7 +47,6 @@ class Category implements LocaleEntity
 	 * @var string
 	 *
 	 * @ORM\Column(name="seo_title", type="string", length=255)
-	 * @Gedmo\Translatable
 	 */
 	private $seoTitle;
 
@@ -72,7 +54,6 @@ class Category implements LocaleEntity
 	 * @var string
 	 *
 	 * @ORM\Column(name="seo_keywords", type="string", length=255)
-	 * @Gedmo\Translatable
 	 */
 	private $seoKeywords;
 
@@ -80,7 +61,6 @@ class Category implements LocaleEntity
 	 * @var string
 	 *
 	 * @ORM\Column(name="seo_description", type="string", length=500)
-	 * @Gedmo\Translatable
 	 */
 	private $seoDescription;
 
@@ -88,7 +68,6 @@ class Category implements LocaleEntity
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="created", type="datetime")
-	 * @Gedmo\Timestampable(on="create")
 	 */
 	private $created;
 
@@ -96,7 +75,6 @@ class Category implements LocaleEntity
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="modified", type="datetime")
-	 * @Gedmo\Timestampable(on="update")
 	 */
 	private $modified;
 
@@ -307,3 +285,4 @@ class Category implements LocaleEntity
 	}
 
 }
+

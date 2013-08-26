@@ -3,28 +3,23 @@
 namespace Hexmedia\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Hexmedia\ContentBundle\Locale\Entity as LocaleEntity;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
  * Scroller
  *
  * @ORM\Table(name="scroller")
  * @ORM\Entity(repositoryClass="Hexmedia\ContentBundle\Repository\Doctrine\ScrollerRepository")
- *
- * @Gedmo\Loggable
  */
-class Scroller implements LocaleEntity
+class Scroller
 {
 
-	/**
-	 * Default locale
-	 *
-	 * @var string
-	 *
-	 * @Gedmo\Locale
-	 */
-	private $locale = 'pl';
+	use ORMBehaviors\Timestampable\Timestampable,
+	 ORMBehaviors\Blameable\Blameable,
+	 ORMBehaviors\Loggable\Loggable,
+	 ORMBehaviors\Sluggable\Sluggable,
+	 ORMBehaviors\Sortable\Sortable
+	;
 
 	/**
 	 * @var integer
@@ -39,7 +34,6 @@ class Scroller implements LocaleEntity
 	 * @var string
 	 *
 	 * @ORM\Column(name="title", type="string", length=255)
-	 * @Gedmo\Translatable
 	 */
 	private $title;
 
@@ -47,7 +41,6 @@ class Scroller implements LocaleEntity
 	 * @var string
 	 *
 	 * @ORM\Column(name="subtitle", type="string", length=255)
-	 * @Gedmo\Translatable
 	 */
 	private $subtitle;
 
@@ -55,25 +48,8 @@ class Scroller implements LocaleEntity
 	 * @var string
 	 *
 	 * @ORM\Column(name="description", type="string", length=5000)
-	 * @Gedmo\Translatable
 	 */
 	private $description;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="created", type="datetime")
-	 * @Gedmo\Timestampable(on="create")
-	 */
-	private $created;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="modified", type="datetime")
-	 * @Gedmo\Timestampable(on="update")
-	 */
-	private $modified;
 
 	/**
 	 * @var Hexmedia\UserBundle\Entity\User
@@ -382,16 +358,10 @@ class Scroller implements LocaleEntity
 		return $this->media;
 	}
 
-	/**
-	 * Set locale for translations
-	 *
-	 * @param string $locale
-	 * @return Scroller
-	 */
-	public function setTranslatableLocale($locale)
+	public function getSluggableFields()
 	{
-		$this->locale = $locale;
-		return $this;
+		return ['name'];
 	}
 
 }
+

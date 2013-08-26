@@ -5,8 +5,8 @@ namespace Hexmedia\ContentBundle\Entity;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Hexmedia\ContentBundle\Locale\Entity as LocaleEntity;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
  * Media
@@ -15,19 +15,16 @@ use Hexmedia\ContentBundle\Locale\Entity as LocaleEntity;
  *
  * @ORM\Entity(repositoryClass="Hexmedia\ContentBundle\Repository\Doctrine\MediaRepository")
  * @ORM\Table(name="media")
- * @Gedmo\Loggable
  */
 class Media implements LocaleEntity
 {
 
-	/**
-	 * Default locale
-	 *
-	 * @var string
-	 *
-	 * @Gedmo\Locale
-	 */
-	private $locale = 'pl';
+	use ORMBehaviors\Timestampable\Timestampable,
+	 ORMBehaviors\Blameable\Blameable,
+	 ORMBehaviors\Loggable\Loggable,
+	 ORMBehaviors\Sluggable\Sluggable,
+	 ORMBehaviors\Sortable\Sortable
+	;
 
 	/**
 	 * @var integer
@@ -42,7 +39,6 @@ class Media implements LocaleEntity
 	 * @var string
 	 *
 	 * @ORM\Column(name="name", type="string", length=255)
-	 * @Gedmo\Translatable
 	 */
 	protected $name;
 
@@ -50,25 +46,8 @@ class Media implements LocaleEntity
 	 * @var string
 	 *
 	 * @ORM\Column(name="description", type="string", length=5000, nullable=true)
-	 * @Gedmo\Translatable
 	 */
 	protected $description;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="created", type="datetime")
-	 * @Gedmo\Timestampable(on="create")
-	 */
-	protected $created;
-
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="modified", type="datetime", nullable=true)
-	 * @Gedmo\Timestampable(on="update")
-	 */
-	private $modified;
 
 	/**
 	 * @var string
@@ -157,52 +136,6 @@ class Media implements LocaleEntity
 	public function getDescription()
 	{
 		return $this->description;
-	}
-
-	/**
-	 * Set created
-	 *
-	 * @param \DateTime $created
-	 * @return Media
-	 */
-	public function setCreated($created)
-	{
-		$this->created = $created;
-
-		return $this;
-	}
-
-	/**
-	 * Get created
-	 *
-	 * @return \DateTime
-	 */
-	public function getCreated()
-	{
-		return $this->created;
-	}
-
-	/**
-	 * Set modified
-	 *
-	 * @param \DateTime $modified
-	 * @return Media
-	 */
-	public function setModified($modified)
-	{
-		$this->modified = $modified;
-
-		return $this;
-	}
-
-	/**
-	 * Get modified
-	 *
-	 * @return \DateTime
-	 */
-	public function getModified()
-	{
-		return $this->modified;
 	}
 
 	/**
@@ -295,27 +228,38 @@ class Media implements LocaleEntity
 		return $this;
 	}
 
+	/**
+	 * Add galleries
+	 *
+	 * @param \Hexmedia\ContentBundle\Entity\Gallery $galleries
+	 * @return Media
+	 */
+	public function addGallerie(\Hexmedia\ContentBundle\Entity\Gallery $galleries)
+	{
+		$this->galleries[] = $galleries;
 
-    /**
-     * Add galleries
-     *
-     * @param \Hexmedia\ContentBundle\Entity\Gallery $galleries
-     * @return Media
-     */
-    public function addGallerie(\Hexmedia\ContentBundle\Entity\Gallery $galleries)
-    {
-        $this->galleries[] = $galleries;
-    
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Remove galleries
-     *
-     * @param \Hexmedia\ContentBundle\Entity\Gallery $galleries
-     */
-    public function removeGallerie(\Hexmedia\ContentBundle\Entity\Gallery $galleries)
-    {
-        $this->galleries->removeElement($galleries);
-    }
+	/**
+	 * Remove galleries
+	 *
+	 * @param \Hexmedia\ContentBundle\Entity\Gallery $galleries
+	 */
+	public function removeGallerie(\Hexmedia\ContentBundle\Entity\Gallery $galleries)
+	{
+		$this->galleries->removeElement($galleries);
+	}
+
+	public function getSluggableFields()
+	{
+		return ['name'];
+	}
+
+	public function getRegenerateSlugOnUpdate()
+	{
+		return false;
+	}
+
 }
+

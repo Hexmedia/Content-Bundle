@@ -52,9 +52,6 @@ class MediaController extends Controller implements ListControllerInterface, Bre
 				$media->setName($media->getFile()->getClientOriginalName());
 			}
 
-			$media->setLastModified(new \DateTime());
-			$media->setCreated(new \DateTime());
-
 			$em->persist($media);
 
 			$em->flush();
@@ -151,7 +148,7 @@ class MediaController extends Controller implements ListControllerInterface, Bre
 				'id' => $entity->getId(),
 				'number' => $i,
 				'miniature' => "<img src=\"" . $cacheManager->getBrowserPath($vichHelper->asset($entity, 'file'), 'small_admin_square') . "\" />",
-				'lastModified' => $entity->getModified() == null ? $agoHelper->formatTime($entity->getCreated()) : $agoHelper->formatTime($entity->getModified()),
+				'lastModified' => $entity->getUpdatedAt() == null ? $agoHelper->formatTime($entity->getCreatedAt()) : $agoHelper->formatTime($entity->getUpdatedAt()),
 				'name' => $entity->getName()
 			);
 		}

@@ -3,7 +3,6 @@
 namespace Hexmedia\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Hexmedia\UserBundle\Entity\User;
 use Hexmedia\ContentBundle\Locale\Entity as LocaleEntity;
 
@@ -12,20 +11,10 @@ use Hexmedia\ContentBundle\Locale\Entity as LocaleEntity;
  *
  * @ORM\Table(name="page")
  * @ORM\Entity(repositoryClass="Hexmedia\ContentBundle\Repository\Entity\PageRepository")
- *
- * @Gedmo\Loggable
+
  */
 class Page
 {
-
-	/**
-	 * Default locale
-	 *
-	 * @var string
-	 *
-	 * @Gedmo\Locale
-	 */
-	private $locale = 'pl';
 
 	/**
 	 * @var integer
@@ -40,7 +29,6 @@ class Page
 	 * @var string
 	 *
 	 * @ORM\Column(name="title", type="string", length=255)
-	 * @Gedmo\Translatable
 	 */
 	private $title;
 
@@ -48,8 +36,6 @@ class Page
 	 * @var string
 	 *
 	 * @ORM\Column(name="slug", type="string", length=255)
-	 * @Gedmo\Slug(fields={"title"})
-	 * @Gedmo\Translatable
 	 */
 	private $slug;
 
@@ -57,7 +43,6 @@ class Page
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="created", type="datetime")
-	 * @Gedmo\Timestampable(on="create")
 	 */
 	private $created;
 
@@ -65,7 +50,6 @@ class Page
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="modified", type="datetime", nullable=true)
-	 * @Gedmo\Timestampable(on="update")
 	 */
 	private $modified;
 
@@ -73,7 +57,6 @@ class Page
 	 * @var string
 	 *
 	 * @ORM\Column(name="teaser", type="string", length=500)
-	 * @Gedmo\Translatable
 	 */
 	private $teaser;
 
@@ -81,7 +64,6 @@ class Page
 	 * @var string
 	 *
 	 * @ORM\Column(name="content", type="string", length=10000)
-	 * @Gedmo\Translatable
 	 */
 	private $content;
 
@@ -89,7 +71,6 @@ class Page
 	 * @var string
 	 *
 	 * @ORM\Column(name="seo_title", type="string", length=255, nullable=true)
-	 * @Gedmo\Translatable
 	 */
 	private $seoTitle;
 
@@ -97,7 +78,6 @@ class Page
 	 * @var string
 	 *
 	 * @ORM\Column(name="seo_keywords", type="string", length=500, nullable=true)
-	 * @Gedmo\Translatable
 	 */
 	private $seoKeywords;
 
@@ -105,7 +85,6 @@ class Page
 	 * @var string
 	 *
 	 * @ORM\Column(name="seo_description", type="string", length=500, nullable=true)
-	 * @Gedmo\Translatable
 	 */
 	private $seoDescription;
 
@@ -140,6 +119,15 @@ class Page
 	private $categories;
 
 	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+		$this->media = new \Doctrine\Common\Collections\ArrayCollection();
+		$this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+	}
+
+	/**
 	 * Get id
 	 *
 	 * @return integer
@@ -170,75 +158,6 @@ class Page
 	public function getTitle()
 	{
 		return $this->title;
-	}
-
-	/**
-	 * Set slug
-	 *
-	 * @param string $slug
-	 * @return Page
-	 */
-	public function setSlug($slug)
-	{
-		$this->slug = $slug;
-
-		return $this;
-	}
-
-	/**
-	 * Get slug
-	 *
-	 * @return string
-	 */
-	public function getSlug()
-	{
-		return $this->slug;
-	}
-
-	/**
-	 * Set created
-	 *
-	 * @param \DateTime $created
-	 * @return Page
-	 */
-	public function setCreated($created)
-	{
-		$this->created = $created;
-
-		return $this;
-	}
-
-	/**
-	 * Get created
-	 *
-	 * @return \DateTime
-	 */
-	public function getCreated()
-	{
-		return $this->created;
-	}
-
-	/**
-	 * Set modified
-	 *
-	 * @param \DateTime $modified
-	 * @return Page
-	 */
-	public function setModified($modified)
-	{
-		$this->modified = $modified;
-
-		return $this;
-	}
-
-	/**
-	 * Get modified
-	 *
-	 * @return \DateTime
-	 */
-	public function getModified()
-	{
-		return $this->modified;
 	}
 
 	/**
@@ -414,27 +333,6 @@ class Page
 	}
 
 	/**
-	 * Set locale for translations
-	 *
-	 * @param string $locale
-	 * @return Gallery
-	 */
-	public function setTranslatableLocale($locale)
-	{
-		$this->locale = $locale;
-		return $this;
-	}
-
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->media = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->categories = new \Doctrine\Common\Collections\ArrayCollection();
-	}
-
-	/**
 	 * Add categories
 	 *
 	 * @param \Hexmedia\ContentBundle\Entity\Category $categories
@@ -468,3 +366,4 @@ class Page
 	}
 
 }
+

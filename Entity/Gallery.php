@@ -3,28 +3,16 @@
 namespace Hexmedia\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
-use Hexmedia\ContentBundle\Locale\Entity as LocaleEntity;
 
 /**
  * Gallery
  *
  * @ORM\Entity(repositoryClass="Hexmedia\ContentBundle\Repository\Doctrine\GalleryRepository")
  * @ORM\Table(name="galleries")
- * @Gedmo\Loggable
  */
-class Gallery implements LocaleEntity
+class Gallery
 {
-
-	/**
-	 * Default locale
-	 *
-	 * @var string
-	 *
-	 * @Gedmo\Locale
-	 */
-	private $locale = 'pl';
 
 	/**
 	 * @var integer
@@ -39,24 +27,13 @@ class Gallery implements LocaleEntity
 	 * @var string
 	 *
 	 * @ORM\Column(name="name", type="string", length=255)
-	 * @Gedmo\Translatable
 	 */
 	private $name;
 
 	/**
 	 * @var string
 	 *
-	 * @ORM\Column(name="slug", type="string", length=255, unique=true)
-	 * @Gedmo\Slug(fields={"name"})
-	 * @Gedmo\Translatable
-	 */
-	private $slug;
-
-	/**
-	 * @var string
-	 *
 	 * @ORM\Column(name="description", type="string", length=500)
-	 * @Gedmo\Translatable
 	 */
 	private $description;
 
@@ -64,7 +41,6 @@ class Gallery implements LocaleEntity
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="created", type="datetime")
-	 * @Gedmo\Timestampable(on="create")
 	 */
 	private $created;
 
@@ -72,7 +48,6 @@ class Gallery implements LocaleEntity
 	 * @var \DateTime
 	 *
 	 * @ORM\Column(name="modified", type="datetime", nullable=true)
-	 * @Gedmo\Timestampable(on="update")
 	 */
 	private $modified;
 

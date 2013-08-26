@@ -5,11 +5,11 @@ namespace Hexmedia\ContentBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Hexmedia\AdministratorBundle\ControllerInterface\BreadcrumbsInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\FOSRestController as Controller;
 use Hexmedia\AdministratorBundle\ControllerInterface\ListController as ListControllerInterface;
 use Hexmedia\ContentBundle\Entity\Area;
-use Hexmedia\ContentBundle\Form\Type\AreaType;
+use Hexmedia\ContentBundle\Form\Type\AreaAddType;
+use Hexmedia\ContentBundle\Form\Type\AreaEditType;
 
 /**
  * Area controller.
@@ -37,19 +37,41 @@ class AreaController extends Controller implements ListControllerInterface, Brea
 	 */
 	public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
 	{
-		$em = $this->getDoctrine()->getManager();
+		$this->registerBreadcrubms();
 
-		$entities = $em->getRepository('HexmediaContentBundle:Area')->findAll();
+		$entities = $this->getRepository()->getPage($page, $sort, $pageSize, $sortDirection);
+		$agoHelper = $this->container->get('hexmedia.templating.helper.time_formatter');
+
+		$i = 0;
+		$entitesRet = [];
+
+		foreach ($entities as $entity) {
+			$r = new \stdClass();
+			$r->id = $entity->getId();
+			$r->number = ++$i;
+			$r->name = $entity->getName();
+			$r->lastModified = $entity->getUpdatedAt() == null ? $agoHelper->formatTime($entity->getCreatedAt()) : $agoHelper->formatTime($entity->getUpdatedAt());
+
+			$entitesRet[] = $r;
+		}
+//
+//		var_dump([
+//			'entities' => $entitesRet,
+//			"entitiesCount" => $this->getRepository()->getCount()
+//		]);
+//		die();
+
 
 		return array(
-			'entities' => $entities,
+			'entities' => $entitesRet,
+			"entitiesCount" => $this->getRepository()->getCount()
 		);
 	}
 
 	/**
 	 * Creates a new Area entity.
 	 *
-	 * @Rest\View
+	 * @Rest\View(template="HexmediaContentBundle:Area:add.html.twig")
 	 */
 	public function createAction(Request $request)
 	{
@@ -62,7 +84,7 @@ class AreaController extends Controller implements ListControllerInterface, Brea
 			$em->persist($entity);
 			$em->flush();
 
-			return $this->redirect($this->generateUrl('area_show', array('id' => $entity->getId())));
+			return $this->redirect($this->generateUrl('HexMediaContentArea'));
 		}
 
 		return array(
@@ -80,8 +102,8 @@ class AreaController extends Controller implements ListControllerInterface, Brea
 	 */
 	private function createCreateForm(Area $entity)
 	{
-		$form = $this->createForm(new AreaType(), $entity, array(
-			'action' => $this->generateUrl('area_create'),
+		$form = $this->createForm(new AreaAddType(), $entity, array(
+			'action' => $this->generateUrl('HexMediaContentAreaAdd'),
 			'method' => 'POST',
 		));
 
@@ -93,10 +115,9 @@ class AreaController extends Controller implements ListControllerInterface, Brea
 	/**
 	 * Displays a form to create a new Area entity.
 	 *
-	 * @Rest\Method("GET")
 	 * @Rest\View
 	 */
-	public function newAction()
+	public function addAction()
 	{
 		$entity = new Area();
 		$form = $this->createCreateForm($entity);
@@ -114,9 +135,7 @@ class AreaController extends Controller implements ListControllerInterface, Brea
 	 */
 	public function editAction($id)
 	{
-		$em = $this->getDoctrine()->getManager();
-
-		$entity = $em->getRepository('HexmediaContentBundle:Area')->find($id);
+		$entity = $this->getRepository()->find($id);
 
 		if (!$entity) {
 			throw $this->createNotFoundException('Unable to find Area entity.');
@@ -141,7 +160,7 @@ class AreaController extends Controller implements ListControllerInterface, Brea
 	 */
 	private function createEditForm(Area $entity)
 	{
-		$form = $this->createForm(new AreaType(), $entity, array(
+		$form = $this->createForm(new AreaEditType(), $entity, array(
 			'action' => $this->generateUrl('area_update', array('id' => $entity->getId())),
 			'method' => 'PUT',
 		));
@@ -154,13 +173,11 @@ class AreaController extends Controller implements ListControllerInterface, Brea
 	/**
 	 * Edits an existing Area entity.
 	 *
-	 * @Rest\View
+	 * @Rest\View("HexmediaContentBundle::Area/add")
 	 */
 	public function updateAction(Request $request, $id)
 	{
-		$em = $this->getDoctrine()->getManager();
-
-		$entity = $em->getRepository('HexmediaContentBundle:Area')->find($id);
+		$entity = $this->getRepository()->find($id);
 
 		if (!$entity) {
 			throw $this->createNotFoundException('Unable to find Area entity.');
@@ -173,7 +190,7 @@ class AreaController extends Controller implements ListControllerInterface, Brea
 		if ($editForm->isValid()) {
 			$em->flush();
 
-			return $this->redirect($this->generateUrl('area_edit', array('id' => $id)));
+			return $this->redirect($this->generateUrl('HexMediaContentArea', array('id' => $id)));
 		}
 
 		return array(
@@ -185,8 +202,6 @@ class AreaController extends Controller implements ListControllerInterface, Brea
 
 	/**
 	 * Deletes a Area entity.
-	 *
-	 * @Rest\View
 	 */
 	public function deleteAction(Request $request, $id)
 	{
@@ -194,8 +209,7 @@ class AreaController extends Controller implements ListControllerInterface, Brea
 		$form->handleRequest($request);
 
 		if ($form->isValid()) {
-			$em = $this->getDoctrine()->getManager();
-			$entity = $em->getRepository('HexmediaContentBundle:Area')->find($id);
+			$entity = $this->getRepository()->find($id);
 
 			if (!$entity) {
 				throw $this->createNotFoundException('Unable to find Area entity.');
@@ -205,7 +219,7 @@ class AreaController extends Controller implements ListControllerInterface, Brea
 			$em->flush();
 		}
 
-		return $this->redirect($this->generateUrl('area'));
+		return $this->redirect($this->generateUrl('HexMediaContentArea'));
 	}
 
 	/**
@@ -223,6 +237,16 @@ class AreaController extends Controller implements ListControllerInterface, Brea
 						->add('submit', 'submit', array('label' => 'Delete'))
 						->getForm()
 		;
+	}
+
+	/**
+	 *
+	 * @return \Hexmedia\ContentBundle\Repository\Doctrine\AreaRepository
+	 */
+	private function getRepository()
+	{
+		$em = $this->getDoctrine()->getManager();
+		return $em->getRepository('HexmediaContentBundle:Area');
 	}
 
 }

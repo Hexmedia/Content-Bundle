@@ -1,9 +1,17 @@
-'Save': 'Zapisz'
-'Delete': 'Usuń'
+Save: Zapisz
+Delete: Usuń
+'Add Media': 'Dodaj media'
+Create: Stwórz
 'Additional Data': 'Dodatkowe informacje'
-'Image View': 'Podgląd'
+'Image View': Podgląd
 'Media Library': 'Biblioteka mediów'
-'Add': 'Dodaj'
-'Miniature': 'Miniatura'
-'Name': 'Nazwa'
+Add: Dodaj
+Miniature: Miniatura
+Name: Nazwa
 'Last Modified': 'Ostatnia modyfikacja'
+Areas: Obszary
+Content: Treść
+'List of all areas': 'Lista wszystkich obszarów'
+Global: Globalny
+Saving...: Zapisywanie...
+Deleting...: Usuwanie...
