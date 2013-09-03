@@ -6,8 +6,8 @@
 	{% javascripts output='js/area-edit.js'
 			'@HexmediaContentBundle/Resources/public/js/area-edit.js'
 			'@HexmediaAdministratorBundle/Resources/public/js/bootstrap-datepicker.js'
-			'@HexmediaAdministratorBundle/Resources/public/js/wysihtml.js'
-			'@HexmediaAdministratorBundle/Resources/public/js/bootstrap-wysihtml.js'
+            '@HexmediaAdministratorBundle/Resources/public/js/raptor.js'
+            '@HexmediaAdministratorBundle/Resources/public/js/raptor-init.js'
 		%}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
@@ -15,7 +15,7 @@
 
 {% block head_style %}
 		{% stylesheets filter='assetsurl,less,?yui_css' output='css/adrea-edit.css'
-			'@HexmediaAdministratorBundle/Resources/public/less/bootstrap-wysihtml.less'
+        '@HexmediaAdministratorBundle/Resources/public/css/raptor.css'
 		%}
 <link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
 		{% endstylesheets %}
