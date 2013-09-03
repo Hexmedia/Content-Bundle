@@ -25,7 +25,8 @@
 
 {{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
 <div class="buttons-bar">
-	<button class="btn btn-primary" data-loading-text="{{'Saving...'|trans}}" type="submit" value="save">{{'Save'|trans}}</button>
+    {{ form_widget(form.saveAndExit) }}
+    {{ form_widget(form.save) }}
 </div>
 
 <div class="content edit-content data-area-edit">

@@ -9,37 +9,60 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 abstract class MediaTypeAbstract extends AbstractType
 {
 
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder
-				->add('name', 'text', array(
-					'label' => 'Name',
-					'required' => false
-				))
-				->add('description', 'textarea', array(
-					'label' => 'Description',
-					'required' => false
-				))
-				->add('save', 'submit', array(
-					'label' => 'Save'
-				))
-		;
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add(
+                'name',
+                'text',
+                [
+                    'label' => 'Name',
+                    'required' => false
+                ]
+            )
+            ->add(
+                'description',
+                'textarea',
+                [
+                    'label' => 'Description',
+                    'required' => false
+                ]
+            )
+            ->add(
+                'save',
+                'submit',
+                [
+                    'label' => 'Save',
+                    'attr' => [
+                        'class' => 'btn-primary',
+                        'data-loading-text' => 'Saving ...'
+                    ]
+                ]
+            )
+            ->add(
+                'saveAndExit',
+                'submit',
+                [
+                    'label' => 'Save & Exit',
+                    'attr' => [
+                        'class' => 'btn-primary',
+                        'data-loading-text' => 'Saving ...'
+                    ]
+                ]
+            );
 
-		$this->doBuild($builder, $options);
-	}
+        $this->doBuildForm($builder, $options);
+    }
 
-	abstract protected function doBuild(FormBuilderInterface $buildier, array $options);
+    abstract protected function doBuildForm(FormBuilderInterface $buildier, array $options);
 
-	public function setDefaultOptions(OptionsResolverInterface $resolver)
-	{
-		$resolver->setDefaults(array(
-			'data_class' => 'Hexmedia\ContentBundle\Entity\Media'
-		));
-	}
-
-	public function getName()
-	{
-		return 'hexmedia_mediabundle_mediatype';
-	}
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'Hexmedia\ContentBundle\Entity\Media'
+            )
+        );
+    }
 
 }

@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class MediaAddType extends MediaTypeAbstract
 {
 
-	public function doBuild(FormBuilderInterface $builder, array $options)
+	public function doBuildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
 				->add('file', 'file', array(
@@ -15,5 +15,10 @@ class MediaAddType extends MediaTypeAbstract
 					'required' => true
 		));
 	}
+
+    public function getName()
+    {
+        return 'hexmedia_mediabundle_mediatype_add';
+    }
 
 }

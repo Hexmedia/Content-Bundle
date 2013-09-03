@@ -1,16 +1,33 @@
-{% extends '::base.html.twig' %}
+{% extends 'HexmediaContentBundle::admin.html.twig' %}
+
+{% block title %}Area Creation{% endblock title %}
+
+{% block head_script %}
+    {% javascripts output='js/area-edit.js'
+    '@HexmediaContentBundle/Resources/public/js/area-edit.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/bootstrap-datepicker.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/wysihtml.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/bootstrap-wysihtml.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block head_style %}
+    {% stylesheets filter='assetsurl,less,?yui_css' output='css/adrea-edit.css'
+    '@HexmediaAdministratorBundle/Resources/public/less/bootstrap-wysihtml.less'
+    %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
 
 {% block body -%}
-    <h1>Area edit</h1>
-
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('area') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    {{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
+    <div class="buttons-bar">
+        <a class="btn btn-warning" href="{{ path('HexMediaContentArea') }}" title="{{ 'Exit without edit'|trans }}">{{ 'Exit'|trans }}</a>
+        {{ form_widget(form.delete) }}
+        {{ form_widget(form.saveAndExit) }}
+        {{ form_widget(form.save) }}
+    </div>
+    {{ form_end(form) }}
 {% endblock %}

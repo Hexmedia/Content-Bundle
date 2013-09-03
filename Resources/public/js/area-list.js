@@ -23,7 +23,7 @@ var AdminListModel;
 			"sortable": true
 		};
 		columns[3] = {
-			"name": "updated_at",
+			"name": "lastModified",
 			"display": Translator.get("Last Modified"),
 			"type": "date",
 			"sortable": false

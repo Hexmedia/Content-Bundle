@@ -23,7 +23,7 @@ HexMediaContentAreaEdit:
 HexMediaContentAreaUpdate:
     pattern: /edit/{id}
     defaults: { _controller: HexmediaContentBundle:Area:update }
-    methods: [ POST ]
+    methods: [ PUT ]
     options:
         expose: true
 
