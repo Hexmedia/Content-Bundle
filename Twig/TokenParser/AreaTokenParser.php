@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <krystian@hexmedia.pl>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Hexmedia\ContentBundle\Twig\TokenParser;
 
 use Hexmedia\ContentBundle\Twig\Node\AreaNode;
@@ -35,9 +26,9 @@ class AreaTokenParser extends \Twig_TokenParser
 		$lineno = $token->getLine();
 		$stream = $this->parser->getStream();
 
-		$vars = new \Twig_Node_Expression_Array(array(), $lineno);
 		$areaName = null;
 		$isGlobal = false;
+        $language = null;
 
 		if (!$stream->test(\Twig_Token::BLOCK_END_TYPE)) {
 			if ($stream->test('name')) {
@@ -50,15 +41,20 @@ class AreaTokenParser extends \Twig_TokenParser
 
 			if ($stream->test('global')) {
 				$stream->next();
-				$global = $this->parser->getExpressionParser()->parseExpression();
+                $isGlobal = true;
 			}
+
+            if ($stream->test('language')) {
+                $stream->next();
+                $language = $this->parser->getExpressionParser()->parseExpression();
+            }
 
 			if (!$stream->test(\Twig_Token::BLOCK_END_TYPE)) {
 				throw new \Twig_Error_Syntax('Unexpected token. Twig was looking for the "with" or "from" keyword.');
 			}
 		}
 
-		// {% area %}message{% endarea %}
+		// {% area name 'name' global%} default conntent {% endarea %}
 		$stream->expect(\Twig_Token::BLOCK_END_TYPE);
 		$body = $this->parser->subparse(array($this, 'decideAreaFork'), true);
 
@@ -68,7 +64,7 @@ class AreaTokenParser extends \Twig_TokenParser
 
 		$stream->expect(\Twig_Token::BLOCK_END_TYPE);
 
-//		return new AreaNode($body, $domain, null, $vars, $locale, $lineno, $this->getTag());
+        return new AreaNode($body, $areaName, $language, $isGlobal, $lineno, $this->getTag());
 	}
 
 	public function decideAreaFork($token)

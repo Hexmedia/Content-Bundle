@@ -13,7 +13,6 @@ use Hexmedia\ContentBundle\Repository\CategoryRepositoryInterface;
  */
 class AreaRepository extends EntityRepository implements CategoryRepositoryInterface
 {
-
 	public function getPage($page = 1, $sort = 'id', $pageSize = 10, $sortDirection = 'ASC', $fields = array())
 	{
 		$queryBuilder = $this->createQueryBuilder('t')
@@ -32,5 +31,9 @@ class AreaRepository extends EntityRepository implements CategoryRepositoryInter
 
 		return $queryBuilder->getQuery()->getSingleScalarResult();
 	}
+
+    public function getByName() {
+        return $this->findOneByName("");
+    }
 
 }

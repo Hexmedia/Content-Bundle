@@ -7,106 +7,73 @@ namespace Hexmedia\ContentBundle\Twig\Node;
  */
 class AreaNode extends \Twig_Node
 {
+    /**
+     * @param \Twig_Node $content
+     * @param \Twig_Node $areaName
+     * @param bool $isGlobal
+     * @param int $lineno
+     * @param string $tag
+     */
+    public function __construct(
+        \Twig_Node $content,
+        \Twig_Node $areaName,
+        \Twig_Node $language = null,
+        $isGlobal = false,
+        $lineno = 0,
+        $tag = null
+    ) {
+        parent::__construct(
+            [
+                'content' => $content,
+                'areaName' => $areaName,
+                'language' => $language
+            ],
+            [
+                'isGlobal' => $isGlobal
+            ],
+            $lineno,
+            $tag
+        );
+    }
 
-	public function __construct(\Twig_NodeInterface $body, \Twig_NodeInterface $domain = null, \Twig_Node_Expression $count = null, \Twig_Node_Expression $vars = null, \Twig_Node_Expression $locale = null, $lineno = 0, $tag = null)
-	{
-		parent::__construct(array('count' => $count, 'body' => $body, 'domain' => $domain, 'vars' => $vars, 'locale' => $locale), array(), $lineno, $tag);
-	}
+    /**
+     * Compiles the node to PHP.
+     *
+     * @param \Twig_Compiler $compiler A Twig_Compiler instance
+     */
+    public function compile(\Twig_Compiler $compiler)
+    {
+        $languageNode = $this->getNode("language");
 
-	/**
-	 * Compiles the node to PHP.
-	 *
-	 * @param \Twig_Compiler $compiler A Twig_Compiler instance
-	 */
-	public function compile(\Twig_Compiler $compiler)
-	{
-		$compiler->addDebugInfo($this);
+        $compiler->write(
+            'echo($this->env->getExtension(\'content_area_extension\')->get('
+        );
 
-		$vars = $this->getNode('vars');
-		$defaults = new \Twig_Node_Expression_Array(array(), -1);
-		if ($vars instanceof \Twig_Node_Expression_Array) {
-			$defaults = $this->getNode('vars');
-			$vars = null;
-		}
-		list($msg, $defaults) = $this->compileString($this->getNode('body'), $defaults);
+        $compiler->subcompile($this->getNode("areaName"));
+        $compiler->write(", ");
+        $compiler->subcompile($this->compileString($this->getNode("content")));
 
-		$method = null === $this->getNode('count') ? 'trans' : 'transChoice';
+        $compiler->write(", ");
+        $compiler->write($this->getAttribute("isGlobal") ? 'true' : 'false');
 
-		$compiler
-			->write('echo $this->env->getExtension(\'translator\')->getTranslator()->' . $method . '(')
-			->subcompile($msg)
-		;
+        if ($languageNode instanceof Twig_Node) {
+            $compiler->write(", ");
+            $compiler->subcompile($languageNode);
+        }
 
-		$compiler->raw(', ');
+        $compiler->write("));");
+    }
 
-		if (null !== $this->getNode('count')) {
-			$compiler
-				->subcompile($this->getNode('count'))
-				->raw(', ')
-			;
-		}
+    protected function compileString(\Twig_Node $body)
+    {
+        if ($body instanceof \Twig_Node_Expression_Constant) {
+            $msg = $body->getAttribute('value');
+        } elseif ($body instanceof \Twig_Node_Text) {
+            $msg = $body->getAttribute('data');
+        } else {
+            return $body;
+        }
 
-		if (null !== $vars) {
-			$compiler
-				->raw('array_merge(')
-				->subcompile($defaults)
-				->raw(', ')
-				->subcompile($this->getNode('vars'))
-				->raw(')')
-			;
-		} else {
-			$compiler->subcompile($defaults);
-		}
-
-		$compiler->raw(', ');
-
-		if (null === $this->getNode('domain')) {
-			$compiler->repr('messages');
-		} else {
-			$compiler->subcompile($this->getNode('domain'));
-		}
-
-		if (null !== $this->getNode('locale')) {
-			$compiler
-				->raw(', ')
-				->subcompile($this->getNode('locale'))
-			;
-		}
-		$compiler->raw(");\n");
-	}
-
-	protected function compileString(\Twig_NodeInterface $body, \Twig_Node_Expression_Array $vars)
-	{
-		if ($body instanceof \Twig_Node_Expression_Constant) {
-			$msg = $body->getAttribute('value');
-		} elseif ($body instanceof \Twig_Node_Text) {
-			$msg = $body->getAttribute('data');
-		} else {
-			return array($body, $vars);
-		}
-
-		preg_match_all('/(?<!%)%([^%]+)%/', $msg, $matches);
-
-		if (version_compare(\Twig_Environment::VERSION, '1.5', '>=')) {
-			foreach ($matches[1] as $var) {
-				$key = new \Twig_Node_Expression_Constant('%' . $var . '%', $body->getLine());
-				if (!$vars->hasElement($key)) {
-					$vars->addElement(new \Twig_Node_Expression_Name($var, $body->getLine()), $key);
-				}
-			}
-		} else {
-			$current = array();
-			foreach ($vars as $name => $var) {
-				$current[$name] = true;
-			}
-			foreach ($matches[1] as $var) {
-				if (!isset($current['%' . $var . '%'])) {
-					$vars->setNode('%' . $var . '%', new \Twig_Node_Expression_Name($var, $body->getLine()));
-				}
-			}
-		}
-
-		return array(new \Twig_Node_Expression_Constant(str_replace('%%', '%', trim($msg)), $body->getLine()), $vars);
-	}
-
+        return new \Twig_Node_Expression_Constant(trim($msg), $body->getLine());
+    }
 }

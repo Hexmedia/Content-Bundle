@@ -2,9 +2,15 @@ parameters:
 #    hexmedia_content.example.class: Hexmedia\ContentBundle\Example
 
 services:
-services:
-    hexmedia_media.content.menu.subscriber:
+    hexmedia.content.menu.subscriber:
         class: Hexmedia\ContentBundle\Menu\Subscriber
         arguments: [ "@translator" ]
         tags:
             - { name: kernel.event_subscriber }
+
+    hexmedia.content.area_extension:
+        class: Hexmedia\ContentBundle\Twig\Extension\AreaExtension
+        arguments: [ "@doctrine.orm.entity_manager", "@session" ]
+        tags:
+            - { name: twig.extension }
+
