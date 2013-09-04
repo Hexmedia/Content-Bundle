@@ -38,7 +38,8 @@ class AreaController extends Controller implements ListControllerInterface, Brea
             $r->id = $entity->getId();
             $r->number = ++$i;
             $r->name = $entity->getName();
-            $r->slug = $entity->getSlug();
+            $r->page = $entity->getPage();
+            $r->route = $entity->getRoute();
             $r->lastModified = $entity->getUpdatedAt() == null ? $agoHelper->formatTime(
                 $entity->getCreatedAt()
             ) : $agoHelper->formatTime($entity->getUpdatedAt());

@@ -17,16 +17,22 @@ var AdminListModel;
 			"sortable": true
 		};
 		columns[2] = {
-			"name": "slug",
-			"display": Translator.get("Slug"),
+			"name": "page",
+			"display": Translator.get("Page"),
 			"type": "text",
 			"sortable": true
 		};
-		columns[3] = {
+        columns[3] = {
+            "name": "route",
+            "display": Translator.get("Route"),
+            "type": "text",
+            "sortable": true
+        };
+		columns[4] = {
 			"name": "lastModified",
 			"display": Translator.get("Last Modified"),
 			"type": "date",
-			"sortable": false
+			"sortable": true
 		};
 		self.list().columns(columns);
 	};

@@ -19,6 +19,7 @@ class Area
 	 ORMBehaviors\Blameable\Blameable,
 	 ORMBehaviors\Loggable\Loggable,
 	 ORMBehaviors\Sluggable\Sluggable
+//     ORMBehaviors\Translatable\Translatable
 	;
 
 	/**
@@ -51,7 +52,35 @@ class Area
 	 */
 	private $content;
 
-	/**
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="locale", type="string", length=5)
+     */
+    private $locale;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="path", type="string", length=32)
+     */
+    private $path;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="route", type="string", length=255)
+     */
+    private $route;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="page", type="string", length=255)
+     */
+    private $page;
+
+    /**
 	 * Get id
 	 *
 	 * @return integer
@@ -124,9 +153,89 @@ class Area
 		return $this->content;
 	}
 
+    /**
+     * Set area locale
+     *
+     * @param string $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
+     * Get area locale
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Get area path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Set area path
+     *
+     * @param string $path
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+    }
+
+    /**
+     * Get area route
+     *
+     * @return string
+     */
+    public function getRoute()
+    {
+        return $this->route;
+    }
+
+    /**
+     * Set area route
+     *
+     * @param string $route
+     */
+    public function setRoute($route)
+    {
+        $this->route = $route;
+    }
+
+    /**
+     * Get area page
+     *
+     * @return string
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * Set area page
+     *
+     * @param string $page
+     */
+    public function setPage($page)
+    {
+        $this->page = $page;
+    }
+
 	public function getSluggableFields()
 	{
-		return array('name');
+		return ['name', 'locale'];
 	}
 
 }

@@ -10,7 +10,9 @@ services:
 
     hexmedia.content.area_extension:
         class: Hexmedia\ContentBundle\Twig\Extension\AreaExtension
-        arguments: [ "@doctrine.orm.entity_manager", "@session" ]
+        arguments: [ "@doctrine.orm.entity_manager", "@service_container" ]
         tags:
             - { name: twig.extension }
+
+
 
