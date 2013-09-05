@@ -210,26 +210,22 @@ class AreaController extends Controller implements ListControllerInterface, Brea
         $form = $this->createEditForm($entity);
         $form->handleRequest($request);
 
-        if ($form->get("exit")->isClicked()) {
-            return $this->redirect($this->generateUrl('HexMediaContentArea'));
-        } else {
-            if ($form->isValid()) {
-                /**
-                 * @var $em \Doctrine\ORM\EntityManager
-                 */
-                $em = $this->getDoctrine()->getManager();
+        if ($form->isValid()) {
+            /**
+             * @var $em \Doctrine\ORM\EntityManager
+             */
+            $em = $this->getDoctrine()->getManager();
 
-                if ($em->getUnitOfWork()->isScheduledForUpdate($entity)) {
-                    $this->get('session')->getFlashBag()->add('notice', 'Area has been updated!');
-                }
+            if ($em->getUnitOfWork()->isScheduledForUpdate($entity)) {
+                $this->get('session')->getFlashBag()->add('notice', 'Area has been updated!');
+            }
 
-                $em->flush();
+            $em->flush();
 
-                if ($form->get("saveAndExit")->isClicked()) {
-                    return $this->redirect($this->generateUrl('HexMediaContentArea'));
-                } else {
-                    return $this->redirect($this->generateUrl('HexMediaContentAreaEdit', array('id' => $id)));
-                }
+            if ($form->get("saveAndExit")->isClicked()) {
+                return $this->redirect($this->generateUrl('HexMediaContentArea'));
+            } else {
+                return $this->redirect($this->generateUrl('HexMediaContentAreaEdit', array('id' => $id)));
             }
         }
 
@@ -260,4 +256,13 @@ class AreaController extends Controller implements ListControllerInterface, Brea
         return array('success' => true);
     }
 
+
+    /**
+     * Updating area from raptor.
+     *
+     * @Rest\View
+     */
+    public function raptorUpdateAction() {
+
+    }
 }

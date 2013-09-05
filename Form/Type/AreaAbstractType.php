@@ -22,6 +22,7 @@ abstract class AreaAbstractType extends AbstractType
                 'global',
                 'checkbox',
                 [
+                    'required' => false,
                     'label' => 'Global'
                 ]
             )

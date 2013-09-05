@@ -105,6 +105,24 @@ class AreaExtension extends \Twig_Extension
             $this->entityManager->flush();
         }
 
-        return $entity->getContent();
+        $twig = $this->service->get("twig");
+
+        if ($twig instanceof \Twig_Environment) {
+            ;
+        }
+
+        if ($this->service->get('session')->get('hexmedia_content_edit_mode')) {
+            $content = $twig->render(
+                "HexmediaContentBundle:Area:area.html.twig",
+                [
+                    'content' => $entity->getContent(),
+                    'path' => $entity->getPath()
+                ]
+            );
+        } else {
+            $content = $entity->getContent();
+        }
+
+        return $content; //$entity->getContent();
     }
 }

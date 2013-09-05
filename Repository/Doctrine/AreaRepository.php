@@ -58,6 +58,10 @@ class AreaRepository extends EntityRepository implements AreaRepositoryInterface
         }
     }
 
+    public function getByPath($path) {
+        return $this->findOneByPath($path);
+    }
+
     function getGlobalByName($name)
     {
         // TODO: Implement getGlobalByName() method.
