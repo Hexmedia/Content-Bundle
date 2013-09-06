@@ -4,366 +4,410 @@ namespace Hexmedia\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Hexmedia\UserBundle\Entity\User;
-use Hexmedia\ContentBundle\Locale\Entity as LocaleEntity;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
  * Page
  *
  * @ORM\Table(name="page")
- * @ORM\Entity(repositoryClass="Hexmedia\ContentBundle\Repository\Entity\PageRepository")
-
+ * @ORM\Entity(repositoryClass="Hexmedia\ContentBundle\Repository\Doctrine\PageRepository")
  */
 class Page
 {
+    use ORMBehaviors\Timestampable\Timestampable,
+        ORMBehaviors\Blameable\Blameable,
+        ORMBehaviors\Loggable\Loggable,
+        ORMBehaviors\Sluggable\Sluggable//     ORMBehaviors\Translatable\Translatable
+        ;
 
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	private $id;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="teaser", type="string", length=500)
+     */
+    private $teaser;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content", type="string", length=10000)
+     */
+    private $content;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="published", type="boolean")
+     */
+    private $published;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="published_from", type="datetime", nullable=true)
+     */
+    private $publishedFrom;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="published_to", type="datetime", nullable=true)
+     */
+    private $publishedTo;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="seo_title", type="string", length=255, nullable=true)
+     */
+    private $seoTitle;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="seo_keywords", type="string", length=500, nullable=true)
+     */
+    private $seoKeywords;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="seo_description", type="string", length=500, nullable=true)
+     */
+    private $seoDescription;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="title", type="string", length=255)
-	 */
-	private $title;
+    /**
+     * @var Media
+     *
+     * @ORM\ManyToMany(targetEntity="Hexmedia\ContentBundle\Entity\Media")
+     * @ORM\JoinTable(name="page_has_media",
+     *        joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
+     *        inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id")}
+     *    )
+     */
+    private $media;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="slug", type="string", length=255)
-	 */
-	private $slug;
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToMany(targetEntity="Hexmedia\ContentBundle\Entity\Category")
+     * @ORM\JoinTable(name="category_has_page",
+     *        joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
+     *        inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
+     *    )
+     */
+    private $categories;
 
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="created", type="datetime")
-	 */
-	private $created;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->media = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="modified", type="datetime", nullable=true)
-	 */
-	private $modified;
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="teaser", type="string", length=500)
-	 */
-	private $teaser;
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="content", type="string", length=10000)
-	 */
-	private $content;
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Page
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="seo_title", type="string", length=255, nullable=true)
-	 */
-	private $seoTitle;
+        return $this;
+    }
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="seo_keywords", type="string", length=500, nullable=true)
-	 */
-	private $seoKeywords;
+    /**
+     * Get teaser
+     *
+     * @return string
+     */
+    public function getTeaser()
+    {
+        return $this->teaser;
+    }
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="seo_description", type="string", length=500, nullable=true)
-	 */
-	private $seoDescription;
+    /**
+     * Set teaser
+     *
+     * @param string $teaser
+     * @return Page
+     */
+    public function setTeaser($teaser)
+    {
+        $this->teaser = $teaser;
 
-	/**
-	 * @var User
-	 *
-	 * @ORM\ManyToOne(targetEntity="Hexmedia\UserBundle\Entity\User")
-	 * @ORM\JoinColumn(name="admin_id", referencedColumnName="id", nullable=false)
-	 */
-	private $admin;
+        return $this;
+    }
 
-	/**
-	 * @var Media
-	 *
-	 * @ORM\ManyToMany(targetEntity="Hexmedia\ContentBundle\Entity\Media")
-	 * @ORM\JoinTable(name="page_has_media",
-	 * 		joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
-	 * 		inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id")}
-	 * 	)
-	 */
-	private $media;
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
 
-	/**
-	 * @var Category
-	 *
-	 * @ORM\ManyToMany(targetEntity="Hexmedia\ContentBundle\Entity\Category")
-	 * @ORM\JoinTable(name="category_has_page",
-	 * 		joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
-	 * 		inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
-	 * 	)
-	 */
-	private $categories;
+    /**
+     * Set content
+     *
+     * @param string $content
+     * @return Page
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->media = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->categories = new \Doctrine\Common\Collections\ArrayCollection();
-	}
+        return $this;
+    }
 
-	/**
-	 * Get id
-	 *
-	 * @return integer
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * @return boolean
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
 
-	/**
-	 * Set title
-	 *
-	 * @param string $title
-	 * @return Page
-	 */
-	public function setTitle($title)
-	{
-		$this->title = $title;
+    /**
+     * @param boolean $published
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+    }
 
-		return $this;
-	}
+    /**
+     * @return \DateTime
+     */
+    public function getPublishedFrom()
+    {
+        return $this->publishedFrom;
+    }
 
-	/**
-	 * Get title
-	 *
-	 * @return string
-	 */
-	public function getTitle()
-	{
-		return $this->title;
-	}
+    /**
+     * @param \DateTime $publishedFrom
+     */
+    public function setPublishedFrom($publishedFrom)
+    {
+        $this->publishedFrom = $publishedFrom;
+    }
 
-	/**
-	 * Set teaser
-	 *
-	 * @param string $teaser
-	 * @return Page
-	 */
-	public function setTeaser($teaser)
-	{
-		$this->teaser = $teaser;
+    /**
+     * @return \DateTime
+     */
+    public function getPublishedTo()
+    {
+        return $this->publishedTo;
+    }
 
-		return $this;
-	}
+    /**
+     * @param \DateTime $publishedTo
+     */
+    public function setPublishedTo($publishedTo)
+    {
+        $this->publishedTo = $publishedTo;
+    }
 
-	/**
-	 * Get teaser
-	 *
-	 * @return string
-	 */
-	public function getTeaser()
-	{
-		return $this->teaser;
-	}
+    /**
+     * Get seoTitle
+     *
+     * @return string
+     */
+    public function getSeoTitle()
+    {
+        return $this->seoTitle;
+    }
 
-	/**
-	 * Set content
-	 *
-	 * @param string $content
-	 * @return Page
-	 */
-	public function setContent($content)
-	{
-		$this->content = $content;
+    /**
+     * Set seoTitle
+     *
+     * @param string $seoTitle
+     * @return Page
+     */
+    public function setSeoTitle($seoTitle)
+    {
+        $this->seoTitle = $seoTitle;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get content
-	 *
-	 * @return string
-	 */
-	public function getContent()
-	{
-		return $this->content;
-	}
+    /**
+     * Get seoKeywords
+     *
+     * @return string
+     */
+    public function getSeoKeywords()
+    {
+        return $this->seoKeywords;
+    }
 
-	/**
-	 * Set seoTitle
-	 *
-	 * @param string $seoTitle
-	 * @return Page
-	 */
-	public function setSeoTitle($seoTitle)
-	{
-		$this->seoTitle = $seoTitle;
+    /**
+     * Set seoKeywords
+     *
+     * @param string $seoKeywords
+     * @return Page
+     */
+    public function setSeoKeywords($seoKeywords)
+    {
+        $this->seoKeywords = $seoKeywords;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get seoTitle
-	 *
-	 * @return string
-	 */
-	public function getSeoTitle()
-	{
-		return $this->seoTitle;
-	}
+    /**
+     * Get seoDescription
+     *
+     * @return string
+     */
+    public function getSeoDescription()
+    {
+        return $this->seoDescription;
+    }
 
-	/**
-	 * Set seoKeywords
-	 *
-	 * @param string $seoKeywords
-	 * @return Page
-	 */
-	public function setSeoKeywords($seoKeywords)
-	{
-		$this->seoKeywords = $seoKeywords;
+    /**
+     * Set seoDescription
+     *
+     * @param string $seoDescription
+     * @return Page
+     */
+    public function setSeoDescription($seoDescription)
+    {
+        $this->seoDescription = $seoDescription;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get seoKeywords
-	 *
-	 * @return string
-	 */
-	public function getSeoKeywords()
-	{
-		return $this->seoKeywords;
-	}
+    /**
+     * Get admin
+     *
+     * @return string
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
 
-	/**
-	 * Set seoDescription
-	 *
-	 * @param string $seoDescription
-	 * @return Page
-	 */
-	public function setSeoDescription($seoDescription)
-	{
-		$this->seoDescription = $seoDescription;
+    /**
+     * Set admin
+     *
+     * @param string $admin
+     * @return Page
+     */
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get seoDescription
-	 *
-	 * @return string
-	 */
-	public function getSeoDescription()
-	{
-		return $this->seoDescription;
-	}
+    /**
+     * Add media
+     *
+     * @param Media $media
+     * @return Page
+     */
+    public function addMedia(Media $media)
+    {
+        $this->media[] = $media;
 
-	/**
-	 * Set admin
-	 *
-	 * @param string $admin
-	 * @return Page
-	 */
-	public function setAdmin($admin)
-	{
-		$this->admin = $admin;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     *
+     * @param Media $media
+     * @return Page
+     */
+    public function removeMedia(Media $media)
+    {
 
-	/**
-	 * Get admin
-	 *
-	 * @return string
-	 */
-	public function getAdmin()
-	{
-		return $this->admin;
-	}
+        return $this;
+    }
 
-	/**
-	 * Add media
-	 *
-	 * @param Media $media
-	 * @return Page
-	 */
-	public function addMedia(Media $media)
-	{
-		$this->media[] = $media;
+    /**
+     * Get media
+     *
+     * @return string
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
 
-		return $this;
-	}
+    /**
+     * Add categories
+     *
+     * @param \Hexmedia\ContentBundle\Entity\Category $categories
+     * @return Page
+     */
+    public function addCategorie(\Hexmedia\ContentBundle\Entity\Category $categories)
+    {
+        $this->categories[] = $categories;
 
-	/**
-	 *
-	 * @param Media $media
-	 * @return Page
-	 */
-	public function removeMedia(Media $media)
-	{
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Remove categories
+     *
+     * @param \Hexmedia\ContentBundle\Entity\Category $categories
+     */
+    public function removeCategorie(\Hexmedia\ContentBundle\Entity\Category $categories)
+    {
+        $this->categories->removeElement($categories);
+    }
 
-	/**
-	 * Get media
-	 *
-	 * @return string
-	 */
-	public function getMedia()
-	{
-		return $this->media;
-	}
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
 
-	/**
-	 * Add categories
-	 *
-	 * @param \Hexmedia\ContentBundle\Entity\Category $categories
-	 * @return Page
-	 */
-	public function addCategorie(\Hexmedia\ContentBundle\Entity\Category $categories)
-	{
-		$this->categories[] = $categories;
-
-		return $this;
-	}
-
-	/**
-	 * Remove categories
-	 *
-	 * @param \Hexmedia\ContentBundle\Entity\Category $categories
-	 */
-	public function removeCategorie(\Hexmedia\ContentBundle\Entity\Category $categories)
-	{
-		$this->categories->removeElement($categories);
-	}
-
-	/**
-	 * Get categories
-	 *
-	 * @return \Doctrine\Common\Collections\Collection
-	 */
-	public function getCategories()
-	{
-		return $this->categories;
-	}
-
+    /**
+     * Returns an array of the fields used to generate the slug.
+     *
+     * @return array
+     */
+    public function getSluggableFields()
+    {
+        return ["title", "id"];
+    }
 }
 

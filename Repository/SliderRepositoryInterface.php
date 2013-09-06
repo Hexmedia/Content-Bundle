@@ -4,7 +4,7 @@ namespace Hexmedia\ContentBundle\Repository;
 
 use Hexmedia\AdministratorBundle\Repository\ListRepositoryInterface;
 
-interface ScrollerRepositoryInterface extends ListRepositoryInterface
+interface SliderRepositoryInterface extends ListRepositoryInterface
 {
 
 }

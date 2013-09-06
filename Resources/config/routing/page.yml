@@ -1,0 +1,38 @@
+HexMediaContentPage:
+    pattern:  /
+    defaults: { _controller: "HexmediaContentBundle:Page:list" }
+    options:
+        expose: true
+
+HexMediaContenPageShow:
+    pattern:  /{id}/show
+    defaults: { _controller: "HexmediaContentBundle:Page:show" }
+
+HexMediaContentPageAdd:
+    pattern:  /add
+    defaults: { _controller: "HexmediaContentBundle:Page:add" }
+    options:
+        expose: true
+
+HexMediaContentPageCreate:
+    pattern:  /create
+    defaults: { _controller: "HexmediaContentBundle:Page:create" }
+    methods: [ POST]
+
+HexMediaContentPageEdit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "HexmediaContentBundle:Page:edit" }
+    options:
+        expose: true
+
+HexMediaContentPageUpdate:
+    pattern:  /{id}/update
+    defaults: { _controller: "HexmediaContentBundle:Page:update" }
+    methods: [ POST, PUT ]
+
+HexMediaContentPageDelete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "HexmediaContentBundle:Page:delete" }
+    methods: [ POST, DELETE ]
+    options:
+        expose: true

@@ -14,7 +14,6 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  */
 class Area
 {
-
 	use ORMBehaviors\Timestampable\Timestampable,
 	 ORMBehaviors\Blameable\Blameable,
 	 ORMBehaviors\Loggable\Loggable,

@@ -13,14 +13,21 @@ class Subscriber extends SubscriberAbstract implements EventSubscriberInterface
 	public function addPositions(MenuEvent $event)
 	{
 
-		$menu = $event->getMenu()->addChild($this->translator->trans("Media Library"), array('route' => 'HexMediaContentMediaLibrary', 'id' => 'HexMediaContentMediaLibrary'));
-//		$menu->addChild($this->translator->trans("Media"), array('route' => 'HexMediaContentMediaLibrary', 'under' => 'HexMediaContentMediaLibrary'));
-		$menu->addChild($this->translator->trans("Add"), array('route' => 'HexMediaContentMediaAdd', 'under' => 'HexMediaContentMediaLibrary'));
+		$menu = $event->getMenu()->addChild($this->translator->trans("Media Library"), ['route' => 'HexMediaContentMediaLibrary', 'id' => 'HexMediaContentMediaLibrary']);
+//		$menu->addChild($this->translator->trans("Media"), ['route' => 'HexMediaContentMediaLibrary', 'under' => 'HexMediaContentMediaLibrary']);
+		$menu->addChild($this->translator->trans("Add"), ['route' => 'HexMediaContentMediaAdd', 'under' => 'HexMediaContentMediaLibrary']);
 
 
-		$menu = $event->getMenu()->addChild($this->translator->trans("Area"), array('route' => 'HexMediaContentArea', 'id' => 'HexMediaContentArea'));
-		$menu->addChild($this->translator->trans("Add"), array('route' => 'HexMediaContentAreaAdd'));
-		return $event->getMenu();
+		$menu = $event->getMenu()->addChild($this->translator->trans("Area"), ['route' => 'HexMediaContentArea', 'id' => 'HexMediaContentArea']);
+		$menu->addChild($this->translator->trans("Add"), ['route' => 'HexMediaContentAreaAdd']);
+
+
+        $menu = $event->getMenu()->addChild($this->translator->trans("Page"), ['route' => 'HexMediaContentPage', 'id' => "HexMediaContentPage"]);
+        $menu->addChild($this->translator->trans("Add"), ['route' => 'HexMediaContentPageAdd']);
+
+        return $event->getMenu();
+
+
 	}
 
 	public static function getSubscribedEvents()
