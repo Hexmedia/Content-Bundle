@@ -1,6 +1,7 @@
 HexMediaContentPage:
     pattern:  /
     defaults: { _controller: "HexmediaContentBundle:Page:list" }
+    methods: [ GET, POST ]
     options:
         expose: true
 
@@ -11,6 +12,7 @@ HexMediaContenPageShow:
 HexMediaContentPageAdd:
     pattern:  /add
     defaults: { _controller: "HexmediaContentBundle:Page:add" }
+    methods: [ GET ]
     options:
         expose: true
 
@@ -22,6 +24,7 @@ HexMediaContentPageCreate:
 HexMediaContentPageEdit:
     pattern:  /{id}/edit
     defaults: { _controller: "HexmediaContentBundle:Page:edit" }
+    methods: [ GET ]
     options:
         expose: true
 

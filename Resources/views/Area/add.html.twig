@@ -3,30 +3,29 @@
 {% block title %}Area Creation{% endblock title %}
 
 {% block head_script %}
-	{% javascripts filter="?yui_js" output='js/area-edit.js'
-			'@HexmediaContentBundle/Resources/public/js/area-edit.js'
-			'@HexmediaAdministratorBundle/Resources/public/js/bootstrap-datepicker.js'
-            '@HexmediaAdministratorBundle/Resources/public/js/lib/raptor.js'
-            '@HexmediaAdministratorBundle/Resources/public/js/raptor-textarea.js'
-		%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-	{% endjavascripts %}
+    {% javascripts filter="?yui_js" output='js/area-edit.js'
+    '@HexmediaContentBundle/Resources/public/js/area-edit.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/bootstrap-datepicker.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/lib/raptor.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/raptor-textarea.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
 
 {% block head_style %}
-		{% stylesheets filter='assetsurl,less,?yui_css' output='css/adrea-edit.css'
-        '@HexmediaAdministratorBundle/Resources/public/css/raptor.css'
-		%}
-<link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
-		{% endstylesheets %}
+    {% stylesheets filter='assetsurl,less,?yui_css' output='css/adrea-edit.css'
+    '@HexmediaAdministratorBundle/Resources/public/css/raptor.css' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
+    {% endstylesheets %}
 {% endblock %}
 
 {% block body -%}
-{{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
-<div class="buttons-bar">
-    <a class="btn btn-warning" href="{{ path('HexMediaContentArea') }}" title="{{ 'Exit without edit'|trans }}">{{ 'Exit'|trans }}</a>
-    {{ form_widget(form.saveAndExit) }}
-    {{ form_widget(form.save) }}
-</div>
-{{ form_end(form) }}
+    {{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
+    <div class="buttons-bar">
+        <a class="btn btn-warning" href="{{ path('HexMediaContentArea') }}"
+           title="{{ 'Exit without edit'|trans }}">{{ 'Exit'|trans }}</a>
+        {{ form_widget(form.saveAndExit) }}
+        {{ form_widget(form.save) }}
+    </div>
+    {{ form_end(form) }}
 {% endblock %}

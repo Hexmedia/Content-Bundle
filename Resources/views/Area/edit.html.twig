@@ -7,24 +7,23 @@
     '@HexmediaContentBundle/Resources/public/js/area-edit.js'
     '@HexmediaAdministratorBundle/Resources/public/js/bootstrap-datepicker.js'
     '@HexmediaAdministratorBundle/Resources/public/js/lib/raptor.js'
-    '@HexmediaAdministratorBundle/Resources/public/js/raptor-textarea.js'
-    %}
+    '@HexmediaAdministratorBundle/Resources/public/js/raptor-textarea.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
 
 {% block head_style %}
     {% stylesheets filter='assetsurl,?yui_css' output='css/adrea-edit.css'
-    '@HexmediaAdministratorBundle/Resources/public/css/raptor.css'
-    %}
-    <link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
+    '@HexmediaAdministratorBundle/Resources/public/css/raptor.css' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
     {% endstylesheets %}
 {% endblock %}
 
 {% block body -%}
     {{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
     <div class="buttons-bar">
-        <a class="btn btn-warning" href="{{ path('HexMediaContentArea') }}" title="{{ 'Exit without edit'|trans }}">{{ 'Exit'|trans }}</a>
+        <a class="btn btn-warning" href="{{ path('HexMediaContentArea') }}"
+           title="{{ 'Exit without edit'|trans }}">{{ 'Exit'|trans }}</a>
         {{ form_widget(form.delete) }}
         {{ form_widget(form.saveAndExit) }}
         {{ form_widget(form.save) }}

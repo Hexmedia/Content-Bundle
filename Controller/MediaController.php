@@ -6,8 +6,8 @@ use Hexmedia\AdministratorBundle\ControllerInterface\BreadcrumbsInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController as Controller;
 use Hexmedia\AdministratorBundle\ControllerInterface\ListController as ListControllerInterface;
-use Hexmedia\ContentBundle\Form\Type\MediaEditType;
-use Hexmedia\ContentBundle\Form\Type\MediaAddType;
+use Hexmedia\ContentBundle\Form\Type\Media\AddType;
+use Hexmedia\ContentBundle\Form\Type\Media\EditType;
 use Hexmedia\ContentBundle\Entity\Media;
 
 class MediaController extends Controller implements ListControllerInterface, BreadcrumbsInterface
@@ -41,7 +41,7 @@ class MediaController extends Controller implements ListControllerInterface, Bre
 
 		$em = $this->getDoctrine()->getManager();
 
-		$form = $this->createForm(new MediaAddType());
+		$form = $this->createForm(new AddType());
 
 		$form->handleRequest($this->getRequest());
 
@@ -77,7 +77,7 @@ class MediaController extends Controller implements ListControllerInterface, Bre
 
 		$media = $repository->findOneById($id);
 
-		$form = $this->createForm(new MediaEditType(), $media);
+		$form = $this->createForm(new EditType(), $media);
 
 		if ($form instanceof \Symfony\Component\Form\Form)
 			;

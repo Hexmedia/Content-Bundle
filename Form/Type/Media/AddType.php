@@ -1,10 +1,10 @@
 <?php
 
-namespace Hexmedia\ContentBundle\Form\Type;
+namespace Hexmedia\ContentBundle\Form\Type\Media;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-class MediaAddType extends MediaTypeAbstract
+class AddType extends AbstractType
 {
 
 	public function doBuildForm(FormBuilderInterface $builder, array $options)

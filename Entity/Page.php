@@ -370,12 +370,12 @@ class Page
     /**
      * Add categories
      *
-     * @param \Hexmedia\ContentBundle\Entity\Category $categories
+     * @param \Hexmedia\ContentBundle\Entity\Category $category
      * @return Page
      */
-    public function addCategorie(\Hexmedia\ContentBundle\Entity\Category $categories)
+    public function addCategory(\Hexmedia\ContentBundle\Entity\Category $category)
     {
-        $this->categories[] = $categories;
+        $this->categories[] = $category;
 
         return $this;
     }
@@ -383,11 +383,11 @@ class Page
     /**
      * Remove categories
      *
-     * @param \Hexmedia\ContentBundle\Entity\Category $categories
+     * @param \Hexmedia\ContentBundle\Entity\Category $category
      */
-    public function removeCategorie(\Hexmedia\ContentBundle\Entity\Category $categories)
+    public function removeCategory(\Hexmedia\ContentBundle\Entity\Category $category)
     {
-        $this->categories->removeElement($categories);
+        $this->categories->removeElement($category);
     }
 
     /**

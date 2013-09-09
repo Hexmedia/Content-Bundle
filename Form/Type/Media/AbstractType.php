@@ -1,12 +1,12 @@
 <?php
 
-namespace Hexmedia\ContentBundle\Form\Type;
+namespace Hexmedia\ContentBundle\Form\Type\Media;
 
-use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\AbstractType as AbstractTypeBase;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-abstract class MediaTypeAbstract extends AbstractType
+abstract class AbstractType extends AbstractTypeBase
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)

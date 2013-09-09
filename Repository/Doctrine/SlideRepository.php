@@ -13,4 +13,21 @@ use Hexmedia\ContentBundle\Repository\SlideRepositoryInterface;
  */
 class SlideRepository extends EntityRepository implements SlideRepositoryInterface
 {
+    public function getPage($page = 1, $sort = 'id', $pageSize = 10, $sortDirection = 'ASC', $fields = array())
+    {
+        $queryBuilder = $this->createQueryBuilder('s')
+            ->setMaxResults($pageSize)
+            ->setFirstResult(max(0, $page - 1) * $pageSize)
+            ->orderBy('s.' . $sort, $sortDirection == 'ASC' ? 'ASC' : 'DESC');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function getCount()
+    {
+        $queryBuilder = $this->createQueryBuilder("s")
+            ->select("count(s.id)");
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
 }

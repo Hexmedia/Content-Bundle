@@ -3,63 +3,61 @@
 {% block title %}Add Media{% endblock %}
 
 {% block head_script %}
-	{% javascripts output='js/media-edit.js'
-			'@HexmediaContentBundle/Resources/public/js/media-edit.js'
-			'@HexmediaAdministratorBundle/Resources/public/js/bootstrap-datepicker.js'
-			'@HexmediaAdministratorBundle/Resources/public/js/wysihtml.js'
-			'@HexmediaAdministratorBundle/Resources/public/js/bootstrap-wysihtml.js'
-		%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-	{% endjavascripts %}
+    {% javascripts output='js/media-edit.js'
+    '@HexmediaContentBundle/Resources/public/js/media-edit.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/bootstrap-datepicker.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/lib/raptor.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/raptor-textarea.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
 
 {% block head_style %}
-		{% stylesheets filter='assetsurl,less,?yui_css' output='css/media-edit.css'
-			'@HexmediaAdministratorBundle/Resources/public/less/bootstrap-wysihtml.less'
-		%}
-<link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
-		{% endstylesheets %}
+    {% stylesheets filter='assetsurl,less,?yui_css' output='css/media-edit.css'
+    '@HexmediaAdministratorBundle/Resources/public/css/raptor.css' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
+    {% endstylesheets %}
 {% endblock %}
 
 {% block body %}
 
-{{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
-<div class="buttons-bar">
-    {{ form_widget(form.saveAndExit) }}
-    {{ form_widget(form.save) }}
-</div>
+    {{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
+    <div class="buttons-bar">
+        {{ form_widget(form.saveAndExit) }}
+        {{ form_widget(form.save) }}
+    </div>
 
-<div class="content edit-content data-area-edit">
-	<div class="row">
-		<div class="col-md-8">
-			{{ form_widget(form.file) }}
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-8">
-			<fieldset class="box main-content">
-				<legend>{{'Additional Data'|trans}}</legend>
-				<!--									<div class="content-nav">
-														<button class="btn btn-info">Add Media</button>
+    <div class="content edit-content data-area-edit">
+        <div class="row">
+            <div class="col-md-8">
+                {{ form_widget(form.file) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <fieldset class="box main-content">
+                    <legend>{{ 'Additional Data'|trans }}</legend>
+                    <!--									<div class="content-nav">
+                                                            <button class="btn btn-info">Add Media</button>
 
-														<ul class="nav nav-tabs">
-															<li><a href="#">Text</a></li>
-															<li><a href="#">HTML</a></li>
-														</ul>
-													</div>-->
+                                                            <ul class="nav nav-tabs">
+                                                                <li><a href="#">Text</a></li>
+                                                                <li><a href="#">HTML</a></li>
+                                                            </ul>
+                                                        </div>-->
 
-					{{form_row(form.name)}}
+                    {{ form_row(form.name) }}
 
-					{{form_widget(form.description)}}
-			</fieldset>
-		</div>
-		<div class="col-md-4">
-			<fieldset class="box">
-				<legend>{{'Image View'|trans}}</legend>
+                    {{ form_widget(form.description) }}
+                </fieldset>
+            </div>
+            <div class="col-md-4">
+                <fieldset class="box">
+                    <legend>{{ 'Image View'|trans }}</legend>
 
-			</fieldset>
-		</div>
-	</div>
-</div>
-{{form_end(form)}}
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
 {% endblock %}

@@ -17,13 +17,14 @@ class Subscriber extends SubscriberAbstract implements EventSubscriberInterface
 //		$menu->addChild($this->translator->trans("Media"), ['route' => 'HexMediaContentMediaLibrary', 'under' => 'HexMediaContentMediaLibrary']);
 		$menu->addChild($this->translator->trans("Add"), ['route' => 'HexMediaContentMediaAdd', 'under' => 'HexMediaContentMediaLibrary']);
 
-
 		$menu = $event->getMenu()->addChild($this->translator->trans("Area"), ['route' => 'HexMediaContentArea', 'id' => 'HexMediaContentArea']);
 		$menu->addChild($this->translator->trans("Add"), ['route' => 'HexMediaContentAreaAdd']);
 
-
         $menu = $event->getMenu()->addChild($this->translator->trans("Page"), ['route' => 'HexMediaContentPage', 'id' => "HexMediaContentPage"]);
         $menu->addChild($this->translator->trans("Add"), ['route' => 'HexMediaContentPageAdd']);
+
+        $menu = $event->getMenu()->addChild($this->translator->trans("Slider"), ['route' => 'HexMediaContentSlider', 'id' => "HexMediaContentSlider"]);
+        $menu->addChild($this->translator->trans("Add"), ['route' => 'HexMediaContentSliderAdd']);
 
         return $event->getMenu();
 

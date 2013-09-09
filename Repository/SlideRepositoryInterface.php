@@ -2,7 +2,9 @@
 
 namespace Hexmedia\ContentBundle\Repository;
 
-interface SliderRepositoryInterface
+use Hexmedia\AdministratorBundle\Repository\ListRepositoryInterface;
+
+interface SliderRepositoryInterface extends ListRepositoryInterface
 {
 
 }

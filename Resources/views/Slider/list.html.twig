@@ -3,8 +3,8 @@
 {% block title %}{% trans %}List of all areas{% endtrans %}{% endblock %}
 
 {% block head_script %}
-	{% javascripts output='js/area-list.js'
-			'@HexmediaContentBundle/Resources/public/js/area-list.js'
+	{% javascripts output='js/slider-list.js'
+			'@HexmediaContentBundle/Resources/public/js/slider-list.js'
 		%}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
@@ -18,7 +18,7 @@
 	<div data-bind="pagination: pagination"></div>
 </div>
 
-{% include "HexmediaKnockoutBootstrapBundle:Table:list_table_header.html.twig" with {'addRouteName' : 'HexMediaContentAreaAdd'} %}
-{% include "HexmediaKnockoutBootstrapBundle:Table:list_table_items.html.twig" with {'editRouteName' : 'HexMediaContentAreaEdit', 'removeRouteName' : 'HexMediaContentAreaDelete'} %}
+{% include "HexmediaKnockoutBootstrapBundle:Table:list_table_header.html.twig" with {'addRouteName' : 'HexMediaContentSliderAdd'} %}
+{% include "HexmediaKnockoutBootstrapBundle:Table:list_table_items.html.twig" with {'editRouteName' : 'HexMediaContentSliderEdit', 'removeRouteName' : 'HexMediaContentSliderDelete'} %}
 
 {% endblock %}

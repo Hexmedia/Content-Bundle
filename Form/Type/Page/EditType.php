@@ -7,13 +7,13 @@
  * To change this template use File | Settings | File Templates.
  */
 
-namespace Hexmedia\ContentBundle\Form\Type;
+namespace Hexmedia\ContentBundle\Form\Type\Page;
 
 
-use Hexmedia\ContentBundle\Form\Type\PageTypeAbstract;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class PageTypeEdit extends PageTypeAbstract {
+class EditType extends AbstractType
+{
 
     /**
      * Returns the name of this type.
@@ -25,7 +25,17 @@ class PageTypeEdit extends PageTypeAbstract {
         return "content_page_type_edit";
     }
 
-    protected function doBuildForm(FormBuilderInterface $buildier, array $options)
+    protected function doBuildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add(
+            'delete',
+            'submit',
+            [
+                'label' => 'Delete',
+                'attr' => [
+                    'class' => "btn-danger"
+                ]
+            ]
+        );
     }
 }

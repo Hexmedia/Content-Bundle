@@ -1,11 +1,11 @@
 <?php
 
-namespace Hexmedia\ContentBundle\Form\Type;
+namespace Hexmedia\ContentBundle\Form\Type\Area;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class AreaAddType extends AreaAbstractType
+class AddType extends AbstractType
 {
 
 	/**

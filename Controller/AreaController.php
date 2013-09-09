@@ -9,8 +9,8 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController as Controller;
 use Hexmedia\AdministratorBundle\ControllerInterface\ListController as ListControllerInterface;
 use Hexmedia\ContentBundle\Entity\Area;
-use Hexmedia\ContentBundle\Form\Type\AreaAddType;
-use Hexmedia\ContentBundle\Form\Type\AreaEditType;
+use Hexmedia\ContentBundle\Form\Type\Area\AddType;
+use Hexmedia\ContentBundle\Form\Type\Area\EditType;
 
 /**
  * Area controller.
@@ -122,7 +122,7 @@ class AreaController extends Controller implements ListControllerInterface, Brea
     private function createCreateForm(Area $entity)
     {
         $form = $this->createForm(
-            new AreaAddType(),
+            new AddType(),
             $entity,
             array(
                 'action' => $this->generateUrl('HexMediaContentAreaAdd'),
@@ -180,7 +180,7 @@ class AreaController extends Controller implements ListControllerInterface, Brea
     private function createEditForm(Area $entity)
     {
         $form = $this->createForm(
-            new AreaEditType(),
+            new EditType(),
             $entity,
             array(
                 'action' => $this->generateUrl('HexMediaContentAreaUpdate', array('id' => $entity->getId())),

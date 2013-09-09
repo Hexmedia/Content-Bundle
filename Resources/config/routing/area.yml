@@ -14,21 +14,21 @@ HexMediaContentAreaCreate:
 
 
 HexMediaContentAreaEdit:
-    pattern: /edit/{id}
+    pattern: /{id}/edit
     defaults: { _controller: HexmediaContentBundle:Area:edit }
     methods: [GET]
     options:
         expose: true
 
 HexMediaContentAreaUpdate:
-    pattern: /edit/{id}
+    pattern: /{id}/update
     defaults: { _controller: HexmediaContentBundle:Area:update }
     methods: [ PUT ]
     options:
         expose: true
 
-HexMediaContentAreaRemove:
-    pattern: /delete/{id}
+HexMediaContentAreaDelete:
+    pattern: /{id}/delete
     defaults: { _controller: HexmediaContentBundle:Area:delete }
     options:
         expose: true

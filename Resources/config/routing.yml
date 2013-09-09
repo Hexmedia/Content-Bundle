@@ -9,3 +9,7 @@ hexMedia_Content_Area:
 hexMedia_Content_Page:
     resource: "@HexmediaContentBundle/Resources/config/routing/page.yml"
     prefix:   /page/
+
+hexMedia_Content_Slider:
+    resource: "@HexmediaContentBundle/Resources/config/routing/slider.yml"
+    prefix:   /slider/

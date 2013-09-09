@@ -3,51 +3,49 @@
 {% block title %}Edit media file data{% endblock %}
 
 {% block head_script %}
-	{% javascripts output='js/media-edit.js'
-			'@HexmediaContentBundle/Resources/public/js/media-edit.js'
-			'@HexmediaAdministratorBundle/Resources/public/js/bootstrap-datepicker.js'
-			'@HexmediaAdministratorBundle/Resources/public/js/wysihtml.js'
-			'@HexmediaAdministratorBundle/Resources/public/js/bootstrap-wysihtml.js'
-		%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-	{% endjavascripts %}
+    {% javascripts output='js/media-edit.js'
+    '@HexmediaContentBundle/Resources/public/js/media-edit.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/bootstrap-datepicker.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/lib/raptor.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/raptor-textarea.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
 
 {% block head_style %}
-		{% stylesheets filter='assetsurl,less,?yui_css' output='css/media-edit.css'
-			'@HexmediaAdministratorBundle/Resources/public/less/bootstrap-wysihtml.less'
-		%}
-<link rel="stylesheet" type="text/css" href="{{ asset_url }}" />
-		{% endstylesheets %}
+    {% stylesheets filter='assetsurl,less,?yui_css' output='css/media-edit.css'
+    '@HexmediaAdministratorBundle/Resources/public/css/raptor.css' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
+    {% endstylesheets %}
 {% endblock %}
 
 {% block body %}
 
-{{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
-<div class="buttons-bar">
-    {{ form_widget(form.saveAndExit) }}
-    {{ form_widget(form.save) }}
-    {{ form_widget(form.delete) }}
-</div>
+    {{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
+    <div class="buttons-bar">
+        {{ form_widget(form.saveAndExit) }}
+        {{ form_widget(form.save) }}
+        {{ form_widget(form.delete) }}
+    </div>
 
-<div class="content edit-content">
-	<div class="row">
-		<div class="col-md-8">
-			<fieldset class="box main-content">
-				<legend>{{'Additional Data'|trans}}</legend>
+    <div class="content edit-content">
+        <div class="row">
+            <div class="col-md-8">
+                <fieldset class="box main-content">
+                    <legend>{{ 'Additional Data'|trans }}</legend>
 
-					{{form_row(form.name)}}
+                    {{ form_row(form.name) }}
 
-					{{form_widget(form.description)}}
-			</fieldset>
-		</div>
-		<div class="col-md-4">
-			<fieldset class="box">
-				<legend>Image View</legend>
-				<img src="{{ vich_uploader_asset(media, 'file')|imagine_filter('big_admin_square')  }}" alt="" />
-			</fieldset>
-		</div>
-	</div>
-</div>
-{{form_end(form)}}
+                    {{ form_widget(form.description) }}
+                </fieldset>
+            </div>
+            <div class="col-md-4">
+                <fieldset class="box">
+                    <legend>Image View</legend>
+                    <img src="{{ vich_uploader_asset(media, 'file')|imagine_filter('big_admin_square') }}" alt=""/>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
 {% endblock %}

@@ -72,14 +72,17 @@ class Slide
      * @var \Hexmedia\ContentBundle\Entity\Slider
      *
      * @ORM\ManyToOne(targetEntity="Hexmedia\ContentBundle\Entity\Slider", inversedBy="slides")
-     * @ORM\JoinColumn(name="slider_id", referencedColumn="id", nullable=false)
+     * @ORM\JoinColumn(name="slider_id", referencedColumnName="id", nullable=false)
      */
     private $slider;
     /**
      * @var \Hexmedia\ContentBundle\Entity\Media
      *
-     * @ORM\OneToMany(targetEntity="Hexmedia\ContentBundle\Entity\Media")
-     * @ORM\JoinColumn(name="media_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToMany(targetEntity="Hexmedia\ContentBundle\Entity\Media")
+     * @ORM\JoinTable(name="slide_has_media",
+     *        joinColumns={@ORM\JoinColumn(name="page_id", referencedColumnName="id")},
+     *        inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id")}
+     *    )
      */
     private $media;
 
@@ -88,7 +91,7 @@ class Slide
      */
     public function __construct()
     {
-        $this->slider = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->media = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -125,22 +128,8 @@ class Slide
     }
 
     /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
+     * Get subtitle
+     *
      * @return string
      */
     public function getSubtitle()
@@ -149,11 +138,39 @@ class Slide
     }
 
     /**
+     * Set subtitle
+     *
      * @param string $subtitle
+     * @return Slide
      */
     public function setSubtitle($subtitle)
     {
         $this->subtitle = $subtitle;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Slide
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
     }
 
     /**
@@ -249,29 +266,6 @@ class Slide
     }
 
     /**
-     * Set sortOrder
-     *
-     * @param integer $sortOrder
-     * @return Slide
-     */
-    public function setSortOrder($sortOrder)
-    {
-        $this->sortOrder = $sortOrder;
-
-        return $this;
-    }
-
-    /**
-     * Get sortOrder
-     *
-     * @return integer
-     */
-    public function getSortOrder()
-    {
-        return $this->sortOrder;
-    }
-
-    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -341,32 +335,9 @@ class Slide
     }
 
     /**
-     * Add slider
-     *
-     * @param \Hexmedia\ContentBundle\Entity\Slider $slider
-     * @return Slide
-     */
-    public function addSlider(\Hexmedia\ContentBundle\Entity\Slider $slider)
-    {
-        $this->slider[] = $slider;
-
-        return $this;
-    }
-
-    /**
-     * Remove slider
-     *
-     * @param \Hexmedia\ContentBundle\Entity\Slider $slider
-     */
-    public function removeSlider(\Hexmedia\ContentBundle\Entity\Slider $slider)
-    {
-        $this->slider->removeElement($slider);
-    }
-
-    /**
      * Get slider
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Hexmedia\ContentBundle\Entity\Slider
      */
     public function getSlider()
     {
@@ -374,26 +345,48 @@ class Slide
     }
 
     /**
+     * Set slider
+     *
+     * @param \Hexmedia\ContentBundle\Entity\Slider $slider
+     * @return Slide
+     */
+    public function setSlider(\Hexmedia\ContentBundle\Entity\Slider $slider)
+    {
+        $this->slider = $slider;
+
+        return $this;
+    }
+
+    /**
+     * Add media
+     *
+     * @param \Hexmedia\ContentBundle\Entity\Media $media
+     * @return Slide
+     */
+    public function addMedia(\Hexmedia\ContentBundle\Entity\Media $media)
+    {
+        $this->media[] = $media;
+
+        return $this;
+    }
+
+    /**
+     * Remove media
+     *
+     * @param \Hexmedia\ContentBundle\Entity\Media $media
+     */
+    public function removeMedia(\Hexmedia\ContentBundle\Entity\Media $media)
+    {
+        $this->media->removeElement($media);
+    }
+
+    /**
      * Get media
      *
-     * @return \Hexmedia\ContentBundle\Entity\Media
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMedia()
     {
         return $this->media;
     }
-
-    /**
-     * Set media
-     *
-     * @param \Hexmedia\ContentBundle\Entity\Media $media
-     * @return Slide
-     */
-    public function setMedia(\Hexmedia\ContentBundle\Entity\Media $media)
-    {
-        $this->media = $media;
-
-        return $this;
-    }
-
 }

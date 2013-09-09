@@ -5,29 +5,26 @@ namespace Hexmedia\ContentBundle\Controller;
 use Hexmedia\AdministratorBundle\ControllerInterface\BreadcrumbsInterface;
 use Hexmedia\AdministratorBundle\ControllerInterface\ListController;
 use Hexmedia\AdministratorBundle\ControllerInterface\WhiteOctober;
-use Hexmedia\ContentBundle\Form\Type\Page\AddType;
-use Hexmedia\ContentBundle\Form\Type\Page\EditType;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController as Controller;
-
-use Hexmedia\ContentBundle\Entity\Page;
-use Hexmedia\ContentBundle\Form\PageType;
+use Hexmedia\ContentBundle\Entity\Slider;
+use Hexmedia\ContentBundle\Form\Type\Slider\AddType;
+use Hexmedia\ContentBundle\Form\Type\Slider\EditType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
 /**
- * Page controller.
+ * Slider controller.
  *
  */
-class PageController extends Controller implements ListController, BreadcrumbsInterface
+class SliderController extends Controller implements ListController, BreadcrumbsInterface
 {
-
     /**
      * @var \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs
      */
     private $breadcrumbs;
 
     /**
-     * Lists all Page entities.
+     * Lists all Slider entities.
      *
      * @Rest\View
      */
@@ -45,8 +42,7 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
             $r = new \stdClass();
             $r->id = $entity->getId();
             $r->number = ++$i;
-            $r->title = $entity->getTitle();
-            $r->slug = $entity->getSlug();
+            $r->name = $entity->getName();
             $r->published = $entity->getPublished();
             $r->publishedFrom = $entity->getPublishedFrom() != null ? $agoHelper->formatTime(
                 $entity->getPublishedFrom()
@@ -68,7 +64,8 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
     }
 
     /**
-     * {@inheritDoc}
+     *
+     * @return WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs
      */
     public function registerBreadcrubms()
     {
@@ -76,8 +73,8 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
 
         $this->breadcrumbs->addItem($this->get('translator')->trans("Content"));
         $this->breadcrumbs->addItem(
-            $this->get('translator')->trans("Page"),
-            $this->get('router')->generate('HexMediaContentPage')
+            $this->get('translator')->trans("Slider"),
+            $this->get('router')->generate('HexMediaContentSlider')
         );
 
         return $this->breadcrumbs;
@@ -91,33 +88,26 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
     {
         $em = $this->getDoctrine()->getManager();
 
-        return $em->getRepository('HexmediaContentBundle:Page');
+        return $em->getRepository('HexmediaContentBundle:Slider');
     }
 
     /**
-     * Creates a new Page entity.
+     * Creates a new Slider entity.
      *
-     * @Rest\View(template="HexmediaContentBundle:Page:add.html.twig")
+     * @Rest|View(template="HexmediaContentBundle:Slider:add.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Page();
+        $entity = new Slider();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
-
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('notice', 'Page has been added!');
-
-            if ($form->get("saveAndExit")->isClicked()) {
-                return $this->redirect($this->generateUrl('HexMediaContentPage'));
-            } else {
-                return $this->redirect($this->generateUrl('HexMediaContentPageEdit', array('id' =>  $entity->getId())));
-            }
+            return $this->redirect($this->generateUrl('slider_show', array('id' => $entity->getId())));
         }
 
         return [
@@ -127,34 +117,36 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
     }
 
     /**
-     * Creates a form to create a Page entity.
+     * Creates a form to create a Slider entity.
      *
-     * @param Page $entity The entity
+     * @param Slider $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Page $entity)
+    private function createCreateForm(Slider $entity)
     {
         $form = $this->createForm(
             new AddType(),
             $entity,
-            [
-                'action' => $this->generateUrl('HexMediaContentPageCreate'),
+            array(
+                'action' => $this->generateUrl('slider_create'),
                 'method' => 'POST',
-            ]
+            )
         );
+
+        $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
 
     /**
-     * Displays a form to create a new Page entity.
+     * Displays a form to create a new Slider entity.
      *
      * @Rest\View
      */
     public function addAction()
     {
-        $entity = new Page();
+        $entity = new Slider();
         $form = $this->createCreateForm($entity);
 
         return [
@@ -164,30 +156,27 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
     }
 
     /**
-     * Finds and displays a Page entity.
+     * Finds and displays a Slider entity.
      *
-     * @Rest\View()
+     * @Rest\View
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('HexmediaContentBundle:Page')->find($id);
+        $entity = $em->getRepository('HexmediaContentBundle:Slider')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Page entity.');
+            throw $this->createNotFoundException('Unable to find Slider entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return [
-            'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity
         ];
     }
 
     /**
-     * Displays a form to edit an existing Page entity.
+     * Displays a form to edit an existing Slider entity.
      *
      * @Rest\View()
      */
@@ -195,34 +184,34 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('HexmediaContentBundle:Page')->find($id);
+        $entity = $em->getRepository('HexmediaContentBundle:Slider')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Page entity.');
+            throw $this->createNotFoundException('Unable to find Slider entity.');
         }
 
         $form = $this->createEditForm($entity);
 
         return [
             'entity' => $entity,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ];
     }
 
     /**
-     * Creates a form to edit a Page entity.
+     * Creates a form to edit a Slider entity.
      *
-     * @param Page $entity The entity
+     * @param Slider $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Page $entity)
+    private function createEditForm(Slider $entity)
     {
         $form = $this->createForm(
             new EditType(),
             $entity,
             [
-                'action' => $this->generateUrl('HexMediaContentPageUpdate', array('id' => $entity->getId())),
+                'action' => $this->generateUrl('slider_update', array('id' => $entity->getId())),
                 'method' => 'PUT',
             ]
         );
@@ -231,18 +220,18 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
     }
 
     /**
-     * Edits an existing Page entity.
+     * Edits an existing Slider entity.
      *
-     * @Rest\View(template="HexmediaContentBundle:Page:edit.html.twig")
+     * @Rest\View(template="HexmediaContentBundle:Slider:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('HexmediaContentBundle:Page')->find($id);
+        $entity = $em->getRepository('HexmediaContentBundle:Slider')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Page entity.');
+            throw $this->createNotFoundException('Unable to find Slider entity.');
         }
 
         $form = $this->createEditForm($entity);
@@ -250,15 +239,15 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
 
         if ($form->isValid()) {
             if ($em->getUnitOfWork()->isScheduledForUpdate($entity)) {
-                $this->get('session')->getFlashBag()->add('notice', 'Page has been updated!');
+                $this->get('session')->getFlashBag()->add('notice', 'Slider has been updated!');
             }
 
             $em->flush();
 
             if ($form->get("saveAndExit")->isClicked()) {
-                return $this->redirect($this->generateUrl('HexMediaContentPage'));
+                return $this->redirect($this->generateUrl('HexMediaContentSlider'));
             } else {
-                return $this->redirect($this->generateUrl('HexMediaContentPageEdit', ['id' => $entity->getId()]));
+                return $this->redirect($this->generateUrl('HexMediaContentSliderEdit', ['id' => $entity->getId()]));
             }
         }
 
@@ -269,16 +258,15 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
     }
 
     /**
-     * Deletes a Page entity.
+     * Deletes a Slider entity.
      *
-     * @Rest\View
      */
     public function deleteAction(Request $request, $id)
     {
         $entity = $this->getRepository()->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Page entity.');
+            throw $this->createNotFoundException('Unable to find Slider entity.');
         }
         $em = $this->getDoctrine()->getManager();
 
