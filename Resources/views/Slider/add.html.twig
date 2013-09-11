@@ -3,8 +3,7 @@
 {% block title %}Area Creation{% endblock title %}
 
 {% block head_script %}
-    {% javascripts filter="?yui_js" output='js/page-edit.js'
-    '@HexmediaContentBundle/Resources/public/js/page-edit.js'
+    {% javascripts filter="?yui_js" output='js/slider-edit.js'
     '@HexmediaAdministratorBundle/Resources/public/js/bootstrap-datepicker.js'
     '@HexmediaAdministratorBundle/Resources/public/js/lib/raptor.js'
     '@HexmediaAdministratorBundle/Resources/public/js/raptor-textarea.js' %}
@@ -13,7 +12,7 @@
 {% endblock %}
 
 {% block head_style %}
-    {% stylesheets filter='assetsurl,less,?yui_css' output='css/page-edit.css'
+    {% stylesheets filter='assetsurl,less,?yui_css' output='css/slider-edit.css'
     '@HexmediaAdministratorBundle/Resources/public/css/raptor.css' %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
     {% endstylesheets %}
@@ -22,44 +21,31 @@
 {% block body -%}
     {{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
     <div class="buttons-bar">
-        <a class="btn btn-warning" href="{{ path('HexMediaContentPage') }}"
+        <a class="btn btn-warning" href="{{ path('HexMediaContentSlider') }}"
            title="{{ 'Exit without edit'|trans }}">{{ 'Exit'|trans }}</a>
         {{ form_widget(form.saveAndExit) }}
         {{ form_widget(form.save) }}
     </div>
     <div class="row">
         <div class="col-md-12">
-            {{ form_widget(form.title) }}
+            {{ form_widget(form.name) }}
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8">
-            <fieldset class="box main-content">
-                <legend>{{ 'Content'|trans }}</legend>
-                {{ form_row(form.teaser) }}
-            </fieldset>
-            <fieldset class="box main-content">
-                <legend>{{ 'SEO'|trans }}</legend>
-                {{ form_row(form.seoTitle) }}
-                {{ form_row(form.seoKeywords) }}
-                {{ form_row(form.seoDescription) }}
-            </fieldset>
-        </div>
-        <div class="col-md-4">
-            <fieldset class="box">
-                <legend>{{ 'Publication'|trans }}</legend>
+        <div class="col-md-6">
                 {{ form_row(form.published) }}
                 {{ form_row(form.publishedFrom) }}
+        </div>
+        <div class="col-md-6">
+            <fieldset class="box">
+                {{ form_row(form.sort) }}
                 {{ form_row(form.publishedTo) }}
             </fieldset>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <fieldset class="box main-content-full">
-                <legend>{{ 'Content'|trans }}</legend>
-                {{ form_widget(form.content) }}
-            </fieldset>
+            Here will go slides
         </div>
     </div>
 

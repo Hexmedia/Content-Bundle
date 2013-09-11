@@ -107,7 +107,15 @@ class SliderController extends Controller implements ListController, Breadcrumbs
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('slider_show', array('id' => $entity->getId())));
+            $this->get('session')->getFlashBag()->add('notice', 'Slider has been added!');
+
+            if ($form->get("saveAndExit")->isClicked()) {
+                return $this->redirect($this->generateUrl('HexMediaContentSlider'));
+            } else {
+                return $this->redirect($this->generateUrl('HexMediaContentSliderEdit', ['id' =>  $entity->getId()]));
+            }
+
+            return $this->redirect($this->generateUrl('slider_show', ['id' => $entity->getId()]));
         }
 
         return [
@@ -128,13 +136,11 @@ class SliderController extends Controller implements ListController, Breadcrumbs
         $form = $this->createForm(
             new AddType(),
             $entity,
-            array(
-                'action' => $this->generateUrl('slider_create'),
+            [
+                'action' => $this->generateUrl('HexMediaContentSliderCreate'),
                 'method' => 'POST',
-            )
+            ]
         );
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -211,7 +217,7 @@ class SliderController extends Controller implements ListController, Breadcrumbs
             new EditType(),
             $entity,
             [
-                'action' => $this->generateUrl('slider_update', array('id' => $entity->getId())),
+                'action' => $this->generateUrl('HexMediaContentSliderUpdate', ['id' => $entity->getId()]),
                 'method' => 'PUT',
             ]
         );
@@ -274,6 +280,6 @@ class SliderController extends Controller implements ListController, Breadcrumbs
 
         $em->flush();
 
-        return array('success' => true);
+        return ['success' => true];
     }
 }
