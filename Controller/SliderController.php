@@ -2,6 +2,7 @@
 
 namespace Hexmedia\ContentBundle\Controller;
 
+use Hexmedia\AdministratorBundle\Controller\ListTrait;
 use Hexmedia\AdministratorBundle\ControllerInterface\BreadcrumbsInterface;
 use Hexmedia\AdministratorBundle\ControllerInterface\ListController;
 use Hexmedia\AdministratorBundle\ControllerInterface\WhiteOctober;
@@ -18,49 +19,23 @@ use FOS\RestBundle\Controller\Annotations as Rest;
  */
 class SliderController extends Controller implements ListController, BreadcrumbsInterface
 {
+    use ListTrait;
+
     /**
      * @var \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs
      */
     private $breadcrumbs;
 
     /**
-     * Lists all Slider entities.
+     * @return array
      *
      * @Rest\View
      */
-    public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
+    public function indexAction()
     {
         $this->registerBreadcrubms();
 
-        $entities = $this->getRepository()->getPage($page, $sort, $pageSize, $sortDirection);
-        $agoHelper = $this->container->get('hexmedia.templating.helper.time_formatter');
-
-        $i = 0;
-        $entitesRet = [];
-
-        foreach ($entities as $entity) {
-            $r = new \stdClass();
-            $r->id = $entity->getId();
-            $r->number = ++$i;
-            $r->name = $entity->getName();
-            $r->published = $entity->getPublished();
-            $r->publishedFrom = $entity->getPublishedFrom() != null ? $agoHelper->formatTime(
-                $entity->getPublishedFrom()
-            ) : "not set";
-            $r->publishedTo = $entity->getPublishedTo() != null ? $agoHelper->formatTime(
-                $entity->getPublishedTo()
-            ) : "not set";
-            $r->lastModified = $entity->getUpdatedAt() == null ? $agoHelper->formatTime(
-                $entity->getCreatedAt()
-            ) : $agoHelper->formatTime($entity->getUpdatedAt());
-
-            $entitesRet[] = (array)$r;
-        }
-
-        return [
-            'entities' => $entitesRet,
-            "entitiesCount" => $this->getRepository()->getCount()
-        ];
+        return [];
     }
 
     /**
@@ -81,6 +56,22 @@ class SliderController extends Controller implements ListController, Breadcrumbs
     }
 
     /**
+     * Lists all Slider entities.
+     *
+     * @Rest\View
+     */
+    public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
+    {
+        $entities = $this->getRepository()->getPage($page, $sort, $pageSize, $sortDirection);
+        $entitesRet = $this->prepareEntities($entities);
+
+        return [
+            'entities' => $entitesRet,
+            "entitiesCount" => $this->getRepository()->getCount()
+        ];
+    }
+
+    /**
      *
      * @return \Hexmedia\ContentBundle\Repository\Doctrine\PageRepository
      */
@@ -91,10 +82,20 @@ class SliderController extends Controller implements ListController, Breadcrumbs
         return $em->getRepository('HexmediaContentBundle:Slider');
     }
 
+    public function getFieldsToDisplayOnList()
+    {
+        return [
+            "number" => "number",
+            "id" => "getId",
+            "name" => "getName",
+            "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat']
+        ];
+    }
+
     /**
      * Creates a new Slider entity.
      *
-     * @Rest|View(template="HexmediaContentBundle:Slider:add.html.twig")
+     * @Rest\View(template="HexmediaContentBundle:Slider:add.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -112,7 +113,7 @@ class SliderController extends Controller implements ListController, Breadcrumbs
             if ($form->get("saveAndExit")->isClicked()) {
                 return $this->redirect($this->generateUrl('HexMediaContentSlider'));
             } else {
-                return $this->redirect($this->generateUrl('HexMediaContentSliderEdit', ['id' =>  $entity->getId()]));
+                return $this->redirect($this->generateUrl('HexMediaContentSliderEdit', ['id' => $entity->getId()]));
             }
 
             return $this->redirect($this->generateUrl('slider_show', ['id' => $entity->getId()]));

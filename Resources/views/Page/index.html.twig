@@ -1,57 +1,7 @@
-{% extends '::base.html.twig' %}
+{% extends "HexmediaContentBundle::admin.html.twig" %}
 
-{% block body -%}
-    <h1>Page list</h1>
+{% block title %}{% trans %}List of all Pages{% endtrans %}{% endblock title %}
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Slug</th>
-                <th>Created</th>
-                <th>Modified</th>
-                <th>Teaser</th>
-                <th>Content</th>
-                <th>Seotitle</th>
-                <th>Seokeywords</th>
-                <th>Seodescription</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('page_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.title }}</td>
-                <td>{{ entity.slug }}</td>
-                <td>{% if entity.created %}{{ entity.created|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.modified %}{{ entity.modified|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.teaser }}</td>
-                <td>{{ entity.content }}</td>
-                <td>{{ entity.seoTitle }}</td>
-                <td>{{ entity.seoKeywords }}</td>
-                <td>{{ entity.seoDescription }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('page_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('page_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('page_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+{% block body %}
+    {{ render(controller('HexmediaContentBundle:Page:list')) }}
+{% endblock body %}

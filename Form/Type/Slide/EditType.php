@@ -19,15 +19,7 @@ class EditType extends AbstractType
 
     protected function doBuildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(
-            'delete',
-            'submit',
-            [
-                'label' => 'Delete',
-                'attr' => [
-                    'class' => "btn-danger"
-                ]
-            ]
-        );
+        $this->addDeleteButton($builder);
+
     }
 }

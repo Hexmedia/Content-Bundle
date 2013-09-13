@@ -14,7 +14,7 @@ class MediaController extends Controller implements ListControllerInterface, Bre
 {
 
 	/**
-	 * @var WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs
+	 * @var \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs
 	 */
 	private $breadcrumbs;
 
@@ -124,6 +124,20 @@ class MediaController extends Controller implements ListControllerInterface, Bre
 	{
 		return array();
 	}
+
+    /**
+     * @param int $page
+     * @param int $pageSize
+     * @param string $sort
+     * @param string $sortDirection
+     * @return array
+     *
+     * @Rest\View
+     */
+    public function indexAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
+    {
+        return [];
+    }
 
 	/**
 	 * @Rest\View

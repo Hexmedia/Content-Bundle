@@ -1,24 +1,16 @@
-{% extends "HexmediaContentBundle::admin.html.twig" %}
-
-{% block title %}{% trans %}List of all areas{% endtrans %}{% endblock %}
-
-{% block head_script %}
-	{% javascripts output='js/slider-list.js'
-			'@HexmediaContentBundle/Resources/public/js/slider-list.js'
-		%}
+{% javascripts output='js/slider-list.js'
+'@HexmediaContentBundle/Resources/public/js/slider-list.js' %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
-	{% endjavascripts %}
-{% endblock %}
+{% endjavascripts %}
 
-{% block body %}
 <div class="content data-area-list">
-	<table class="table table-hover" data-bind="table: list, headerTemplate: 'list_table_header', itemTemplate: 'list_table_items'">
-	</table>
+    <table class="table table-hover"
+           data-bind="table: list, headerTemplate: 'list_table_header', itemTemplate: 'list_table_items'">
+    </table>
 
-	<div data-bind="pagination: pagination"></div>
+    <div data-bind="pagination: pagination"></div>
 </div>
 
 {% include "HexmediaKnockoutBootstrapBundle:Table:list_table_header.html.twig" with {'addRouteName' : 'HexMediaContentSliderAdd'} %}
 {% include "HexmediaKnockoutBootstrapBundle:Table:list_table_items.html.twig" with {'editRouteName' : 'HexMediaContentSliderEdit', 'removeRouteName' : 'HexMediaContentSliderDelete'} %}
 
-{% endblock %}

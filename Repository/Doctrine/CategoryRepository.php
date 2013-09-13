@@ -3,6 +3,7 @@
 namespace Hexmedia\ContentBundle\Repository\Doctrine;
 
 use Doctrine\ORM\EntityRepository;
+use Hexmedia\AdministratorBundle\Repository\Doctrine\ListTrait;
 use Hexmedia\ContentBundle\Repository\CategoryRepositoryInterface;
 
 /**
@@ -13,15 +14,6 @@ use Hexmedia\ContentBundle\Repository\CategoryRepositoryInterface;
  */
 class CategoryRepository extends EntityRepository implements CategoryRepositoryInterface
 {
-
-	public function getCount()
-	{
-
-	}
-
-	public function getPage($page = 1, $sort = 'id', $pageSize = 10, $sortDirection = 'ASC', $fields = array())
-	{
-
-	}
+    use ListTrait;
 
 }

@@ -4,6 +4,7 @@ namespace Hexmedia\ContentBundle\Repository\Doctrine;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
+use Hexmedia\AdministratorBundle\Repository\Doctrine\ListTrait;
 use Hexmedia\ContentBundle\Repository\AreaRepositoryInterface;
 
 /**
@@ -14,23 +15,7 @@ use Hexmedia\ContentBundle\Repository\AreaRepositoryInterface;
  */
 class AreaRepository extends EntityRepository implements AreaRepositoryInterface
 {
-    public function getPage($page = 1, $sort = 'id', $pageSize = 10, $sortDirection = 'ASC', $fields = array())
-    {
-        $queryBuilder = $this->createQueryBuilder('a')
-            ->setMaxResults($pageSize)
-            ->setFirstResult(max(0, $page - 1) * $pageSize)
-            ->orderBy('a.' . $sort, $sortDirection == 'ASC' ? 'ASC' : 'DESC');
-
-        return $queryBuilder->getQuery()->getResult();
-    }
-
-    public function getCount()
-    {
-        $queryBuilder = $this->createQueryBuilder("a")
-            ->select("count(a.id)");
-
-        return $queryBuilder->getQuery()->getSingleScalarResult();
-    }
+    use ListTrait;
 
     /**
      * @param $name
@@ -58,7 +43,8 @@ class AreaRepository extends EntityRepository implements AreaRepositoryInterface
         }
     }
 
-    public function getByPath($path) {
+    public function getByPath($path)
+    {
         return $this->findOneByPath($path);
     }
 

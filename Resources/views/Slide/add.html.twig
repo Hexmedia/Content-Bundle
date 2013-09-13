@@ -21,19 +21,42 @@
 {% block body -%}
     {{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
     <div class="buttons-bar">
-        <a class="btn btn-warning" href="{{ path('HexMediaContentSlider') }}"
+        <a class="btn btn-warning" href="{{ path('HexMediaContentSlide', {'sliderId' : sliderId }) }}"
            title="{{ 'Exit without edit'|trans }}">{{ 'Exit'|trans }}</a>
         {{ form_widget(form.saveAndExit) }}
         {{ form_widget(form.save) }}
+        {{ form_widget(form.publish) }}
     </div>
     <div class="row">
         <div class="col-md-12">
-            {{ form_widget(form.name) }}
+            {{ form_widget(form.title) }}
         </div>
     </div>
     <div class="row">
+        <div class="col-md-8">
+            <fieldset class="box main-content">
+                <legend>{{ 'Content'|trans }}</legend>
+                {{ form_row(form.subtitle) }}
+                {{ form_row(form.link) }}
+                {{ form_row(form.sort) }}
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+            <fieldset class="box">
+                <legend>{{ 'Publication'|trans }}</legend>
+                {{ form_row(form.published) }}
+                {{ form_row(form.publishedFrom) }}
+                {{ form_row(form.publishedTo) }}
+            </fieldset>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-12">
-            {{ render(controller('HexmediaContentBundle:Slides:List' width {'sliderId' : 1})) }}
+            <fieldset class="box main-content">
+                <legend>{{ 'Description'|trans }}</legend>
+                {{ form_widget(form.description) }}
+            </fieldset>
         </div>
     </div>
 

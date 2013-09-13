@@ -37,7 +37,7 @@ var AdminListModel;
 		self.list().columns(columns);
 	};
 	ListModel.prototype.getUrl = function(page, sort, pageSize, sortDirection) {
-		return Routing.generate("HexMediaContentArea", {
+		return Routing.generate("HexMediaContentAreaList", {
 			page: page,
 			sort: sort,
 			pageSize: pageSize,

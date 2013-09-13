@@ -1,28 +1,65 @@
-{% extends '::base.html.twig' %}
+{% extends 'HexmediaContentBundle::admin.html.twig' %}
+
+{% block title %}Slider Creation{% endblock title %}
+
+{% block head_script %}
+    {% javascripts filter="?yui_js" output='js/slider-edit.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/bootstrap-datepicker.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/lib/raptor.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/raptor-textarea.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block head_style %}
+    {% stylesheets filter='assetsurl,less,?yui_css' output='css/slider-edit.css'
+    '@HexmediaAdministratorBundle/Resources/public/css/raptor.css' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
 
 {% block body -%}
-    <h1>Slide edit</h1>
+    {{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
+    <div class="buttons-bar">
+        <a class="btn btn-warning" href="{{ path('HexMediaContentSlide', {'sliderId' : sliderId }) }}"
+           title="{{ 'Exit without edit'|trans }}">{{ 'Exit'|trans }}</a>
+        {{ form_widget(form.saveAndExit) }}
+        {{ form_widget(form.save) }}
+        {{ form_widget(form.publish) }}
+        {{ form_widget(form.delete) }}
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ form_widget(form.title) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <fieldset class="box main-content">
+                <legend>{{ 'Content'|trans }}</legend>
+                {{ form_row(form.subtitle) }}
+                {{ form_row(form.link) }}
+                {{ form_row(form.sort) }}
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+            <fieldset class="box">
+                <legend>{{ 'Publication'|trans }}</legend>
+                {{ form_row(form.published) }}
+                {{ form_row(form.publishedFrom) }}
+                {{ form_row(form.publishedTo) }}
+            </fieldset>
+        </div>
+    </div>
 
-    <form action="{{ path('\_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-        <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
-        <p>
-            <button type="submit">Edit</button>
-        </p>
-    </form>
+    <div class="row">
+        <div class="col-md-12">
+            <fieldset class="box main-content">
+                <legend>{{ 'Description'|trans }}</legend>
+                {{ form_widget(form.description) }}
+            </fieldset>
+        </div>
+    </div>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('\') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('\_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+    {{ form_end(form) }}
 {% endblock %}

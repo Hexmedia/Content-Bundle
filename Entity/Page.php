@@ -3,6 +3,7 @@
 namespace Hexmedia\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Hexmedia\AdministratorBundle\Doctrine\TimestampableTrait;
 use Hexmedia\UserBundle\Entity\User;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 

@@ -59,13 +59,13 @@ class Slide
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="published_from", type="datetime")
+     * @ORM\Column(name="published_from", type="datetime", nullable=true)
      */
     private $publishedFrom;
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="published_to", type="datetime")
+     * @ORM\Column(name="published_to", type="datetime", nullable=true)
      */
     private $publishedTo;
     /**
@@ -85,6 +85,13 @@ class Slide
      *    )
      */
     private $media;
+    /**
+     * @var \Hexmedia\ContentBundle\Entity\Media
+     *
+     * @ORM\ManyToOne(targetEntity="\Hexmedia\ContentBundle\Entity\Media")
+     * @ORM\JoinColumn(name="background_media_id", referencedColumnName="id")
+     */
+    private $bgImage;
 
     /**
      * Constructor
@@ -388,5 +395,28 @@ class Slide
     public function getMedia()
     {
         return $this->media;
+    }
+
+    /**
+     * Set bgImage
+     *
+     * @param \Hexmedia\ContentBundle\Entity\Media $bgImage
+     * @return Slide
+     */
+    public function setBgImage(\Hexmedia\ContentBundle\Entity\Media $bgImage = null)
+    {
+        $this->bgImage = $bgImage;
+    
+        return $this;
+    }
+
+    /**
+     * Get bgImage
+     *
+     * @return \Hexmedia\ContentBundle\Entity\Media 
+     */
+    public function getBgImage()
+    {
+        return $this->bgImage;
     }
 }

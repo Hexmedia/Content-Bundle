@@ -1,9 +1,22 @@
-HexMediaContentPage:
-    pattern:  /
-    defaults: { _controller: "HexmediaContentBundle:Page:list" }
+HexMediaContentPageList:
+    pattern:  /list/{page}/{sort}/{pageSize}/{sortDirection}
+    defaults: { _controller: "HexmediaContentBundle:Page:list", page: 1, sort: id, pageSize: 10, sortDirection: asc }
+    requirements:
+        page: \d+
+        pageSize: \d+
+        sortDirection: asc|desc
     methods: [ GET, POST ]
     options:
         expose: true
+
+HexMediaContentPage:
+    pattern:  /
+    defaults: { _controller: "HexmediaContentBundle:Page:index"}
+    methods: [ GET, POST ]
+    options:
+        expose: true
+
+
 
 HexMediaContenPageShow:
     pattern:  /{id}/show

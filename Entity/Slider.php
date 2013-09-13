@@ -16,8 +16,7 @@ class Slider
 
     use ORMBehaviors\Timestampable\Timestampable,
         ORMBehaviors\Blameable\Blameable,
-        ORMBehaviors\Loggable\Loggable,
-        ORMBehaviors\Sortable\Sortable;
+        ORMBehaviors\Loggable\Loggable;
 
     /**
      * @var integer
@@ -33,24 +32,6 @@ class Slider
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="published", type="boolean")
-     */
-    private $published;
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="published_from", type="datetime")
-     */
-    private $publishedFrom;
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="published_to", type="datetime")
-     */
-    private $publishedTo;
     /**
      * @var \Hexmedia\ContentBundle\Entity\Slide
      *
@@ -75,75 +56,6 @@ class Slider
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Get published
-     *
-     * @return boolean
-     */
-    public function getPublished()
-    {
-        return $this->published;
-    }
-
-    /**
-     * Set published
-     *
-     * @param boolean $published
-     * @return Slider
-     */
-    public function setPublished($published)
-    {
-        $this->published = $published;
-
-        return $this;
-    }
-
-    /**
-     * Get publishedFrom
-     *
-     * @return \DateTime
-     */
-    public function getPublishedFrom()
-    {
-        return $this->publishedFrom;
-    }
-
-    /**
-     * Set publishedFrom
-     *
-     * @param \DateTime $publishedFrom
-     * @return Slider
-     */
-    public function setPublishedFrom($publishedFrom)
-    {
-        $this->publishedFrom = $publishedFrom;
-
-        return $this;
-    }
-
-    /**
-     * Get publishedTo
-     *
-     * @return \DateTime
-     */
-    public function getPublishedTo()
-    {
-        return $this->publishedTo;
-    }
-
-    /**
-     * Set publishedTo
-     *
-     * @param \DateTime $publishedTo
-     * @return Slider
-     */
-    public function setPublishedTo($publishedTo)
-    {
-        $this->publishedTo = $publishedTo;
-
-        return $this;
     }
 
     /**
