@@ -1,27 +1,76 @@
 <?php
 
-namespace Hexmedia\ContentBundle\Form\Type;
+namespace Hexmedia\ContentBundle\Form\Type\Slider;
 
-use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\AbstractType as AbstractTypeBase;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-abstract class SliderTypeAbstract extends AbstractType
+abstract class AbstractType extends AbstractTypeBase
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('published')
-            ->add('publishedFrom')
-            ->add('publishedTo')
-            ->add('sort')
-        ;
+            ->add('name')
+            ->add('published', 'choice', [
+                'choices' => [
+                    false => 'No',
+                    true => 'Yes'
+                ]
+            ])
+            ->add('publishedFrom',
+                'date',
+                [
+                    'label' => 'Published From:',
+                    'required' => false,
+                    'render_optional_text' => false,
+                    'widget' => 'single_text',
+                    'widget_addon' => [
+                        'type' => 'prepend',
+                        'text' => '<span class="icon-calendar"></span>'
+                    ]
+                ])
+            ->add('publishedTo',
+                'date',
+                [
+                    'label' => 'Published To:',
+                    'required' => false,
+                    'render_optional_text' => false,
+                    'widget' => 'single_text',
+                    'widget_addon' => [
+                        'type' => 'prepend',
+                        'text' => '<span class="icon-calendar"></span>'
+                    ]
+                ])
+            ->add('sort', 'number')
+            ->add(
+                'save',
+                'submit',
+                [
+                    'label' => 'Save',
+                    'attr' => [
+                        'class' => 'btn-primary',
+                        'data-loading-text' => 'Saving ...'
+                    ]
+                ]
+            )
+            ->add(
+                'saveAndExit',
+                'submit',
+                [
+                    'label' => 'Save & Exit',
+                    'attr' => [
+                        'class' => 'btn-primary',
+                        'data-loading-text' => 'Saving ...'
+                    ]
+                ]
+            );;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

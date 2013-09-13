@@ -1,0 +1,42 @@
+HexMediaContentSlide:
+    pattern:  /
+    defaults: { _controller: "HexmediaContentBundle:Slide:index" }
+    options:
+        expose: true
+
+HexMediaContentSlideShow:
+    pattern:  /{id}/show
+    defaults: { _controller: "HexmediaContentBundle:Slide:show" }
+
+HexMediaContentSlideAdd:
+    pattern:  /add
+    defaults: { _controller: "HexmediaContentBundle:Slide:add" }
+    options:
+        expose: true
+
+HexMediaContentSlideCreate:
+    pattern:  /create
+    defaults: { _controller: "HexmediaContentBundle:Slide:create" }
+    options:
+        expose: true
+    methods: [ POST, PUT ]
+
+HexMediaContentSlideEdit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "HexmediaContentBundle:Slide:edit" }
+    options:
+        expose: true
+
+HexMediaContentSlideUpdate:
+    pattern:  /{id}/update
+    defaults: { _controller: "HexmediaContentBundle:Slide:update" }
+    options:
+        expose: true
+    methods: [ POST, PUT ]
+
+HexMediaContentSlideDelete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "HexmediaContentBundle:Slide:delete" }
+    options:
+        expose: true
+    methods: [ POST, DELETE ]

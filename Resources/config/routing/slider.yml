@@ -9,6 +9,8 @@ HexMediaContentSliderAdd:
     pattern:  /add
     defaults: { _controller: "HexmediaContentBundle:Slider:add" }
     methods: [ GET ]
+    options:
+        expose: true
 
 HexMediaContentSliderCreate:
     pattern:  /add
