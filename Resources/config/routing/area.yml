@@ -34,8 +34,23 @@ HexMediaContentAreaDelete:
         expose: true
 
 HexMediaContentArea:
-    pattern: /
-    defaults: { _controller: HexmediaContentBundle:Area:list }
+    pattern: /{page}/{sort}/{pageSize}/{sortDirection}
+    defaults: { _controller: HexmediaContentBundle:Area:index, page: 1, sort: id, pageSize: 10, sortDirection: asc }
+    requirements:
+        page: \d+
+        pageSize: \d+
+        sortDirection: asc|desc
+    methods: [ GET ]
+    options:
+        expose: true
+
+HexMediaContentAreaList:
+    pattern: /list/{page}/{sort}/{pageSize}/{sortDirection}
+    defaults: { _controller: HexmediaContentBundle:Area:list, page: 1, sort: id, pageSize: 10, sortDirection: asc }
+    requirements:
+        page: \d+
+        pageSize: \d+
+        sortDirection: asc|desc
     methods: [ GET ]
     options:
         expose: true

@@ -3,6 +3,7 @@
 namespace Hexmedia\ContentBundle\Repository\Doctrine;
 
 use Doctrine\ORM\EntityRepository;
+use Hexmedia\AdministratorBundle\Repository\Doctrine\ListTrait;
 use Hexmedia\ContentBundle\Repository\PageRepositoryInterface;
 
 /**
@@ -12,23 +13,5 @@ use Hexmedia\ContentBundle\Repository\PageRepositoryInterface;
  * repository methods below.
  */
 class PageRepository extends EntityRepository implements PageRepositoryInterface {
-
-    public function getPage($page = 1, $sort = 'id', $pageSize = 10, $sortDirection = 'ASC', $fields = array())
-    {
-        $queryBuilder = $this->createQueryBuilder('p')
-            ->setMaxResults($pageSize)
-            ->setFirstResult(max(0, $page - 1) * $pageSize)
-            ->orderBy('p.' . $sort, $sortDirection == 'ASC' ? 'ASC' : 'DESC');
-
-        return $queryBuilder->getQuery()->getResult();
-    }
-
-    public function getCount()
-    {
-        $queryBuilder = $this->createQueryBuilder("p")
-            ->select("count(p.id)");
-
-        return $queryBuilder->getQuery()->getSingleScalarResult();
-    }
-
+    use ListTrait;
 }

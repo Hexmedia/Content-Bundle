@@ -2,6 +2,7 @@
 
 namespace Hexmedia\ContentBundle\Controller;
 
+use Hexmedia\AdministratorBundle\Controller\ListTrait;
 use Hexmedia\AdministratorBundle\ControllerInterface\BreadcrumbsInterface;
 use Hexmedia\AdministratorBundle\ControllerInterface\ListController;
 use Hexmedia\AdministratorBundle\ControllerInterface\WhiteOctober;
@@ -20,6 +21,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
  */
 class PageController extends Controller implements ListController, BreadcrumbsInterface
 {
+    use ListTrait;
 
     /**
      * @var \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs
@@ -27,44 +29,19 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
     private $breadcrumbs;
 
     /**
-     * Lists all Page entities.
+     * @param int $page
+     * @param int $pageSize
+     * @param string $sort
+     * @param string $sortDirection
+     * @return array
      *
      * @Rest\View
      */
-    public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
+    public function indexAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
     {
         $this->registerBreadcrubms();
 
-        $entities = $this->getRepository()->getPage($page, $sort, $pageSize, $sortDirection);
-        $agoHelper = $this->container->get('hexmedia.templating.helper.time_formatter');
-
-        $i = 0;
-        $entitesRet = [];
-
-        foreach ($entities as $entity) {
-            $r = new \stdClass();
-            $r->id = $entity->getId();
-            $r->number = ++$i;
-            $r->title = $entity->getTitle();
-            $r->slug = $entity->getSlug();
-            $r->published = $entity->getPublished();
-            $r->publishedFrom = $entity->getPublishedFrom() != null ? $agoHelper->formatTime(
-                $entity->getPublishedFrom()
-            ) : "not set";
-            $r->publishedTo = $entity->getPublishedTo() != null ? $agoHelper->formatTime(
-                $entity->getPublishedTo()
-            ) : "not set";
-            $r->lastModified = $entity->getUpdatedAt() == null ? $agoHelper->formatTime(
-                $entity->getCreatedAt()
-            ) : $agoHelper->formatTime($entity->getUpdatedAt());
-
-            $entitesRet[] = (array)$r;
-        }
-
-        return [
-            'entities' => $entitesRet,
-            "entitiesCount" => $this->getRepository()->getCount()
-        ];
+        return [];
     }
 
     /**
@@ -84,6 +61,30 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
     }
 
     /**
+     * Lists all Page entities.
+     *
+     * @param int $page
+     * @param int $pageSize
+     * @param string $sort
+     * @param string $sortDirection
+     *
+     * @return array
+     *
+     * @Rest\View
+     */
+    public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
+    {
+        $entities = $this->getRepository()->getPage($page, $sort, $pageSize, $sortDirection);
+
+        $entitiesRet = $this->prepareEntities($entities);
+
+        return [
+            'entities' => $entitiesRet,
+            "entitiesCount" => $this->getRepository()->getCount()
+        ];
+    }
+
+    /**
      *
      * @return \Hexmedia\ContentBundle\Repository\Doctrine\PageRepository
      */
@@ -92,6 +93,20 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
         $em = $this->getDoctrine()->getManager();
 
         return $em->getRepository('HexmediaContentBundle:Page');
+    }
+
+    public function getFieldsToDisplayOnList()
+    {
+        return [
+            'id' => 'getId',
+            'number' => 'number',
+            'title' => 'getTitle',
+            'slug' => 'getSlug',
+            'published' => ['get' => 'getPublished', 'format' => 'bool'],
+            'publishedFrom' => ['get' => 'getPublishedFrom', 'format' => 'timeformat'],
+            'publishedTo' => ['get' => 'getPublishedTo', 'format' => 'timeformat'],
+            'lastModified' => ['get' => 'getUpdatedAt', 'format' => 'timeformat']
+        ];
     }
 
     /**
@@ -116,7 +131,7 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
             if ($form->get("saveAndExit")->isClicked()) {
                 return $this->redirect($this->generateUrl('HexMediaContentPage'));
             } else {
-                return $this->redirect($this->generateUrl('HexMediaContentPageEdit', array('id' =>  $entity->getId())));
+                return $this->redirect($this->generateUrl('HexMediaContentPageEdit', array('id' => $entity->getId())));
             }
         }
 

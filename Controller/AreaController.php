@@ -3,6 +3,7 @@
 namespace Hexmedia\ContentBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Hexmedia\AdministratorBundle\Controller\ListTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Hexmedia\AdministratorBundle\ControllerInterface\BreadcrumbsInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -17,6 +18,22 @@ use Hexmedia\ContentBundle\Form\Type\Area\EditType;
  */
 class AreaController extends Controller implements ListControllerInterface, BreadcrumbsInterface
 {
+    use ListTrait;
+
+    /**
+     * Index
+     *
+     * @param int $page
+     * @param int $pageSize
+     * @param string $sort
+     * @param string $sortDirection
+     *
+     * @Rest\View
+     */
+    public function indexAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
+    {
+
+    }
 
     /**
      * Lists all Area entities.
@@ -25,32 +42,38 @@ class AreaController extends Controller implements ListControllerInterface, Brea
      */
     public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
     {
-        $this->registerBreadcrubms();
 
         $entities = $this->getRepository()->getPage($page, $sort, $pageSize, $sortDirection);
-        $agoHelper = $this->container->get('hexmedia.templating.helper.time_formatter');
 
-        $i = 0;
-        $entitesRet = [];
-
-        foreach ($entities as $entity) {
-            $r = new \stdClass();
-            $r->id = $entity->getId();
-            $r->number = ++$i;
-            $r->name = $entity->getName();
-            $r->page = $entity->getPage();
-            $r->route = $entity->getRoute();
-            $r->lastModified = $entity->getUpdatedAt() == null ? $agoHelper->formatTime(
-                $entity->getCreatedAt()
-            ) : $agoHelper->formatTime($entity->getUpdatedAt());
-
-            $entitesRet[] = (array)$r;
-        }
+        $entitesRet = $this->prepareEntities($entities);
 
         return array(
             'entities' => $entitesRet,
             "entitiesCount" => $this->getRepository()->getCount()
         );
+    }
+
+    /**
+     *
+     * @return \Hexmedia\ContentBundle\Repository\Doctrine\AreaRepository
+     */
+    private function getRepository()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        return $em->getRepository('HexmediaContentBundle:Area');
+    }
+
+    public function getFieldsToDisplayOnList()
+    {
+        return [
+            "number" => "number",
+            "id" => "getId",
+            "page" => "getPage",
+            "name" => "getName",
+            "route" => "getRoute",
+            "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat']
+        ];
     }
 
     /**
@@ -67,17 +90,6 @@ class AreaController extends Controller implements ListControllerInterface, Brea
         );
 
         return $this->breadcrumbs;
-    }
-
-    /**
-     *
-     * @return \Hexmedia\ContentBundle\Repository\Doctrine\AreaRepository
-     */
-    private function getRepository()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        return $em->getRepository('HexmediaContentBundle:Area');
     }
 
     /**
@@ -256,13 +268,13 @@ class AreaController extends Controller implements ListControllerInterface, Brea
         return array('success' => true);
     }
 
-
     /**
      * Updating area from raptor.
      *
      * @Rest\View
      */
-    public function raptorUpdateAction() {
+    public function raptorUpdateAction()
+    {
 
     }
 }

@@ -16,25 +16,7 @@ var AdminListModel;
 			"type": "text",
 			"sortable": true
 		};
-        columns[2] = {
-            "name": "published",
-            "display": Translator.get("Published"),
-            "type": "boolean",
-            "sortable": true
-        };
-        columns[3] = {
-            "name": "publishedFrom",
-            "display": Translator.get("Published From"),
-            "type": "date",
-            "sortable": true
-        };
-        columns[4] = {
-            "name": "publishedTo",
-            "display": Translator.get("Published To"),
-            "type": "date",
-            "sortable": true
-        };
-		columns[5] = {
+		columns[2] = {
 			"name": "lastModified",
 			"display": Translator.get("Last Modified"),
 			"type": "date",
@@ -43,7 +25,7 @@ var AdminListModel;
 		self.list().columns(columns);
 	};
 	ListModel.prototype.getUrl = function(page, sort, pageSize, sortDirection) {
-		return Routing.generate("HexMediaContentPage", {
+		return Routing.generate("HexMediaContentSliderList", {
 			page: page,
 			sort: sort,
 			pageSize: pageSize,

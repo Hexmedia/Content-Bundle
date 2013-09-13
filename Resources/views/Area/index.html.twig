@@ -1,0 +1,8 @@
+{% extends "HexmediaContentBundle::admin.html.twig" %}
+
+{% block title %}{% trans %}List of all areas{% endtrans %}{% endblock %}
+
+{% block body %}
+    {{ render(controller('HexmediaContentBundle:Area:list')) }}
+
+{% endblock %}

@@ -1,6 +1,18 @@
 HexMediaContentSlide:
-    pattern:  /
-    defaults: { _controller: "HexmediaContentBundle:Slide:index" }
+    pattern:  /{sliderId}
+    defaults: { _controller: "HexmediaContentBundle:Slide:index"}
+    requirements:
+        sliderId: \d+
+    options:
+        expose: true
+
+HexMediaContentSlideList:
+    pattern:  /list/{sliderId}/{page}/{sort}/{pageSize}/{sortDirection}
+    defaults: { _controller: "HexmediaContentBundle:Slide:list", page: 1, sort: id, pageSize: 10, sortDirection: asc }
+    requirements:
+        page: \d+
+        pageSize: \d+
+        sortDirection: asc|desc
     options:
         expose: true
 
@@ -9,13 +21,13 @@ HexMediaContentSlideShow:
     defaults: { _controller: "HexmediaContentBundle:Slide:show" }
 
 HexMediaContentSlideAdd:
-    pattern:  /add
+    pattern:  /add/{sliderId}
     defaults: { _controller: "HexmediaContentBundle:Slide:add" }
     options:
         expose: true
 
 HexMediaContentSlideCreate:
-    pattern:  /create
+    pattern:  /create/{sliderId}
     defaults: { _controller: "HexmediaContentBundle:Slide:create" }
     options:
         expose: true

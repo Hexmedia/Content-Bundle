@@ -18,9 +18,18 @@ HexMediaContentMediaRemove:
 
 HexMediaContentMediaLibrary:
     pattern: /library
-    defaults: { _controller: HexmediaContentBundle:Media:list }
+    defaults: { _controller: HexmediaContentBundle:Media:index }
     options:
         expose: true
+
+HexMediaContentMediaList:
+    pattern:  /list/{page}/{sort}/{pageSize}/{sortDirection}
+    defaults: { _controller: "HexmediaContentBundle:Media:list", page: 1, sort: id, pageSize: 10, sortDirection: asc }
+    requirements:
+        page: \d+
+        pageSize: \d+
+        sortDirection: asc|desc
+    methods: [ GET, POST ]
 
 HexMediaContentMediaCustomize:
     pattern: /customize
