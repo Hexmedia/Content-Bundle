@@ -15,7 +15,11 @@ abstract class AbstractType extends AbstractTypeBase
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name', 'text', [
+                'attr' => [
+                    'placeholder' => 'Name'
+                ]
+            ])
             ->add('published', 'choice', [
                 'choices' => [
                     false => 'No',
@@ -68,7 +72,7 @@ abstract class AbstractType extends AbstractTypeBase
                         'data-loading-text' => 'Saving ...'
                     ]
                 ]
-            );;
+            );
     }
 
     /**

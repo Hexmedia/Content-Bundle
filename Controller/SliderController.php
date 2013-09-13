@@ -24,6 +24,13 @@ class SliderController extends Controller implements ListController, Breadcrumbs
     private $breadcrumbs;
 
     /**
+     * @Rest\View
+     */
+    public function indexAction() {
+        return [];
+    }
+
+    /**
      * Lists all Slider entities.
      *
      * @Rest\View
@@ -82,7 +89,7 @@ class SliderController extends Controller implements ListController, Breadcrumbs
 
     /**
      *
-     * @return \Hexmedia\ContentBundle\Repository\Doctrine\PageRepository
+     * @return \Hexmedia\ContentBundle\Repository\Doctrine\SliderRepository
      */
     private function getRepository()
     {
