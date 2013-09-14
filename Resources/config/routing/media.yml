@@ -46,11 +46,8 @@ HexMediaContentMediaCustomize:
         id: \d+
 
 HexMediaContentMediaAttach:
-    pattern: /{id}/attach
-    defaults: { _controller: HexmediaContentBundle:Attach:attach }
-    methods: [ POST, PUT ]
-    requirements:
-        id: \d+
+    pattern: /attach/{type}/
+    defaults: { _controller: HexmediaContentBundle:Attach:attach, type: image }
 
 HexMediaContentMediaUpload:
     pattern: /upload
@@ -58,13 +55,11 @@ HexMediaContentMediaUpload:
     options:
         expose: true
 
-
 HexMediaContentMediaAttach:
     pattern: /attach
     defaults: { _controller: HexmediaContentBundle:Media:attach }
     options:
         expose: true
-
 
 HexMediaContentMediaLibrary:
     pattern: /library

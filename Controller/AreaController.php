@@ -136,10 +136,10 @@ class AreaController extends Controller implements ListControllerInterface, Brea
         $form = $this->createForm(
             new AddType(),
             $entity,
-            array(
+            [
                 'action' => $this->generateUrl('HexMediaContentAreaAdd'),
                 'method' => 'POST',
-            )
+            ]
         );
 
         return $form;
@@ -155,10 +155,10 @@ class AreaController extends Controller implements ListControllerInterface, Brea
         $entity = new Area();
         $form = $this->createCreateForm($entity);
 
-        return array(
+        return [
             'entity' => $entity,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -176,10 +176,10 @@ class AreaController extends Controller implements ListControllerInterface, Brea
 
         $editForm = $this->createEditForm($entity);
 
-        return array(
+        return [
             'entity' => $entity,
             'form' => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -194,10 +194,10 @@ class AreaController extends Controller implements ListControllerInterface, Brea
         $form = $this->createForm(
             new EditType(),
             $entity,
-            array(
+            [
                 'action' => $this->generateUrl('HexMediaContentAreaUpdate', array('id' => $entity->getId())),
                 'method' => 'PUT',
-            )
+            ]
         );
 
         return $form;
@@ -265,7 +265,7 @@ class AreaController extends Controller implements ListControllerInterface, Brea
 
         $em->flush();
 
-        return array('success' => true);
+        return ['success' => true];
     }
 
     /**

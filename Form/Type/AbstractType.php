@@ -53,42 +53,20 @@ abstract class AbstractType extends AbstractTypeBase
             )
             ->add(
                 'published',
-                'choice',
-                [
-                    'choices' => [
-                        false => 'No',
-                        true => 'Yes'
-                    ]
-                ]
+                'publication'
             )
             ->add(
                 'publishedFrom',
-                'date',
+                'datepicker',
                 [
                     'label' => 'From:',
-                    'format' => 'dd/MM/yyyy',
-                    'required' => false,
-                    'render_optional_text' => false,
-                    'widget' => 'single_text',
-                    'widget_addon' => [
-                        'type' => 'prepend',
-                        'text' => '<span class="icon-calendar"></span>'
-                    ]
                 ]
             )
             ->add(
                 'publishedTo',
-                'date',
+                'datepicker',
                 [
                     'label' => 'To:',
-                    'format' => 'dd/MM/yyyy',
-                    'required' => false,
-                    'render_optional_text' => false,
-                    'widget' => 'single_text',
-                    'widget_addon' => [
-                        'type' => 'prepend',
-                        'text' => '<span class="icon-calendar"></span>'
-                    ]
                 ]
             );
     }

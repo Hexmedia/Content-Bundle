@@ -21,6 +21,11 @@ abstract class AbstractType extends AbstractTypeBase
             ->add('sort')
             ->add('subtitle', 'text')
             ->add('description', 'textarea')
+            ->add('bgImage', 'media', [
+                    'media_type' => 'image',
+                    'preview' => 'big_admin_square'
+                ])
+//            ->add('bgImage')
             ->add('link', 'text')
             ->add(
                 'title',

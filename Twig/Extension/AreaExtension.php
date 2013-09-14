@@ -88,6 +88,10 @@ class AreaExtension extends \Twig_Extension
         }
 
 
+        if ($requestUri{strlen($requestUri)-1} == "/") {
+            $requestUri = substr($requestUri, 0, strlen($requestUri) - 1);
+        }
+
         if ($entity === null) {
             //Create entity and write it to database
             $entity = new Area();

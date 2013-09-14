@@ -97,19 +97,6 @@ class SlideController extends Controller implements ListController, BreadcrumbsI
         return $em->getRepository('HexmediaContentBundle:Slide');
     }
 
-    protected function getFieldsToDisplayOnList()
-    {
-        return [
-            "number" => "number",
-            "id" => "getId",
-            "title" => "getTitle",
-            'published' => ['get' => 'getPublished', 'format' => 'bool'],
-            'publishedFrom' => ['get' => 'getPublishedFrom', 'format' => 'timeformat'],
-            'publishedTo' => ['get' => 'getPublishedTo', 'format' => 'timeformat'],
-            "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat']
-        ];
-    }
-
     /**
      * Creates a new Slide entity.
      *
@@ -308,5 +295,18 @@ class SlideController extends Controller implements ListController, BreadcrumbsI
         $em->flush();
 
         return ['success' => true];
+    }
+
+    protected function getFieldsToDisplayOnList()
+    {
+        return [
+            "number" => "number",
+            "id" => "getId",
+            "title" => "getTitle",
+            'published' => ['get' => 'getPublished', 'format' => 'bool'],
+            'publishedFrom' => ['get' => 'getPublishedFrom', 'format' => 'timeformat'],
+            'publishedTo' => ['get' => 'getPublishedTo', 'format' => 'timeformat'],
+            "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat']
+        ];
     }
 }

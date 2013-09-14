@@ -41,6 +41,7 @@ HexMediaContentSlideCreate:
 HexMediaContentSlideEdit:
     pattern:  /{id}/edit
     defaults: { _controller: "HexmediaContentBundle:Slide:edit" }
+    methods: [ GET ]
     requirements:
         id: \d+
     options:

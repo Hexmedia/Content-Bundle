@@ -41,6 +41,10 @@
                 {{ form_row(form.link) }}
                 {{ form_row(form.sort) }}
             </fieldset>
+            <fieldset class="box main-content">
+                <legend>{{ 'Description'|trans }}</legend>
+                {{ form_widget(form.description) }}
+            </fieldset>
         </div>
         <div class="col-md-4">
             <fieldset class="box">
@@ -49,17 +53,11 @@
                 {{ form_row(form.publishedFrom) }}
                 {{ form_row(form.publishedTo) }}
             </fieldset>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <fieldset class="box main-content">
-                <legend>{{ 'Description'|trans }}</legend>
-                {{ form_widget(form.description) }}
+            <fieldset class="box">
+                <legend>{{ 'Background Image'|trans }}</legend>
+                {{ form_widget(form.bgImage) }}
             </fieldset>
         </div>
     </div>
-
     {{ form_end(form) }}
 {% endblock %}
