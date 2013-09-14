@@ -56,8 +56,13 @@ HexMediaContentMediaUpload:
         expose: true
 
 HexMediaContentMediaAttach:
-    pattern: /attach
-    defaults: { _controller: HexmediaContentBundle:Media:attach }
+    pattern: /attach/{type}/{page}/{sort}/{pageSize}/{sortDirection}
+    defaults: { _controller: HexmediaContentBundle:Media:attach, type: image, page: 1, sort: id, pageSize: 10, sortDirection: asc }
+    requirements:
+        type: image|video|document
+        page: \d+
+        pageSize: \d+
+        sortDirection: asc|desc
     options:
         expose: true
 

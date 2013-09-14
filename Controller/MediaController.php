@@ -261,6 +261,9 @@ class MediaController extends Controller implements ListControllerInterface, Bre
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function getFieldsToDisplayOnList()
     {
         return [
@@ -280,15 +283,23 @@ class MediaController extends Controller implements ListControllerInterface, Bre
     /**
      * Attaching media
      *
-     * @param type $page
-     * @param type $pageSize
-     * @param type $sort
-     * @param type $sortDirection
+     * @param string $type
+     * @param int $page
+     * @param int $pageSize
+     * @param string $sort
+     * @param string $sortDirection
      *
      * @Rest\View
      */
-    public function attachAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
+    public function attachAction($type, $page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
     {
+        $entities = $this->getRepository()->getPage($page, $pageSize, $sort, $sortDirection);
+        $entitiesCount = $this->getRepository()->getCount();
+
+        return [
+            'entities' => $entities,
+            'entitesCount' => $entitiesCount
+        ];
     }
 
     /**

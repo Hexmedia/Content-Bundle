@@ -19,243 +19,239 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 class Media implements LocaleEntity
 {
 
-	use ORMBehaviors\Timestampable\Timestampable,
-	 ORMBehaviors\Blameable\Blameable,
-	 ORMBehaviors\Loggable\Loggable,
-	 ORMBehaviors\Sluggable\Sluggable,
-	 ORMBehaviors\Sortable\Sortable
-	;
+    use ORMBehaviors\Timestampable\Timestampable,
+        ORMBehaviors\Blameable\Blameable,
+        ORMBehaviors\Loggable\Loggable,
+        ORMBehaviors\Sluggable\Sluggable,
+        ORMBehaviors\Sortable\Sortable;
 
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	protected $id;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    protected $name;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=5000, nullable=true)
+     */
+    protected $description;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="file_name", type="string", length=255)
+     */
+    protected $fileName;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
+     */
+    protected $type;
+    /**
+     * @Vich\UploadableField(mapping="media", fileNameProperty="fileName")
+     */
+    protected $file;
+    /**
+     *
+     * @var array
+     *
+     * @ORM\ManyToMany(targetEntity="Hexmedia\ContentBundle\Entity\Gallery", mappedBy="media")
+     *
+     */
+    private $galleries;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="name", type="string", length=255)
-	 */
-	protected $name;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->galleries = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="description", type="string", length=5000, nullable=true)
-	 */
-	protected $description;
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="file_name", type="string", length=255)
-	 */
-	protected $fileName;
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	/**
-	 * @Vich\UploadableField(mapping="media", fileNameProperty="fileName")
-	 */
-	protected $file;
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Media
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
 
-	/**
-	 *
-	 * @var array
-	 *
-	 * @ORM\ManyToMany(targetEntity="Hexmedia\ContentBundle\Entity\Gallery", mappedBy="media")
-	 *
-	 */
-	private $galleries;
+        return $this;
+    }
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->galleries = new \Doctrine\Common\Collections\ArrayCollection();
-	}
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
-	/**
-	 * Get id
-	 *
-	 * @return integer
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Media
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
 
-	/**
-	 * Set name
-	 *
-	 * @param string $name
-	 * @return Media
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Get media file
+     *
+     * @return string
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
 
-	/**
-	 * Get name
-	 *
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
+    /**
+     * Set media file
+     *
+     * @param object $file
+     * @return Media
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
 
-	/**
-	 * Set description
-	 *
-	 * @param string $description
-	 * @return Media
-	 */
-	public function setDescription($description)
-	{
-		$this->description = $description;
+        return $this;
+    }
 
-		return $this;
-	}
+    public function getGalleries()
+    {
+        return $this->galleries;
+    }
 
-	/**
-	 * Get description
-	 *
-	 * @return string
-	 */
-	public function getDescription()
-	{
-		return $this->description;
-	}
+    /**
+     * Add galleries
+     *
+     * @param Gallery $gallery
+     * @return Media
+     */
+    public function addGallery(Gallery $gallery)
+    {
+        $this->galleries[] = $gallery;
 
-	/**
-	 * Set media file
-	 *
-	 * @param object $file
-	 * @return Media
-	 */
-	public function setFile($file)
-	{
-		$this->file = $file;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Remove gallery
+     *
+     * @param Gallery $gallery
+     */
+    public function removeGallery(Gallery $gallery)
+    {
+        $this->galleries->removeElement($gallery);
+    }
 
-	/**
-	 * Get media file
-	 *
-	 * @return string
-	 */
-	public function getFile()
-	{
-		return $this->file;
-	}
+    public function __toString()
+    {
+        return $this->getFileName();
+    }
 
-	/**
-	 * Set media file name
-	 *
-	 * @param string $fileName
-	 * @return Media
-	 */
-	public function setFileName($fileName)
-	{
-		$this->fileName = $fileName;
-		return $this;
-	}
+    /**
+     * Get media file name
+     *
+     * @return string
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
+    }
 
-	/**
-	 * Get media file name
-	 *
-	 * @return string
-	 */
-	public function getFileName()
-	{
-		return $this->fileName;
-	}
+    /**
+     * Set media file name
+     *
+     * @param string $fileName
+     * @return Media
+     */
+    public function setFileName($fileName)
+    {
+        $this->fileName = $fileName;
 
-	public function getGalleries()
-	{
-		return $this->galleries;
-	}
+        return $this;
+    }
 
-	/**
-	 * Add galleries
-	 *
-	 * @param Gallery $gallery
-	 * @return Media
-	 */
-	public function addGallery(Gallery $gallery)
-	{
-		$this->galleries[] = $gallery;
+    /**
+     * Set locale for translations
+     *
+     * @param string $locale
+     * @return Product
+     */
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Remove gallery
-	 *
-	 * @param Gallery $gallery
-	 */
-	public function removeGallery(Gallery $gallery)
-	{
-		$this->galleries->removeElement($gallery);
-	}
+    public function getSluggableFields()
+    {
+        return ['name'];
+    }
 
-	public function __toString()
-	{
-		return $this->getFileName();
-	}
+    public function getRegenerateSlugOnUpdate()
+    {
+        return false;
+    }
 
-	/**
-	 * Set locale for translations
-	 *
-	 * @param string $locale
-	 * @return Product
-	 */
-	public function setTranslatableLocale($locale)
-	{
-		$this->locale = $locale;
-		return $this;
-	}
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 
-	/**
-	 * Add galleries
-	 *
-	 * @param \Hexmedia\ContentBundle\Entity\Gallery $galleries
-	 * @return Media
-	 */
-	public function addGallerie(\Hexmedia\ContentBundle\Entity\Gallery $galleries)
-	{
-		$this->galleries[] = $galleries;
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
 
-		return $this;
-	}
-
-	/**
-	 * Remove galleries
-	 *
-	 * @param \Hexmedia\ContentBundle\Entity\Gallery $galleries
-	 */
-	public function removeGallerie(\Hexmedia\ContentBundle\Entity\Gallery $galleries)
-	{
-		$this->galleries->removeElement($galleries);
-	}
-
-	public function getSluggableFields()
-	{
-		return ['name'];
-	}
-
-	public function getRegenerateSlugOnUpdate()
-	{
-		return false;
-	}
 
 }
 
