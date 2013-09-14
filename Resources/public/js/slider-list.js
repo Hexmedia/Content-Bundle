@@ -24,13 +24,8 @@ var AdminListModel;
 		};
 		self.list().columns(columns);
 	};
-	ListModel.prototype.getUrl = function(page, sort, pageSize, sortDirection) {
-		return Routing.generate("HexMediaContentSliderList", {
-			page: page,
-			sort: sort,
-			pageSize: pageSize,
-			sortDirection: sortDirection.toLowerCase()
-		});
+	ListModel.prototype.getUrl = function(data) {
+		return Routing.generate("HexMediaContentSliderList",data);
 	};
 
 	AdminListModel.prototype = new ListModel();
@@ -38,6 +33,9 @@ var AdminListModel;
 	$(document).ready(function() {
 		if ($(".data-area-list").get(0)) {
 			alm = new AdminListModel();
+
+            console.log("a", alm.urlData());
+
 			alm.deleteConfirm().action = function(data) {
 				$.ajax($(data.caller).attr("href"), {
 					dataType: "json",

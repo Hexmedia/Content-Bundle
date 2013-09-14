@@ -1,16 +1,10 @@
+{% include "HexmediaAdministratorBundle:List:entities-data.html.twig" with {'entities': entities, 'entitiesCount' : entitiesCount }%}
+
 {% javascripts output='js/slider-list.js'
 '@HexmediaContentBundle/Resources/public/js/slider-list.js' %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
 
-<div class="content data-area-list">
-    <table class="table table-hover"
-           data-bind="table: list, headerTemplate: 'list_table_header', itemTemplate: 'list_table_items'">
-    </table>
 
-    <div data-bind="pagination: pagination"></div>
-</div>
-
-{% include "HexmediaKnockoutBootstrapBundle:Table:list_table_header.html.twig" with {'addRouteName' : 'HexMediaContentSliderAdd'} %}
-{% include "HexmediaKnockoutBootstrapBundle:Table:list_table_items.html.twig" with {'editRouteName' : 'HexMediaContentSliderEdit', 'removeRouteName' : 'HexMediaContentSliderDelete'} %}
+{% include "HexmediaAdministratorBundle:List:list.html.twig"  with {'addRouteName' : 'HexMediaContentSliderAdd', 'editRouteName' : 'HexMediaContentSliderEdit', 'removeRouteName' : 'HexMediaContentSliderDelete'} %}
 
