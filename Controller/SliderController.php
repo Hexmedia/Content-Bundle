@@ -82,7 +82,7 @@ class SliderController extends Controller implements ListController, Breadcrumbs
         return $em->getRepository('HexmediaContentBundle:Slider');
     }
 
-    public function getFieldsToDisplayOnList()
+    protected function getFieldsToDisplayOnList()
     {
         return [
             "number" => "number",

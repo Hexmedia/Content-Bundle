@@ -95,7 +95,7 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
         return $em->getRepository('HexmediaContentBundle:Page');
     }
 
-    public function getFieldsToDisplayOnList()
+    protected function getFieldsToDisplayOnList()
     {
         return [
             'id' => 'getId',
@@ -208,9 +208,7 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('HexmediaContentBundle:Page')->find($id);
+        $entity = $this->getRepository()->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Page entity.');

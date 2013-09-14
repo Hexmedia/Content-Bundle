@@ -1,5 +1,5 @@
-{% javascripts output='js/admins.js'
-'@HexmediaContentBundle/Resources/public/js/library.js' %}
+{% javascripts output='js/media-library.js'
+'@HexmediaContentBundle/Resources/public/js/media-list.js' %}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
 
@@ -12,5 +12,5 @@
 </div>
 
 {% include "HexmediaKnockoutBootstrapBundle:Table:list_table_header.html.twig" with {'addRouteName' : 'HexMediaContentMediaAdd'} %}
-{% include "HexmediaKnockoutBootstrapBundle:Table:list_table_items.html.twig" with {'editRouteName' : 'HexMediaContentMediaEdit', 'removeRouteName' : 'HexMediaContentMediaRemove'} %}
+{% include "HexmediaKnockoutBootstrapBundle:Table:list_table_items.html.twig" with {'editRouteName' : 'HexMediaContentMediaEdit', 'removeRouteName' : 'HexMediaContentMediaDelete'} %}
 

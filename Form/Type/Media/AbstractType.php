@@ -2,7 +2,7 @@
 
 namespace Hexmedia\ContentBundle\Form\Type\Media;
 
-use Symfony\Component\Form\AbstractType as AbstractTypeBase;
+use Hexmedia\ContentBundle\Form\Type\AbstractType as AbstractTypeBase;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -11,6 +11,8 @@ abstract class AbstractType extends AbstractTypeBase
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->addButtons($builder);
+
         $builder
             ->add(
                 'name',
@@ -27,34 +29,10 @@ abstract class AbstractType extends AbstractTypeBase
                     'label' => 'Description',
                     'required' => false
                 ]
-            )
-            ->add(
-                'save',
-                'submit',
-                [
-                    'label' => 'Save',
-                    'attr' => [
-                        'class' => 'btn-primary',
-                        'data-loading-text' => 'Saving ...'
-                    ]
-                ]
-            )
-            ->add(
-                'saveAndExit',
-                'submit',
-                [
-                    'label' => 'Save & Exit',
-                    'attr' => [
-                        'class' => 'btn-primary',
-                        'data-loading-text' => 'Saving ...'
-                    ]
-                ]
             );
 
         $this->doBuildForm($builder, $options);
     }
-
-    abstract protected function doBuildForm(FormBuilderInterface $buildier, array $options);
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {

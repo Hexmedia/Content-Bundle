@@ -10,6 +10,7 @@ HexMediaContentSlideList:
     pattern:  /list/{sliderId}/{page}/{sort}/{pageSize}/{sortDirection}
     defaults: { _controller: "HexmediaContentBundle:Slide:list", page: 1, sort: id, pageSize: 10, sortDirection: asc }
     requirements:
+        sliderId: \d+
         page: \d+
         pageSize: \d+
         sortDirection: asc|desc
@@ -19,10 +20,14 @@ HexMediaContentSlideList:
 HexMediaContentSlideShow:
     pattern:  /{id}/show
     defaults: { _controller: "HexmediaContentBundle:Slide:show" }
+    requirements:
+        id: \d+
 
 HexMediaContentSlideAdd:
     pattern:  /add/{sliderId}
     defaults: { _controller: "HexmediaContentBundle:Slide:add" }
+    requirements:
+        sliderId: \d+
     options:
         expose: true
 
@@ -36,19 +41,25 @@ HexMediaContentSlideCreate:
 HexMediaContentSlideEdit:
     pattern:  /{id}/edit
     defaults: { _controller: "HexmediaContentBundle:Slide:edit" }
+    requirements:
+        id: \d+
     options:
         expose: true
 
 HexMediaContentSlideUpdate:
-    pattern:  /{id}/update
+    pattern:  /{id}/edit
     defaults: { _controller: "HexmediaContentBundle:Slide:update" }
+    methods: [ POST, PUT ]
+    requirements:
+        id: \d+
     options:
         expose: true
-    methods: [ POST, PUT ]
 
 HexMediaContentSlideDelete:
     pattern:  /{id}/delete
     defaults: { _controller: "HexmediaContentBundle:Slide:delete" }
+    methods: [ POST, DELETE ]
+    requirements:
+        id: \d+
     options:
         expose: true
-    methods: [ POST, DELETE ]

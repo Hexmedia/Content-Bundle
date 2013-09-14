@@ -1,76 +1,85 @@
 HexMediaContentMediaAdd:
     pattern: /add
     defaults: { _controller: HexmediaContentBundle:Media:add }
+    methods: [ GET ]
+    options:
+        expose: true
+
+HexMediaContentMediaAdd:
+    pattern: /add
+    defaults: { _controller: HexmediaContentBundle:Media:create }
+    methods: [ PUT, POST ]
     options:
         expose: true
 
 HexMediaContentMediaEdit:
-    pattern: /edit/{id}
+    pattern: /{id}/edit
     defaults: { _controller: HexmediaContentBundle:Media:edit }
+    methods: [ GET ]
+    requirements:
+        id: \d+
     options:
         expose: true
 
-HexMediaContentMediaRemove:
-    pattern: /delete/{id}
-    defaults: { _controller: HexmediaContentBundle:Media:delete }
+HexMediaContentMediaUpdate:
+    pattern: /{id}/edit
+    defaults: { _controller: HexmediaContentBundle:Media:update }
+    methods: [ PUT, POST ]
+    requirements:
+        id: \d+
     options:
         expose: true
+
+HexMediaContentMediaDelete:
+    pattern: /{id}/delete
+    defaults: { _controller: HexmediaContentBundle:Media:delete }
+    methods: [ POST, PUT ]
+    requirements:
+        id: \d+
+    options:
+        expose: true
+
+HexMediaContentMediaCustomize:
+    pattern: /{id}/customize
+    defaults: { _controller: HexmediaContentBundle:Attach:customize }
+    requirements:
+        id: \d+
+
+HexMediaContentMediaAttach:
+    pattern: /{id}/attach
+    defaults: { _controller: HexmediaContentBundle:Attach:attach }
+    methods: [ POST, PUT ]
+    requirements:
+        id: \d+
+
+HexMediaContentMediaUpload:
+    pattern: /upload
+    defaults: { _controller: HexmediaContentBundle:Upload:upload }
+    options:
+        expose: true
+
+
+HexMediaContentMediaAttach:
+    pattern: /attach
+    defaults: { _controller: HexmediaContentBundle:Media:attach }
+    options:
+        expose: true
+
 
 HexMediaContentMediaLibrary:
     pattern: /library
     defaults: { _controller: HexmediaContentBundle:Media:index }
+    methods: [ GET ]
     options:
         expose: true
 
 HexMediaContentMediaList:
-    pattern:  /list/{page}/{sort}/{pageSize}/{sortDirection}
-    defaults: { _controller: "HexmediaContentBundle:Media:list", page: 1, sort: id, pageSize: 10, sortDirection: asc }
+    pattern: /list/{page}/{sort}/{pageSize}/{sortDirection}
+    defaults: { _controller: HexmediaContentBundle:Media:list, page: 1, sort: id, pageSize: 10, sortDirection: asc }
     requirements:
         page: \d+
         pageSize: \d+
         sortDirection: asc|desc
-    methods: [ GET, POST ]
-
-HexMediaContentMediaCustomize:
-    pattern: /customize
-    defaults: { _controller: HexmediaContentBundle:Attach:customize }
-
-HexMediaContentMediaAttach:
-    pattern: /attach
-    defaults: { _controller: HexmediaContentBundle:Attach:attach }
-
-HexMediaContentMediaUpload:
-  pattern: /upload
-  defaults: { _controller: HexmediaContentBundle:Upload:upload }
-  options:
-    expose: true
-
-HexMediaContentMediaGalleryAdd:
-  pattern: /gallery/add
-  defaults: { _controller: HexmediaContentBundle:Gallery:add }
-  options:
-    expose: true
-
-HexMediaContentMediaGalleryEdit:
-  pattern: /gallery/edit
-  defaults: { _controller: HexmediaContentBundle:Gallery:edit }
-  options:
-    expose: true
-
-HexMediaContentMediaGalleryDelete:
-  pattern: /gallery/delete
-  defaults: { _controller: HexmediaContentBundle:Gallery:delete }
-  options:
-    expose: true
-
-HexMediaContentMediaGalleryList:
-  pattern: /gallery/list
-  defaults: { _controller: HexmediaContentBundle:Gallery:list }
-  options:
-    expose: true
-
-HexMediaContentMediaAttach:
-  pattern: /attach
-  defaults: { _controller: HexmediaContentBundle:Media:attach }
-  options:
-    expose: true
+    methods: [ GET ]
+    options:
+        expose: true

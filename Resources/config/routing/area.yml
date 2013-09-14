@@ -17,29 +17,32 @@ HexMediaContentAreaEdit:
     pattern: /{id}/edit
     defaults: { _controller: HexmediaContentBundle:Area:edit }
     methods: [GET]
+    requirements:
+        id: \d+
     options:
         expose: true
 
 HexMediaContentAreaUpdate:
-    pattern: /{id}/update
+    pattern: /{id}/edit
     defaults: { _controller: HexmediaContentBundle:Area:update }
-    methods: [ PUT ]
+    methods: [ PUT, POST ]
+    requirements:
+        id: \d+
     options:
         expose: true
 
 HexMediaContentAreaDelete:
     pattern: /{id}/delete
     defaults: { _controller: HexmediaContentBundle:Area:delete }
+    methods: [ POST, PUT ]
+    requirements:
+        id: \d+
     options:
         expose: true
 
 HexMediaContentArea:
-    pattern: /{page}/{sort}/{pageSize}/{sortDirection}
-    defaults: { _controller: HexmediaContentBundle:Area:index, page: 1, sort: id, pageSize: 10, sortDirection: asc }
-    requirements:
-        page: \d+
-        pageSize: \d+
-        sortDirection: asc|desc
+    pattern: /
+    defaults: { _controller: HexmediaContentBundle:Area:index }
     methods: [ GET ]
     options:
         expose: true

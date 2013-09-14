@@ -57,10 +57,6 @@ class Media implements LocaleEntity
 	protected $fileName;
 
 	/**
-	 * @Assert\File(
-	 *     maxSize="1M",
-	 *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg", "image/gif"}
-	 * )
 	 * @Vich\UploadableField(mapping="media", fileNameProperty="fileName")
 	 */
 	protected $file;

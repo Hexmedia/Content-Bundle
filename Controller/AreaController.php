@@ -64,7 +64,7 @@ class AreaController extends Controller implements ListControllerInterface, Brea
         return $em->getRepository('HexmediaContentBundle:Area');
     }
 
-    public function getFieldsToDisplayOnList()
+    protected function getFieldsToDisplayOnList()
     {
         return [
             "number" => "number",

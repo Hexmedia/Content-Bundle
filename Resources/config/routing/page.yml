@@ -16,8 +16,6 @@ HexMediaContentPage:
     options:
         expose: true
 
-
-
 HexMediaContenPageShow:
     pattern:  /{id}/show
     defaults: { _controller: "HexmediaContentBundle:Page:show" }
@@ -30,7 +28,7 @@ HexMediaContentPageAdd:
         expose: true
 
 HexMediaContentPageCreate:
-    pattern:  /create
+    pattern:  /add
     defaults: { _controller: "HexmediaContentBundle:Page:create" }
     methods: [ POST]
 
@@ -38,17 +36,25 @@ HexMediaContentPageEdit:
     pattern:  /{id}/edit
     defaults: { _controller: "HexmediaContentBundle:Page:edit" }
     methods: [ GET ]
+    requirements:
+        id: \d+
     options:
         expose: true
 
 HexMediaContentPageUpdate:
-    pattern:  /{id}/update
+    pattern:  /{id}/edit
     defaults: { _controller: "HexmediaContentBundle:Page:update" }
     methods: [ POST, PUT ]
+    requirements:
+        id: \d+
+    options:
+        expose: true
 
 HexMediaContentPageDelete:
     pattern:  /{id}/delete
     defaults: { _controller: "HexmediaContentBundle:Page:delete" }
     methods: [ POST, DELETE ]
+    requirements:
+        id: \d+
     options:
         expose: true

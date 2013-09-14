@@ -2,6 +2,7 @@
 
 namespace Hexmedia\ContentBundle\Controller;
 
+use Hexmedia\AdministratorBundle\Controller\ListTrait;
 use Hexmedia\AdministratorBundle\ControllerInterface\BreadcrumbsInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController as Controller;
@@ -9,121 +10,219 @@ use Hexmedia\AdministratorBundle\ControllerInterface\ListController as ListContr
 use Hexmedia\ContentBundle\Form\Type\Media\AddType;
 use Hexmedia\ContentBundle\Form\Type\Media\EditType;
 use Hexmedia\ContentBundle\Entity\Media;
+use Symfony\Component\HttpFoundation\Request;
 
 class MediaController extends Controller implements ListControllerInterface, BreadcrumbsInterface
 {
+    use ListTrait;
 
-	/**
-	 * @var \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs
-	 */
-	private $breadcrumbs;
+    /**
+     * @var \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs
+     */
+    private $breadcrumbs;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function registerBreadcrubms()
-	{
-		$this->breadcrumbs = $this->get("white_october_breadcrumbs");
+    /**
+     * {@inheritDoc}
+     */
+    public function registerBreadcrubms()
+    {
+        $this->breadcrumbs = $this->get("white_october_breadcrumbs");
 
-		$this->breadcrumbs->addItem($this->get('translator')->trans("Content"));
-		$this->breadcrumbs->addItem($this->get('translator')->trans("Media Library"), $this->get('router')->generate('HexMediaContentMediaLibrary'));
+        $this->breadcrumbs->addItem($this->get('translator')->trans("Content"));
+        $this->breadcrumbs->addItem($this->get('translator')->trans("Media Library"), $this->get('router')->generate('HexMediaContentMediaLibrary'));
 
-		return $this->breadcrumbs;
-	}
+        return $this->breadcrumbs;
+    }
 
-	/**
-	 * @Rest\View
-	 */
-	public function addAction()
-	{
-		$breadcrumbs = $this->registerBreadcrubms();
-		$breadcrumbs->addItem("Add");
+    /**
+     * Creates a new Media entity.
+     *
+     * @Rest\View(template="HexmediaContentBundle:Media:add.html.twig")
+     */
+    public function createAction(Request $request)
+    {
+        $entity = new Media();
+        $form = $this->createCreateForm($entity);
+        $form->handleRequest($request);
 
-		$em = $this->getDoctrine()->getManager();
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
 
-		$form = $this->createForm(new AddType());
+            $em->flush();
 
-		$form->handleRequest($this->getRequest());
+            $this->get('session')->getFlashBag()->add('notice', 'Media has been added!');
 
-		if ($form->isValid()) {
-			$media = $form->getData();
+            if ($form->get("saveAndExit")->isClicked()) {
+                return $this->redirect($this->generateUrl('HexMediaContentMediaLibrary'));
+            } else {
+                return $this->redirect($this->generateUrl('HexMediaContentMediaEdit', array('id' => $entity->getId())));
+            }
+        }
 
-			if (!$media->getName() || !strlen(trim($media->getName()))) {
-				$media->setName($media->getFile()->getClientOriginalName());
-			}
+        return [
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ];
+    }
 
-			$em->persist($media);
+    /**
+     * Creates a form to create a Media entity.
+     *
+     * @param Media $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm(Media $entity)
+    {
+        $form = $this->createForm(
+            new AddType(),
+            $entity,
+            [
+                'action' => $this->generateUrl('HexMediaContentMediaCreate'),
+                'method' => 'POST',
+            ]
+        );
 
-			$em->flush();
-		}
+        return $form;
+    }
 
-		return array('form' => $form->createView());
-	}
+    /**
+     * @Rest\View
+     */
+    public function addAction()
+    {
+        $breadcrumbs = $this->registerBreadcrubms();
+        $breadcrumbs->addItem("Add");
 
-	/**
-	 *
-	 * @Rest\View
-	 *
-	 * @param int $id
-	 */
-	public function editAction($id)
-	{
-		$breadcrumbs = $this->registerBreadcrubms();
-		$breadcrumbs->addItem("Edit");
+        $entity = new Media();
 
-		$em = $this->getDoctrine()->getManager();
+        $form = $this->createCreateForm($entity);
 
-		$repository = $em->getRepository('HexmediaContentBundle:Media');
+        return [
+            'form' => $form->createView(),
+            'entity' => $entity
+        ];
+    }
 
-		$media = $repository->findOneById($id);
+    /**
+     * @param $id
+     * @return array
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @Rest\View
+     */
+    public function editAction($id) {
+        $entity = $this->getRepository()->find($id);
 
-		$form = $this->createForm(new EditType(), $media);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Media entity.');
+        }
 
-		if ($form instanceof \Symfony\Component\Form\Form)
-			;
+        $form = $this->createEditForm($entity);
 
-		$form->handleRequest($this->getRequest());
+        return [
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ];
+    }
+    /**
+     * Creates a form to edit a Media entity.
+     *
+     * @param Media $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Media $entity)
+    {
+        $form = $this->createForm(
+            new EditType(),
+            $entity,
+            [
+                'action' => $this->generateUrl('HexMediaContentMediaUpdate', array('id' => $entity->getId())),
+                'method' => 'PUT',
+            ]
+        );
 
-		if ($form->isValid()) {
-			$mediaNew = $form->getData();
+        return $form;
+    }
 
-			$mediaNew->setLastModified(new \DateTime());
+    /**
+     * @param Request $request
+     * @param $id
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @Rest\View(template="HexmediaContentBundle:Media:edit")
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $breadcrumbs = $this->registerBreadcrubms();
+        $breadcrumbs->addItem("Edit");
 
-			$em->persist($mediaNew);
+        $entity = $this->getRepository()->find($id);
 
-			$em->flush();
-		}
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Media entity.');
+        }
 
-		return array('form' => $form->createView(), 'media' => $media);
-	}
+        $em = $this->getDoctrine()->getManager();
 
-	/**
-	 * @param int $id
-	 *
-	 * @Rest\View
-	 */
-	public function deleteAction($id)
-	{
-		$em = $this->getDoctrine()->getManager();
+        $form = $this->createEditForm($entity);
+        $form->handleRequest($request);
 
-		$repository = $em->getRepository('HexmediaContentBundle:Media');
+        if ($form->isValid()) {
+            if ($em->getUnitOfWork()->isScheduledForUpdate($entity)) {
+                $this->get('session')->getFlashBag()->add('notice', 'Media has been updated!');
+            }
 
-		$media = $repository->findOneById($id);
+            $em->flush();
 
-		if (!$media instanceof Media) {
-			throw new NotFoundHttpException('Media not found');
-		}
+            if ($form->get("saveAndExit")->isClicked()) {
+                return $this->redirect($this->generateUrl('HexMediaContentMediaLibrary'));
+            } else {
+                return $this->redirect($this->generateUrl('HexMediaContentMediaEdit', ['id' => $entity->getId()]));
+            }
+        }
 
-		$em->remove($media);
-		$em->flush();
+        return [
+            'entity' => $entity,
+            'form' => $form->createView()
+        ];
+    }
 
-		return array('success' => true);
-	}
+    /**
+     * @param $id
+     * @return array
+     * @throws NotFoundHttpException
+     *
+     * @Rest\View
+     */
+    public function deleteAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
 
-	public function customizeAction()
-	{
-		return array();
-	}
+        $repository = $em->getRepository('HexmediaContentBundle:Media');
+
+        $media = $repository->findOneById($id);
+
+        if (!$media instanceof Media) {
+            throw new NotFoundHttpException('Media not found');
+        }
+
+        $em->remove($media);
+        $em->flush();
+
+        return ['success' => true];
+    }
+
+    /**
+     * @return array
+     */
+    public function customizeAction()
+    {
+        return [];
+    }
 
     /**
      * @param int $page
@@ -136,86 +235,75 @@ class MediaController extends Controller implements ListControllerInterface, Bre
      */
     public function indexAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
     {
+        $this->registerBreadcrubms();
+
         return [];
     }
 
-	/**
-	 * @Rest\View
-	 */
-	public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
-	{
-		$this->registerBreadcrubms();
+    /**
+     * @param int $page
+     * @param int $pageSize
+     * @param string $sort
+     * @param string $sortDirection
+     * @return array
+     *
+     * @Rest\View
+     */
+    public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
+    {
+        $entities = $this->getRepository()->getPage($page, $sort, $pageSize, $sortDirection);
 
-		$arr = array(
-			"entities" => array(),
-			"entitiesCount" => $this->getRepository()->getCount()
-		);
+        $entitiesRet = $this->prepareEntities($entities);
 
-		$vichHelper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
-		$agoHelper = $this->container->get('hexmedia.templating.helper.time_formatter');
+        return [
+            'entities' => $entitiesRet,
+            'entitiesCount' => $this->getRepository()->getCount()
+        ];
+    }
 
-		$cacheManager = $this->container->get('liip_imagine.cache.manager');
+    protected function getFieldsToDisplayOnList()
+    {
+        return [
+            "number" => "number",
+            "id" => "getId",
+            "name" => "getName",
+            "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat'],
+            "miniature" => ['get' => 'self', 'call' => function ($entity) {
+                $cacheManager = $this->container->get('liip_imagine.cache.manager');
+                $vichHelper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
 
-		$i = ($page - 1) * $pageSize + 1;
-		foreach ($this->getRepository()->getPage($page, $sort, $pageSize, $sortDirection) as $entity) {
-			$arr['entities'][] = array(
-				'id' => $entity->getId(),
-				'number' => $i,
-				'miniature' => "<img src=\"" . $cacheManager->getBrowserPath($vichHelper->asset($entity, 'file'), 'small_admin_square') . "\" />",
-				'lastModified' => $entity->getUpdatedAt() == null ? $agoHelper->formatTime($entity->getCreatedAt()) : $agoHelper->formatTime($entity->getUpdatedAt()),
-				'name' => $entity->getName()
-			);
-		}
+                return "<img src=\"" . $cacheManager->getBrowserPath($vichHelper->asset($entity, 'file'), 'small_admin_square') . "\" />";
+            }]
+        ];
+    }
 
-		return $arr;
-	}
+    /**
+     * Attaching media
+     *
+     * @param type $page
+     * @param type $pageSize
+     * @param type $sort
+     * @param type $sortDirection
+     *
+     * @Rest\View
+     */
+    public function attachAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
+    {
+    }
 
-	/**
-	 * Attaching media
-	 *
-	 * @param type $page
-	 * @param type $pageSize
-	 * @param type $sort
-	 * @param type $sortDirection
-	 *
-	 * @Rest\View
-	 */
-	public function attachAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
-	{
-		$arr = array(
-			"entities" => array(),
-			"entitiesCount" => $this->getRepository()->getCount()
-		);
+    /**
+     * @return \Hexmedia\ContentBundle\Repository\Doctrine\MediaRepository
+     */
+    private function getRepository()
+    {
+        $em = $this->getDoctrine()->getManager();
 
-		$vichHelper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
-		$cacheManager = $this->container->get('liip_imagine.cache.manager');
+        /**
+         * @var \Hexmedia\ContentBundle\Repository\Doctrine\MediaRepository
+         */
+        $repository = $em->getRepository('HexmediaContentBundle:Media');
 
-		$i = ($page - 1) * $pageSize + 1;
-		foreach ($this->getRepository()->getPage($page, $sort, $pageSize, $sortDirection) as $entity) {
-			$arr['entities'][] = array(
-				'id' => $entity->getId(),
-				'number' => $i,
-				'miniature' => "<img src=\"" . $cacheManager->getBrowserPath($vichHelper->asset($entity, 'file'), 'attach_admin_square') . "\" />",
-				'name' => $entity->getName()
-			);
-		}
-
-		return $arr;
-	}
-
-	/**
-	 * @return Hexmedia\UserBundle\Repository\MediaRepository
-	 */
-	private function getRepository()
-	{
-		$em = $this->getDoctrine()->getManager();
-
-		/**
-		 * @var Hexmedia\UserBundle\Repository\MediaRepository
-		 */
-		$repository = $em->getRepository('HexmediaContentBundle:Media');
-
-		return $repository;
-	}
+        return $repository;
+    }
 
 }
