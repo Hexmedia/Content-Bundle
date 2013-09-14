@@ -3,6 +3,7 @@
 namespace Hexmedia\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Hexmedia\AdministratorBundle\Model\PublicationTrait;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
@@ -16,7 +17,8 @@ class Slide
     use ORMBehaviors\Timestampable\Timestampable,
         ORMBehaviors\Blameable\Blameable,
         ORMBehaviors\Loggable\Loggable,
-        ORMBehaviors\Sortable\Sortable;
+        ORMBehaviors\Sortable\Sortable,
+        PublicationTrait;
 
     /**
      * @var integer
@@ -50,24 +52,6 @@ class Slide
      * @ORM\Column(name="link", type="string", length=255)
      */
     private $link;
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="published", type="boolean")
-     */
-    private $published;
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="published_from", type="datetime", nullable=true)
-     */
-    private $publishedFrom;
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="published_to", type="datetime", nullable=true)
-     */
-    private $publishedTo;
     /**
      * @var \Hexmedia\ContentBundle\Entity\Slider
      *
@@ -204,144 +188,6 @@ class Slide
     }
 
     /**
-     * Get published
-     *
-     * @return boolean
-     */
-    public function getPublished()
-    {
-        return $this->published;
-    }
-
-    /**
-     * Set published
-     *
-     * @param boolean $published
-     * @return Slide
-     */
-    public function setPublished($published)
-    {
-        $this->published = $published;
-
-        return $this;
-    }
-
-    /**
-     * Get publishedFrom
-     *
-     * @return \DateTime
-     */
-    public function getPublishedFrom()
-    {
-        return $this->publishedFrom;
-    }
-
-    /**
-     * Set publishedFrom
-     *
-     * @param \DateTime $publishedFrom
-     * @return Slide
-     */
-    public function setPublishedFrom($publishedFrom)
-    {
-        $this->publishedFrom = $publishedFrom;
-
-        return $this;
-    }
-
-    /**
-     * Get publishedTo
-     *
-     * @return \DateTime
-     */
-    public function getPublishedTo()
-    {
-        return $this->publishedTo;
-    }
-
-    /**
-     * Set publishedTo
-     *
-     * @param \DateTime $publishedTo
-     * @return Slide
-     */
-    public function setPublishedTo($publishedTo)
-    {
-        $this->publishedTo = $publishedTo;
-
-        return $this;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return Slide
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     * @return Slide
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * Set sort
-     *
-     * @param integer $sort
-     * @return Slide
-     */
-    public function setSort($sort)
-    {
-        $this->sort = $sort;
-
-        return $this;
-    }
-
-    /**
-     * Get sort
-     *
-     * @return integer
-     */
-    public function getSort()
-    {
-        return $this->sort;
-    }
-
-    /**
      * Get slider
      *
      * @return \Hexmedia\ContentBundle\Entity\Slider
@@ -398,6 +244,16 @@ class Slide
     }
 
     /**
+     * Get bgImage
+     *
+     * @return \Hexmedia\ContentBundle\Entity\Media
+     */
+    public function getBgImage()
+    {
+        return $this->bgImage;
+    }
+
+    /**
      * Set bgImage
      *
      * @param \Hexmedia\ContentBundle\Entity\Media $bgImage
@@ -406,17 +262,7 @@ class Slide
     public function setBgImage(\Hexmedia\ContentBundle\Entity\Media $bgImage = null)
     {
         $this->bgImage = $bgImage;
-    
-        return $this;
-    }
 
-    /**
-     * Get bgImage
-     *
-     * @return \Hexmedia\ContentBundle\Entity\Media 
-     */
-    public function getBgImage()
-    {
-        return $this->bgImage;
+        return $this;
     }
 }

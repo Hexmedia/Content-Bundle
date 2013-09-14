@@ -3,8 +3,7 @@
 namespace Hexmedia\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Hexmedia\AdministratorBundle\Doctrine\TimestampableTrait;
-use Hexmedia\UserBundle\Entity\User;
+use Hexmedia\AdministratorBundle\Model as AdmModel;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
@@ -16,6 +15,8 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 class Page
 {
     use ORMBehaviors\Timestampable\Timestampable,
+        AdmModel\SeoTrait,
+        AdmModel\PublicationTrait,
         ORMBehaviors\Blameable\Blameable,
         ORMBehaviors\Loggable\Loggable,
         ORMBehaviors\Sluggable\Sluggable//     ORMBehaviors\Translatable\Translatable
@@ -47,43 +48,6 @@ class Page
      * @ORM\Column(name="content", type="string", length=10000)
      */
     private $content;
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="published", type="boolean")
-     */
-    private $published;
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="published_from", type="datetime", nullable=true)
-     */
-    private $publishedFrom;
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="published_to", type="datetime", nullable=true)
-     */
-    private $publishedTo;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="seo_title", type="string", length=255, nullable=true)
-     */
-    private $seoTitle;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="seo_keywords", type="string", length=500, nullable=true)
-     */
-    private $seoKeywords;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="seo_description", type="string", length=500, nullable=true)
-     */
-    private $seoDescription;
-
     /**
      * @var Media
      *
@@ -194,122 +158,8 @@ class Page
         return $this;
     }
 
-    /**
-     * @return boolean
-     */
-    public function getPublished()
-    {
-        return $this->published;
-    }
 
-    /**
-     * @param boolean $published
-     */
-    public function setPublished($published)
-    {
-        $this->published = $published;
-    }
 
-    /**
-     * @return \DateTime
-     */
-    public function getPublishedFrom()
-    {
-        return $this->publishedFrom;
-    }
-
-    /**
-     * @param \DateTime $publishedFrom
-     */
-    public function setPublishedFrom($publishedFrom)
-    {
-        $this->publishedFrom = $publishedFrom;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getPublishedTo()
-    {
-        return $this->publishedTo;
-    }
-
-    /**
-     * @param \DateTime $publishedTo
-     */
-    public function setPublishedTo($publishedTo)
-    {
-        $this->publishedTo = $publishedTo;
-    }
-
-    /**
-     * Get seoTitle
-     *
-     * @return string
-     */
-    public function getSeoTitle()
-    {
-        return $this->seoTitle;
-    }
-
-    /**
-     * Set seoTitle
-     *
-     * @param string $seoTitle
-     * @return Page
-     */
-    public function setSeoTitle($seoTitle)
-    {
-        $this->seoTitle = $seoTitle;
-
-        return $this;
-    }
-
-    /**
-     * Get seoKeywords
-     *
-     * @return string
-     */
-    public function getSeoKeywords()
-    {
-        return $this->seoKeywords;
-    }
-
-    /**
-     * Set seoKeywords
-     *
-     * @param string $seoKeywords
-     * @return Page
-     */
-    public function setSeoKeywords($seoKeywords)
-    {
-        $this->seoKeywords = $seoKeywords;
-
-        return $this;
-    }
-
-    /**
-     * Get seoDescription
-     *
-     * @return string
-     */
-    public function getSeoDescription()
-    {
-        return $this->seoDescription;
-    }
-
-    /**
-     * Set seoDescription
-     *
-     * @param string $seoDescription
-     * @return Page
-     */
-    public function setSeoDescription($seoDescription)
-    {
-        $this->seoDescription = $seoDescription;
-
-        return $this;
-    }
 
     /**
      * Get admin
