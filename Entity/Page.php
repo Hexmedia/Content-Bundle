@@ -260,5 +260,9 @@ class Page
     {
         return ["title", "id"];
     }
+
+    public function __toString() {
+        return $this->getSlug();
+    }
 }
 

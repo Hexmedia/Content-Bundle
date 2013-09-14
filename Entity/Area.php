@@ -14,64 +14,56 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  */
 class Area
 {
-	use ORMBehaviors\Timestampable\Timestampable,
-	 ORMBehaviors\Blameable\Blameable,
-	 ORMBehaviors\Loggable\Loggable,
-	 ORMBehaviors\Sluggable\Sluggable
-//     ORMBehaviors\Translatable\Translatable
-	;
+    use ORMBehaviors\Timestampable\Timestampable,
+        ORMBehaviors\Blameable\Blameable,
+        ORMBehaviors\Loggable\Loggable,
+        ORMBehaviors\Sluggable\Sluggable//     ORMBehaviors\Translatable\Translatable
+        ;
 
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	private $id;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="name", type="string", length=255)
-	 */
-	private $name;
-
-	/**
-	 * @var boolean
-	 *
-	 * @ORM\Column(name="global", type="boolean")
-	 */
-	private $global;
-
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="content", type="string", length=5000)
-	 */
-	private $content;
-
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="global", type="boolean")
+     */
+    private $global;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content", type="string", length=5000)
+     */
+    private $content;
     /**
      * @var string
      *
      * @ORM\Column(name="locale", type="string", length=5)
      */
     private $locale;
-
     /**
      * @var string
      *
      * @ORM\Column(name="path", type="string", length=32)
      */
     private $path;
-
     /**
      * @var string
      *
      * @ORM\Column(name="route", type="string", length=255)
      */
     private $route;
-
     /**
      * @var string
      *
@@ -80,86 +72,76 @@ class Area
     private $page;
 
     /**
-	 * Get id
-	 *
-	 * @return integer
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
-
-	/**
-	 * Set name
-	 *
-	 * @param string $name
-	 * @return Category
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
-
-		return $this;
-	}
-
-	/**
-	 * Get name
-	 *
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
-
-	/**
-	 * Set if area is global
-	 *
-	 * @param boolean $global
-	 */
-	public function setGlobal($global)
-	{
-		$this->global = $global;
-	}
-
-	/**
-	 * Check if area is global
-	 *
-	 * @return boolean
-	 */
-	public function getGlobal()
-	{
-		return $this->global;
-	}
-
-	/**
-	 * Set area content
-	 *
-	 * @param string $content
-	 */
-	public function setContent($content)
-	{
-		$this->content = $content;
-	}
-
-	/**
-	 * Get area content
-	 *
-	 * @return string
-	 */
-	public function getContent()
-	{
-		return $this->content;
-	}
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
-     * Set area locale
+     * Get name
      *
-     * @param string $locale
+     * @return string
      */
-    public function setLocale($locale)
+    public function getName()
     {
-        $this->locale = $locale;
+        return $this->name;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Category
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Check if area is global
+     *
+     * @return boolean
+     */
+    public function getGlobal()
+    {
+        return $this->global;
+    }
+
+    /**
+     * Set if area is global
+     *
+     * @param boolean $global
+     */
+    public function setGlobal($global)
+    {
+        $this->global = $global;
+    }
+
+    /**
+     * Get area content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set area content
+     *
+     * @param string $content
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
     }
 
     /**
@@ -170,6 +152,16 @@ class Area
     public function getLocale()
     {
         return $this->locale;
+    }
+
+    /**
+     * Set area locale
+     *
+     * @param string $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
     }
 
     /**
@@ -232,10 +224,13 @@ class Area
         $this->page = $page;
     }
 
-	public function getSluggableFields()
-	{
-		return ['name', 'locale'];
-	}
+    public function getSluggableFields()
+    {
+        return ['name', 'locale'];
+    }
 
+    public function __toString() {
+        return $this->getSlug();
+    }
 }
 
