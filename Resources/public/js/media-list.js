@@ -13,7 +13,7 @@ var AdminListModel;
 		columns[1] = {
 			"name": "miniature",
 			"display": Translator.get("Miniature"),
-			"type": "email",
+			"type": "text",
 			"sortable": true
 		};
 		columns[2] = {
@@ -31,7 +31,7 @@ var AdminListModel;
 		self.list().columns(columns);
 	};
 	ListModel.prototype.getUrl = function(page, sort, pageSize, sortDirection) {
-		return Routing.generate("HexMediaContentMediaLibrary", {
+		return Routing.generate("HexMediaContentMediaList", {
 			page: page,
 			sort: sort,
 			pageSize: pageSize,
