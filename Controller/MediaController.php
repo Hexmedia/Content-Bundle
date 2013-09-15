@@ -276,6 +276,12 @@ class MediaController extends Controller implements ListControllerInterface, Bre
                 $vichHelper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
 
                 return "<img src=\"" . $cacheManager->getBrowserPath($vichHelper->asset($entity, 'file'), 'small_admin_square') . "\" />";
+            }],
+            'image' => ['get' => 'self', 'call' => function ($entity) {
+                $cacheManager = $this->container->get('liip_imagine.cache.manager');
+                $vichHelper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
+
+                return "<img src=\"" . $cacheManager->getBrowserPath($vichHelper->asset($entity, 'file'), 'attach_admin_square') . "\" />";
             }]
         ];
     }
@@ -293,12 +299,12 @@ class MediaController extends Controller implements ListControllerInterface, Bre
      */
     public function attachAction($type, $page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
     {
-        $entities = $this->getRepository()->getPage($page, $pageSize, $sort, $sortDirection);
+        $entities = $this->getRepository()->getPage($page, $sort, $pageSize, $sortDirection);
         $entitiesCount = $this->getRepository()->getCount();
 
         return [
-            'entities' => $entities,
-            'entitesCount' => $entitiesCount
+            'entities' => $this->prepareEntities($entities),
+            'entitiesCount' => $entitiesCount
         ];
     }
 

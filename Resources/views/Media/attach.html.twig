@@ -1,2 +1,40 @@
-{% extends "HexmediaAdministratorBundle:Layout:modal.html.twig" %}
+{% extends "HexmediaAdministratorBundle:Layout:main.html.twig" %}
 
+{% block head_script %}
+    {% javascripts output='js/grid.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/own/knockout-bootstrap-grid.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/model/grid.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% include "HexmediaAdministratorBundle:List:entities-data.html.twig" with {'entities': entities, 'entitiesCount' : entitiesCount } %}
+
+    {% javascripts output='js/media-grid.js'
+    '@HexmediaAdministratorBundle/Resources/public/js/own/knockout-bootstrap-grid.js'
+    '@HexmediaContentBundle/Resources/public/js/media-grid.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock head_script %}
+
+{% block body %}
+
+    <div class="content data-area-grid">
+        <div data-bind="grid: grid, gridTemplate: 'grid_radio'">
+        </div>
+    </div>
+
+    <script type="text/knockout" id="grid_radio">
+        <div class="row-fluid data-grid" data-bind="foreach: items">
+            <div class="data-grid-element" data-bind="template: {'name':'grid_radio_element', 'data':$data}, click: $data.select, attr: {class: $data.class}"></div>
+        </div>
+    </script>
+    <script type="text/knockout" id="grid_radio_element">
+        <div class="border">
+            <div class="img" data-bind="html:$data.image"></div>
+            {#<img src="" data-bind="attr: {'src': $data.image }" />#}
+            <h5 data-bind="text: $data.name" />
+            <input type="radio" name="element[$data.id]" data-bind="attr: {checked: $data.checked}" style="visibility: hidden;"/>
+        </div>
+    </script>
+{% endblock body %}

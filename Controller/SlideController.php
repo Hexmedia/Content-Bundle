@@ -82,7 +82,8 @@ class SlideController extends Controller implements ListController, BreadcrumbsI
 
         return [
             'entities' => $entitesRet,
-            "entitiesCount" => $this->getRepository()->getCount()
+            "entitiesCount" => $this->getRepository()->getCount(),
+            "sliderId" => $this->getRequest()->get("sliderId")
         ];
     }
 

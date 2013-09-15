@@ -1,4 +1,4 @@
-{% extends 'HexmediaContentBundle::admin.html.twig' %}
+{% extends 'HexmediaAdministratorBundle:Layout:main.html.twig' %}
 
 {% block title %}Slider Creation{% endblock title %}
 
@@ -31,11 +31,12 @@
             {{ form_widget(form.name) }}
         </div>
     </div>
+    {# FIXME: Need to add this, and save it somewhere
     <div class="row">
         <div class="col-md-12">
-            {{ render(controller('HexmediaContentBundle:Slides:List' width {'sliderId' : 1})) }}
+            {{ render(controller('HexmediaContentBundle:Slide:list', {'sliderId' : 1})) }}
         </div>
-    </div>
+    </div>#}
 
     {{ form_end(form) }}
 {% endblock %}

@@ -5,22 +5,23 @@
             {% if value and value is not empty %}
                 {% if preview is defined %}
                     <img src="{{ vich_uploader_asset(entity, 'file')|imagine_filter(preview) }}" alt="{{ entity.name }}" id="{{ id }}_image" /> <br />
-                    <a href="#" id="{{ id }}_imageSelect" class="btn btn-primary"><i
-                                class="icon-picture"></i> {{ change_label|trans }}</a>
+                    <a href="{{ path('HexMediaContentMediaAttach', {'type':'image'}) }}" id="{{ id }}_imageSelect" class="btn btn-primary">
+                        <i class="icon-picture"></i> {{ change_label|trans }}
+                    </a>
                 {% else %}
-                    <a href="#" id="{{ id }}_imageSelect" class="btn btn-primary"><i
-                                class="icon-picture"></i> {{ change_label|trans }}</a>
+                    <a href="#" id="{{ id }}_imageSelect" class="btn btn-primary">
+                        <i class="icon-picture"></i> {{ change_label|trans }}
+                    </a>
                 {% endif %}
             {% else %}
-                <a href="#" id="{{ id }}_imageSelect" class="btn btn-primary"><i
-                            class="icon-picture"></i> {{ select_label|trans }}</a>
+                <a href="#" id="{{ id }}_imageSelect" class="btn btn-primary">
+                    <i class="icon-picture"></i> {{ select_label|trans }}
+                </a>
             {% endif %}
 
 
             <script type="text/javascript">
                 jQuery(document).ready(function () {
-                    //$("#
-                    {{ id }}_imageSelect").selectImage();
                 });
             </script>
     {% endspaceless %}
