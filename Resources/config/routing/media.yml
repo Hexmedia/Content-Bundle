@@ -5,7 +5,7 @@ HexMediaContentMediaAdd:
     options:
         expose: true
 
-HexMediaContentMediaAdd:
+HexMediaContentMediaCreate:
     pattern: /add
     defaults: { _controller: HexmediaContentBundle:Media:create }
     methods: [ PUT, POST ]
@@ -33,7 +33,7 @@ HexMediaContentMediaUpdate:
 HexMediaContentMediaDelete:
     pattern: /{id}/delete
     defaults: { _controller: HexmediaContentBundle:Media:delete }
-    methods: [ POST, PUT ]
+    methods: [ POST, PUT, DELETE ]
     requirements:
         id: \d+
     options:

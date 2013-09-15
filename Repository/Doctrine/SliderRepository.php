@@ -15,4 +15,40 @@ use Hexmedia\ContentBundle\Repository\SliderRepositoryInterface;
 class SliderRepository extends EntityRepository implements SliderRepositoryInterface
 {
     use ListTrait;
+
+    public function findOneBySlugWithSlides($slug)
+    {
+        $queryBuilder = $this->createQueryBuilder('s');
+
+        $now = new \DateTime();
+
+        $queryBuilder
+            ->where($queryBuilder->expr()->like("s.slug", ":slug"))
+//            ->where(
+//                $queryBuilder->expr()->andX(
+//                    $queryBuilder->expr()->like("s.slug", ":slug"),
+//                    $queryBuilder->expr()->orX(
+//                        $queryBuilder->expr()->eq("sl.published", "1"),
+//                        $queryBuilder->expr()->andX(
+//                            $queryBuilder->expr()->gte("sl.publishedFrom", ":date"),
+//                            $queryBuilder->expr()->lte("sl.publishedTo", ":date")
+//                        )
+//                    )
+//                )
+//            )
+//            ->innerJoin('s.slides', 'sl')
+//            ->innerJoin('sl.bgImage', 'm')
+            ->setParameter(':slug', $slug)
+//            ->setParameter(':date', $now->format("Y-m-d"))
+        ;
+
+        $slider = $queryBuilder->getQuery()->getOneOrNullResult();
+
+        foreach ($slider->getSlides() as $slide) {
+            $slide->getBgImage();
+        }
+
+        return $slider;
+    }
+
 }

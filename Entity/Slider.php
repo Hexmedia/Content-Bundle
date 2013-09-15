@@ -16,7 +16,8 @@ class Slider
 
     use ORMBehaviors\Timestampable\Timestampable,
         ORMBehaviors\Blameable\Blameable,
-        ORMBehaviors\Loggable\Loggable;
+        ORMBehaviors\Loggable\Loggable,
+        ORMBehaviors\Sluggable\Sluggable;
 
     /**
      * @var integer
@@ -181,6 +182,10 @@ class Slider
         $this->name = $name;
 
         return $this;
+    }
+
+    public function getSluggableFields() {
+        return ['name'];
     }
 
     public function __toString() {

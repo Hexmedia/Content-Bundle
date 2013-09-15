@@ -6,6 +6,7 @@ use Hexmedia\AdministratorBundle\Controller\ListTrait;
 use Hexmedia\AdministratorBundle\ControllerInterface\BreadcrumbsInterface;
 use Hexmedia\AdministratorBundle\ControllerInterface\ListController;
 use Hexmedia\AdministratorBundle\ControllerInterface\WhiteOctober;
+use Hexmedia\ContentBundle\HexmediaContentBundle;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController as Controller;
 use Hexmedia\ContentBundle\Entity\Slider;
@@ -282,5 +283,20 @@ class SliderController extends Controller implements ListController, Breadcrumbs
         $em->flush();
 
         return ['success' => true];
+    }
+
+    public function displayAction($ident) {
+        //FIXME: Here should go config variable but for now it's given directly
+        $template = "BergwayMainBundle:Content:slider.html.twig";
+
+        /**
+         * @var $entity \Hexmedia\ContentBundle\Entity\Slider
+         */
+        $entity = $this->getRepository()->findOneBySlugWithSlides($ident);
+
+        return $this->render($template, [
+                'slider' => $entity,
+                'slides' => $entity->getSlides()
+            ]);
     }
 }

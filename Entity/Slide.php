@@ -18,6 +18,7 @@ class Slide
         ORMBehaviors\Blameable\Blameable,
         ORMBehaviors\Loggable\Loggable,
         ORMBehaviors\Sortable\Sortable,
+        ORMBehaviors\Sluggable\Sluggable,
         PublicationTrait;
 
     /**
@@ -52,6 +53,12 @@ class Slide
      * @ORM\Column(name="link", type="string", length=255)
      */
     private $link;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="new", type="boolean")
+     */
+    private $new;
     /**
      * @var \Hexmedia\ContentBundle\Entity\Slider
      *
@@ -93,29 +100,6 @@ class Slide
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return Slide
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
     }
 
     /**
@@ -185,6 +169,22 @@ class Slide
         $this->link = $link;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNew()
+    {
+        return $this->new;
+    }
+
+    /**
+     * @param string $new
+     */
+    public function setNew($new)
+    {
+        $this->new = $new;
     }
 
     /**
@@ -266,7 +266,36 @@ class Slide
         return $this;
     }
 
-    public function __toString() {
-        return $this->getName();
+    public function getSluggableFields()
+    {
+        return ['title'];
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Slide
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
     }
 }

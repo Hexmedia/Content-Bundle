@@ -266,7 +266,7 @@ class SlideController extends Controller implements ListController, BreadcrumbsI
             $em->flush();
 
             if ($form->get("saveAndExit")->isClicked()) {
-                return $this->redirect($this->generateUrl('HexMediaContentSlide'));
+                return $this->redirect($this->generateUrl('HexMediaContentSliderEdit', ['id' => $entity->getSlider()->getId()]));
             } else {
                 return $this->redirect($this->generateUrl('HexMediaContentSlideEdit', ['id' => $entity->getId()]));
             }
