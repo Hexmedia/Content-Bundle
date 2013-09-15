@@ -47,10 +47,14 @@ class AreaExtension extends \Twig_Extension
     /**
      * @param string $name
      * #param string $defaultContent
+     * @param string $type
+     * @param string $class
+     * @param string $defaultContent
      * @param bool $isGlobal
      * @param string $locale
+     * @return string
      */
-    public function get($name, $defaultContent = "", $isGlobal = false, $locale = null)
+    public function get($name, $type, $class, $defaultContent = "", $isGlobal = false, $locale = null)
     {
         /**
          * @var AreaRepositoryInterface
@@ -117,14 +121,24 @@ class AreaExtension extends \Twig_Extension
 
         if ($this->service->get('session')->get('hexmedia_content_edit_mode')) {
             $content = $twig->render(
-                "HexmediaContentBundle:Area:area.html.twig",
+                "HexmediaContentBundle:Area:area-editable.html.twig",
                 [
                     'content' => $entity->getContent(),
-                    'path' => $entity->getPath()
+                    'path' => $entity->getPath(),
+                    'type' => $type,
+                    'class' => $class
                 ]
             );
         } else {
-            $content = $entity->getContent();
+            $content = $twig->render(
+                "HexmediaContentBundle:Area:area.html.twig",
+                [
+                    'content' => $entity->getContent(),
+                    'path' => $entity->getPath(),
+                    'type' => $type,
+                    'class' => $class
+                ]
+            );
         }
 
         return $content; //$entity->getContent();

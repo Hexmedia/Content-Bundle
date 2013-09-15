@@ -29,6 +29,8 @@ class AreaTokenParser extends \Twig_TokenParser
 		$areaName = null;
 		$isGlobal = false;
         $language = null;
+        $type = null;
+        $class = null;
 
 		if (!$stream->test(\Twig_Token::BLOCK_END_TYPE)) {
 			if ($stream->test('name')) {
@@ -38,6 +40,16 @@ class AreaTokenParser extends \Twig_TokenParser
 			} else {
 				throw new \Twig_Error_Syntax('Expecting "name" parameter!');
 			}
+
+            if ($stream->test("type")) {
+                $stream->next();
+                $type = $this->parser->getExpressionParser()->parseExpression();
+            }
+
+            if ($stream->test("class")) {
+                $stream->next();
+                $class = $this->parser->getExpressionParser()->parseExpression();
+            }
 
 			if ($stream->test('global')) {
 				$stream->next();
@@ -64,7 +76,7 @@ class AreaTokenParser extends \Twig_TokenParser
 
 		$stream->expect(\Twig_Token::BLOCK_END_TYPE);
 
-        return new AreaNode($body, $areaName, $language, $isGlobal, $lineno, $this->getTag());
+        return new AreaNode($body, $areaName, $type, $class, $language, $isGlobal, $lineno, $this->getTag());
 	}
 
 	public function decideAreaFork($token)
