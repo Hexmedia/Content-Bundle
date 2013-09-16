@@ -285,10 +285,11 @@ class SliderController extends Controller implements ListController, Breadcrumbs
         return ['success' => true];
     }
 
-    public function displayAction($ident) {
-        //FIXME: Here should go config variable but for now it's given directly
-        $template = "BergwayMainBundle:Content:slider.html.twig";
-
+    /**
+     * @param string $ident
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function displayAction($ident, $template = "HexmediaContentBundle:Slider:display.html.twig") {
         /**
          * @var $entity \Hexmedia\ContentBundle\Entity\Slider
          */

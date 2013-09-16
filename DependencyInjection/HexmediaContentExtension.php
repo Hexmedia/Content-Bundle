@@ -2,6 +2,7 @@
 
 namespace Hexmedia\ContentBundle\DependencyInjection;
 
+use Hexmedia\ContentBundle\Controller\SliderController;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;

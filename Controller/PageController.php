@@ -301,4 +301,19 @@ class PageController extends Controller implements ListController, BreadcrumbsIn
 
         return array('success' => true);
     }
+
+    /**
+     * @param string $ident
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function displayAction($ident, $template = "HexmediaContentBundle:Page:display.html.twig") {
+        /**
+         * @var $entity \Hexmedia\ContentBundle\Entity\Slider
+         */
+        $entity = $this->getRepository()->findOneBySlug($ident);
+
+        return $this->render($template, [
+                'page' => $entity
+            ]);
+    }
 }
