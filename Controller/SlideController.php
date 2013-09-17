@@ -2,6 +2,7 @@
 
 namespace Hexmedia\ContentBundle\Controller;
 
+use Hexmedia\AdministratorBundle\Controller\CrudController;
 use Hexmedia\AdministratorBundle\Controller\ListTrait;
 use Hexmedia\AdministratorBundle\ControllerInterface\BreadcrumbsInterface;
 use Hexmedia\AdministratorBundle\ControllerInterface\ListController;
@@ -17,32 +18,12 @@ use FOS\RestBundle\Controller\Annotations as Rest;
  * Slide controller.
  *
  */
-class SlideController extends Controller implements ListController, BreadcrumbsInterface
+class SlideController extends CrudController
 {
-    use ListTrait;
-
     /**
-     * @var \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs
+     * {@inheritdoc}
      */
-    private $breadcrumbs;
-
-    /**
-     * @return array
-     *
-     * @Rest\View
-     */
-    public function indexAction()
-    {
-        $this->registerBreadcrubms();
-
-        return [];
-    }
-
-    /**
-     *
-     * @return \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs
-     */
-    public function registerBreadcrubms()
+    protected  function registerBreadcrubms()
     {
         $this->breadcrumbs = $this->get("white_october_breadcrumbs");
 
@@ -56,42 +37,19 @@ class SlideController extends Controller implements ListController, BreadcrumbsI
     }
 
     /**
-     * Lists all Slide entities.
+     * {@inheritdoc}
      *
      * @Rest\View
      */
-    public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
-    {
-        $entities = $this->getRepository()->getPage($page, $sort, $pageSize, $sortDirection);
-        $agoHelper = $this->container->get('hexmedia.templating.helper.time_formatter');
-
-        $i = 0;
-        $entitesRet = [];
-
-        foreach ($entities as $entity) {
-            $r = new \stdClass();
-            $r->id = $entity->getId();
-            $r->number = ++$i;
-            $r->title = $entity->getTitle();
-            $r->lastModified = $entity->getUpdatedAt() == null ? $agoHelper->formatTime(
-                $entity->getCreatedAt()
-            ) : $agoHelper->formatTime($entity->getUpdatedAt());
-
-            $entitesRet[] = (array)$r;
-        }
-
-        return [
-            'entities' => $entitesRet,
-            "entitiesCount" => $this->getRepository()->getCount(),
-            "sliderId" => $this->getRequest()->get("sliderId")
-        ];
+    public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC") {
+        return array_merge(parent::listAction($page, $pageSize, $sort, $sortDirection),
+            ['sliderId' => $this->getRequest()->get("sliderId")]);
     }
-
     /**
      *
      * @return \Hexmedia\ContentBundle\Repository\Doctrine\PageRepository
      */
-    private function getRepository()
+    protected function getRepository()
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -138,106 +96,25 @@ class SlideController extends Controller implements ListController, BreadcrumbsI
     }
 
     /**
-     * Creates a form to create a Slide entity.
-     *
-     * @param Slide $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Slide $entity, $sliderId)
-    {
-        $form = $this->createForm(
-            new AddType(),
-            $entity,
-            [
-                'action' => $this->generateUrl('HexMediaContentSlideCreate', ['sliderId' => $sliderId]),
-                'method' => 'POST',
-            ]
-        );
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Slide entity.
+     * {@inheritdoc}
      *
      * @Rest\View
      */
-    public function addAction($sliderId)
+    public function addAction()
     {
-        $entity = new Slide();
-        $form = $this->createCreateForm($entity, $sliderId);
-
-        return [
-            'entity' => $entity,
-            'sliderId' => $sliderId,
-            'form' => $form->createView(),
-        ];
+        return array_merge(parent::addAction(),
+            ['sliderId' => $this->getRequest()->get("sliderId")]);
     }
 
     /**
-     * Finds and displays a Slide entity.
+     * {@inheritdoc}
      *
      * @Rest\View
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('HexmediaContentBundle:Slide')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Slide entity.');
-        }
-
-        return [
-            'entity' => $entity
-        ];
-    }
-
-    /**
-     * Displays a form to edit an existing Slide entity.
-     *
-     * @Rest\View()
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('HexmediaContentBundle:Slide')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Slide entity.');
-        }
-
-        $form = $this->createEditForm($entity);
-
-        return [
-            'entity' => $entity,
-            'sliderId' => $entity->getSlider()->getId(),
-            'form' => $form->createView()
-        ];
-    }
-
-    /**
-     * Creates a form to edit a Slide entity.
-     *
-     * @param Slide $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createEditForm(Slide $entity)
-    {
-        $form = $this->createForm(
-            new EditType(),
-            $entity,
-            [
-                'action' => $this->generateUrl('HexMediaContentSlideUpdate', ['id' => $entity->getId()]),
-                'method' => 'PUT',
-            ]
-        );
-
-        return $form;
+        return array_merge(parent::editAction($id),
+            ['sliderId' => $this->getRequest()->get("sliderId")]);
     }
 
     /**
@@ -247,55 +124,8 @@ class SlideController extends Controller implements ListController, BreadcrumbsI
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('HexmediaContentBundle:Slide')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Slide entity.');
-        }
-
-        $form = $this->createEditForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            if ($em->getUnitOfWork()->isScheduledForUpdate($entity)) {
-                $this->get('session')->getFlashBag()->add('notice', 'Slide has been updated!');
-            }
-
-            $em->flush();
-
-            if ($form->get("saveAndExit")->isClicked()) {
-                return $this->redirect($this->generateUrl('HexMediaContentSliderEdit', ['id' => $entity->getSlider()->getId()]));
-            } else {
-                return $this->redirect($this->generateUrl('HexMediaContentSlideEdit', ['id' => $entity->getId()]));
-            }
-        }
-
-        return [
-            'entity' => $entity,
-            'form' => $form->createView(),
-        ];
-    }
-
-    /**
-     * Deletes a Slide entity.
-     *
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $entity = $this->getRepository()->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Slide entity.');
-        }
-        $em = $this->getDoctrine()->getManager();
-
-        $em->remove($entity);
-
-        $em->flush();
-
-        return ['success' => true];
+        return array_merge(parent::updateAction($request, $id),
+            ['sliderId' => $this->getRequest()->get("sliderId")]);
     }
 
     protected function getFieldsToDisplayOnList()
@@ -309,5 +139,36 @@ class SlideController extends Controller implements ListController, BreadcrumbsI
             'publishedTo' => ['get' => 'getPublishedTo', 'format' => 'timeformat'],
             "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat']
         ];
+    }
+
+    protected function getRouteAdditionalParameters() {
+        return [
+            'sliderId' => $this->getRequest()->get('sliderId')
+        ];
+    }
+
+    protected function getNewEntity()
+    {
+        return new Slide();
+    }
+
+    protected function getAddFormType()
+    {
+        return new AddType();
+    }
+
+    protected function getMainRoute()
+    {
+        return "HexMediaContentSlide";
+    }
+
+    protected function getEntityName()
+    {
+        return "slide";
+    }
+
+    protected function getEditFormType()
+    {
+        return new EditType();
     }
 }

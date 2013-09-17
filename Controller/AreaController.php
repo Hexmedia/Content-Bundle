@@ -3,6 +3,7 @@
 namespace Hexmedia\ContentBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use Hexmedia\AdministratorBundle\Controller\CrudController;
 use Hexmedia\AdministratorBundle\Controller\ListTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Hexmedia\AdministratorBundle\ControllerInterface\BreadcrumbsInterface;
@@ -16,52 +17,10 @@ use Hexmedia\ContentBundle\Form\Type\Area\EditType;
 /**
  * Area controller.
  */
-class AreaController extends Controller implements ListControllerInterface, BreadcrumbsInterface
+class AreaController extends CrudController
 {
-    use ListTrait;
-
-    /**
-     * Index
-     *
-     * @param int $page
-     * @param int $pageSize
-     * @param string $sort
-     * @param string $sortDirection
-     *
-     * @Rest\View
-     */
-    public function indexAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
-    {
-
-    }
-
-    /**
-     * Lists all Area entities.
-     *
-     * @Rest\View
-     */
-    public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
-    {
-
-        $entities = $this->getRepository()->getPage($page, $sort, $pageSize, $sortDirection);
-
-        $entitesRet = $this->prepareEntities($entities);
-
-        return array(
-            'entities' => $entitesRet,
-            "entitiesCount" => $this->getRepository()->getCount()
-        );
-    }
-
-    /**
-     *
-     * @return \Hexmedia\ContentBundle\Repository\Doctrine\AreaRepository
-     */
-    private function getRepository()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        return $em->getRepository('HexmediaContentBundle:Area');
+    protected function getMainRoute() {
+        return "HexMediaContentArea";
     }
 
     protected function getFieldsToDisplayOnList()
@@ -92,189 +51,54 @@ class AreaController extends Controller implements ListControllerInterface, Brea
         return $this->breadcrumbs;
     }
 
+    protected function getNewEntity() {
+        return new Area();
+    }
+
+    protected function getAddFormType() {
+        return new AddType();
+    }
+
+    protected function getEditFormType() {
+        return new EditType();
+    }
+
+
     /**
-     * Creates a new Area entity.
+     * @param Request $request
+     * @param $id
+     *
+     * @return array|\Symfony\Component\HttpFoundation\Response
+
+     * @Rest\View(template="HexmediaContentBundle:Area:edit.html.twig")
+     */
+    public function updateAction(Request $request, $id) {
+        return parent::updateAction($request, $id);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\Response
      *
      * @Rest\View(template="HexmediaContentBundle:Area:add.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        $entity = new Area();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($entity);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('notice', 'Area has been created!');
-
-            if ($form->get("saveAndExit")->isClicked()) {
-                return $this->redirect($this->generateUrl('HexMediaContentArea'));
-            } else {
-                return $this->redirect($this->generateUrl('HexMediaContentAreaEdit', ['id' => $entity->getId()]));
-            }
-        }
-
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-        );
+    public function createAction(Request $request) {
+        return parent::createAction($request);
     }
 
     /**
-     * Creates a form to create a Area entity.
-     *
-     * @param Area $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
+     * @return \Hexmedia\ContentBundle\Repository\Doctrine\AreaRepository
      */
-    private function createCreateForm(Area $entity)
+    protected function getRepository()
     {
-        $form = $this->createForm(
-            new AddType(),
-            $entity,
-            [
-                'action' => $this->generateUrl('HexMediaContentAreaAdd'),
-                'method' => 'POST',
-            ]
-        );
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Area entity.
-     *
-     * @Rest\View
-     */
-    public function addAction()
-    {
-        $entity = new Area();
-        $form = $this->createCreateForm($entity);
-
-        return [
-            'entity' => $entity,
-            'form' => $form->createView(),
-        ];
-    }
-
-    /**
-     * Displays a form to edit an existing Area entity.
-     *
-     * @Rest\View
-     */
-    public function editAction($id)
-    {
-        $entity = $this->getRepository()->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Area entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-
-        return [
-            'entity' => $entity,
-            'form' => $editForm->createView(),
-        ];
-    }
-
-    /**
-     * Creates a form to edit a Area entity.
-     *
-     * @param Area $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createEditForm(Area $entity)
-    {
-        $form = $this->createForm(
-            new EditType(),
-            $entity,
-            [
-                'action' => $this->generateUrl('HexMediaContentAreaUpdate', array('id' => $entity->getId())),
-                'method' => 'PUT',
-            ]
-        );
-
-        return $form;
-    }
-
-    /**
-     * Edits an existing Area entity.
-     *
-     * @Rest\View(template="HexmediaContentBundle:Area:add.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        /**
-         * @var $entity Area
-         */
-        $entity = $this->getRepository()->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Area entity.');
-        }
-
-        $form = $this->createEditForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            /**
-             * @var $em \Doctrine\ORM\EntityManager
-             */
-            $em = $this->getDoctrine()->getManager();
-
-            if ($em->getUnitOfWork()->isScheduledForUpdate($entity)) {
-                $this->get('session')->getFlashBag()->add('notice', 'Area has been updated!');
-            }
-
-            $em->flush();
-
-            if ($form->get("saveAndExit")->isClicked()) {
-                return $this->redirect($this->generateUrl('HexMediaContentArea'));
-            } else {
-                return $this->redirect($this->generateUrl('HexMediaContentAreaEdit', array('id' => $id)));
-            }
-        }
-
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-        );
-    }
-
-    /**
-     * Deletes a Area entity.
-     *
-     * @Rest\View()
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $entity = $this->getRepository()->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Area entity.');
-        }
         $em = $this->getDoctrine()->getManager();
 
-        $em->remove($entity);
-
-        $em->flush();
-
-        return ['success' => true];
+        return $em->getRepository('HexmediaContentBundle:Area');
     }
 
-    /**
-     * Updating area from raptor.
-     *
-     * @Rest\View
-     */
-    public function raptorUpdateAction()
-    {
-
+    protected function getEntityName() {
+        return "Area";
     }
+
 }
