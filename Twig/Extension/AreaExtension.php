@@ -72,10 +72,12 @@ class AreaExtension extends \Twig_Extension
 
         $requestUri = $request->getRequestUri();
 
-        $requestUri = substr(
-            $requestUri,
-            strpos($requestUri, $request->getBasePath()) + strlen($request->getBasePath())
-        );
+        if ($request->getBasePath() != "") {
+            $requestUri = substr(
+                $requestUri,
+                strpos($requestUri, $request->getBasePath()) + strlen($request->getBasePath())
+            );
+        }
 
         if (strpos($requestUri, "?") !== false) {
             $requestUri = substr($requestUri, 0, strpos($requestUri, "?"));
@@ -92,7 +94,7 @@ class AreaExtension extends \Twig_Extension
         }
 
 
-        if ($requestUri{strlen($requestUri)-1} == "/") {
+        if ($requestUri{strlen($requestUri) - 1} == "/") {
             $requestUri = substr($requestUri, 0, strlen($requestUri) - 1);
         }
 
