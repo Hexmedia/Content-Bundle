@@ -34,8 +34,7 @@ class AreaTokenParser extends \Twig_TokenParser
 
 		if (!$stream->test(\Twig_Token::BLOCK_END_TYPE)) {
 			if ($stream->test('name')) {
-				// {% trans with vars %}
-				$stream->next();
+				// {% trans with vars %} $this->parser->getExpressionParser()->parseExpression();
 				$areaName = $this->parser->getExpressionParser()->parseExpression();
 			} else {
 				throw new \Twig_Error_Syntax('Expecting "name" parameter!');

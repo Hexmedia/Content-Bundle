@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Hexmedia\ContentBundle\Entity\Page;
 use Hexmedia\ContentBundle\Form\PageType;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Page controller.
@@ -82,6 +83,10 @@ class PageController extends CrudController
      */
     public function displayAction($ident, $template = "HexmediaContentBundle:Page:display.html.twig") {
         $entity = $this->getRepository()->findOneBySlug($ident);
+
+        if (!$entity) {
+            throw new NotFoundHttpException("Page was not found!");
+        }
 
         return $this->render($template, [
                 'page' => $entity

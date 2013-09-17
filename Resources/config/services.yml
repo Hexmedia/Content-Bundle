@@ -14,6 +14,12 @@ services:
         tags:
             - { name: twig.extension }
 
+    hexmedia.content.page_extension:
+        class: Hexmedia\ContentBundle\Twig\Extension\PageExtension
+        arguments: [ "@doctrine.orm.entity_manager", "@service_container" ]
+        tags:
+            - { name: twig.extension }
+
     hexmedia.content.fields.media:
         class: Hexmedia\ContentBundle\Form\Fields\MediaType
         arguments: [ "@doctrine.orm.entity_manager" ]

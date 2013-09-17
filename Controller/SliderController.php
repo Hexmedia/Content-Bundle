@@ -85,6 +85,10 @@ class SliderController extends CrudController
          */
         $entity = $this->getRepository()->findOneBySlugWithSlides($ident);
 
+        if (!$entity) {
+            throw new NotFoundHttpException("Slider was not found!");
+        }
+
         return $this->render($template, [
                 'slider' => $entity,
                 'slides' => $entity->getSlides()

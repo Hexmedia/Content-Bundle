@@ -22,8 +22,70 @@ class SlideController extends CrudController
 {
     /**
      * {@inheritdoc}
+     *
+     * @Rest\View
      */
-    protected  function registerBreadcrubms()
+    public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
+    {
+        return array_merge(
+            parent::listAction($page, $pageSize, $sort, $sortDirection),
+            ['sliderId' => $this->getRequest()->get("sliderId")]
+        );
+    }
+
+    /**
+     * Creates a new Slide entity.
+     *
+     * @Rest\View(template="HexmediaContentBundle:Slide:add.html.twig")
+     */
+    public function createAction(Request $request)
+    {
+        return array_merge(parent::createAction($request), ['sliderId' => $this->getRequest()->get("sliderId")]);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @Rest\View
+     */
+    public function addAction()
+    {
+        return array_merge(
+            parent::addAction(),
+            ['sliderId' => $this->getRequest()->get("sliderId")]
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @Rest\View
+     */
+    public function editAction($id)
+    {
+        return array_merge(
+            parent::editAction($id),
+            ['sliderId' => $this->getRequest()->get("sliderId")]
+        );
+    }
+
+    /**
+     * Edits an existing Slide entity.
+     *
+     * @Rest\View(template="HexmediaContentBundle:Slide:edit.html.twig")
+     */
+    public function updateAction(Request $request, $id)
+    {
+        return array_merge(
+            parent::updateAction($request, $id),
+            ['sliderId' => $this->getRequest()->get("sliderId")]
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function registerBreadcrubms()
     {
         $this->breadcrumbs = $this->get("white_october_breadcrumbs");
 
@@ -37,15 +99,6 @@ class SlideController extends CrudController
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @Rest\View
-     */
-    public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC") {
-        return array_merge(parent::listAction($page, $pageSize, $sort, $sortDirection),
-            ['sliderId' => $this->getRequest()->get("sliderId")]);
-    }
-    /**
      *
      * @return \Hexmedia\ContentBundle\Repository\Doctrine\PageRepository
      */
@@ -54,78 +107,6 @@ class SlideController extends CrudController
         $em = $this->getDoctrine()->getManager();
 
         return $em->getRepository('HexmediaContentBundle:Slide');
-    }
-
-    /**
-     * Creates a new Slide entity.
-     *
-     * @Rest\View(template="HexmediaContentBundle:Slide:add.html.twig")
-     */
-    public function createAction(Request $request, $sliderId)
-    {
-        $entity = new Slide();
-        $form = $this->createCreateForm($entity, $sliderId);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $repo = $em->getRepository("HexmediaContentBundle:Slider");
-
-            $slider = $repo->findOneById($sliderId);
-
-            $entity->setSlider($slider);
-            $em->persist($entity);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('notice', 'Slide has been added!');
-
-            if ($form->get("saveAndExit")->isClicked()) {
-                return $this->redirect(
-                    $this->generateUrl('HexMediaContentSlide', ['sliderId' => $entity->getSlider()->getId()])
-                );
-            } else {
-                return $this->redirect($this->generateUrl('HexMediaContentSlideEdit', ['id' => $entity->getId()]));
-            }
-        }
-
-        return [
-            'entity' => $entity,
-            'sliderId' => $sliderId,
-            'form' => $form->createView(),
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @Rest\View
-     */
-    public function addAction()
-    {
-        return array_merge(parent::addAction(),
-            ['sliderId' => $this->getRequest()->get("sliderId")]);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @Rest\View
-     */
-    public function editAction($id)
-    {
-        return array_merge(parent::editAction($id),
-            ['sliderId' => $this->getRequest()->get("sliderId")]);
-    }
-
-    /**
-     * Edits an existing Slide entity.
-     *
-     * @Rest\View(template="HexmediaContentBundle:Slide:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        return array_merge(parent::updateAction($request, $id),
-            ['sliderId' => $this->getRequest()->get("sliderId")]);
     }
 
     protected function getFieldsToDisplayOnList()
@@ -141,7 +122,8 @@ class SlideController extends CrudController
         ];
     }
 
-    protected function getRouteAdditionalParameters() {
+    protected function getRouteAdditionalParameters()
+    {
         return [
             'sliderId' => $this->getRequest()->get('sliderId')
         ];
