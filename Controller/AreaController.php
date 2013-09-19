@@ -2,14 +2,10 @@
 
 namespace Hexmedia\ContentBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Hexmedia\AdministratorBundle\Controller\CrudController;
 use Hexmedia\AdministratorBundle\Controller\ListTrait;
 use Symfony\Component\HttpFoundation\Request;
-use Hexmedia\AdministratorBundle\ControllerInterface\BreadcrumbsInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\Controller\FOSRestController as Controller;
-use Hexmedia\AdministratorBundle\ControllerInterface\ListController as ListControllerInterface;
 use Hexmedia\ContentBundle\Entity\Area;
 use Hexmedia\ContentBundle\Form\Type\Area\AddType;
 use Hexmedia\ContentBundle\Form\Type\Area\EditType;
@@ -63,7 +59,19 @@ class AreaController extends CrudController
         return new EditType();
     }
 
-
+    /**
+     * @param int $page
+     * @param int $pageSize
+     * @param string $sort
+     * @param string $sortDirection
+     * @return array
+     *
+     * @Rest\View
+     */
+    public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
+    {
+        return parent::listAction($page, $pageSize, $sort, $sortDirection);
+    }
     /**
      * @param Request $request
      * @param $id

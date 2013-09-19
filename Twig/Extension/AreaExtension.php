@@ -106,9 +106,9 @@ class AreaExtension extends \Twig_Extension
             $entity->setName($name);
             $entity->setContent($defaultContent);
             $entity->setGlobal($isGlobal);
-            $entity->setPath($routePath);
+            $entity->setPath($routePath ? $routePath : "");
             $entity->setPage($requestUri);
-            $entity->setRoute($route);
+            $entity->setRoute($route ? $route : "");
 
             $this->entityManager->persist($entity);
 

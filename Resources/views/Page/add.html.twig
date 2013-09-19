@@ -25,6 +25,7 @@
         <a class="btn btn-warning" href="{{ path('HexMediaContentPage') }}"
            title="{{ 'Exit without edit'|trans }}">{{ 'Exit'|trans }}</a>
         {{ form_widget(form.saveAndExit) }}
+        {{ form_widget(form.publish) }}
         {{ form_widget(form.save) }}
     </div>
     <div class="row">
@@ -34,10 +35,6 @@
     </div>
     <div class="row">
         <div class="col-md-8">
-            <fieldset class="box main-content">
-                <legend>{{ 'Content'|trans }}</legend>
-                {{ form_row(form.teaser) }}
-            </fieldset>
             <fieldset class="box main-content">
                 <legend>{{ 'SEO'|trans }}</legend>
                 {{ form_row(form.seoTitle) }}
@@ -58,7 +55,13 @@
         <div class="col-md-12">
             <fieldset class="box main-content-full">
                 <legend>{{ 'Content'|trans }}</legend>
+
+                <label>{{ 'Teaser'|trans }}</label>
+                {{ form_widget(form.teaser) }}
+
+                <label>{{ 'Content'|trans }}</label>
                 {{ form_widget(form.content) }}
+
             </fieldset>
         </div>
     </div>

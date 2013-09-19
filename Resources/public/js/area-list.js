@@ -36,13 +36,11 @@ var AdminListModel;
 		};
 		self.list().columns(columns);
 	};
-	ListModel.prototype.getUrl = function(page, sort, pageSize, sortDirection) {
-		return Routing.generate("HexMediaContentAreaList", {
-			page: page,
-			sort: sort,
-			pageSize: pageSize,
-			sortDirection: sortDirection.toLowerCase()
-		});
+	ListModel.prototype.getUrl = function(data) {
+        console.log(Routing.generate("HexMediaContentAreaList", data));
+        console.log(data);
+
+		return Routing.generate("HexMediaContentAreaList", data);
 	};
 
 	AdminListModel.prototype = new ListModel();
