@@ -5,11 +5,11 @@ namespace Hexmedia\ContentBundle\Twig\Extension;
 use Doctrine\ORM\EntityManager;
 use Hexmedia\ContentBundle\Entity\Page;
 use Hexmedia\ContentBundle\Repository\AreaRepositoryInterface;
-use Hexmedia\ContentBundle\Twig\TokenParser\PageTokenParser;
+use Hexmedia\ContentBundle\Twig\TokenParser\ContentTokenParser;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Translation\Translator;
 
-class PageExtension extends \Twig_Extension
+class ContentExtension extends \Twig_Extension
 {
     /**
      * @var EntityManager
@@ -29,7 +29,7 @@ class PageExtension extends \Twig_Extension
     public function getTokenParsers()
     {
         return [
-            new PageTokenParser()
+            new ContentTokenParser()
         ];
     }
 
@@ -40,28 +40,29 @@ class PageExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return "content_page_extension";
+        return "content_extension";
     }
 
     /**
      * @param \Hexmedia\ContentBundle\Entity\Page $entity
+     * @param $type
      * @param string $field
+     * @param null $tag
      * @param string $class
+     * @param string  $language
      * @throws Exception
-     * @internal param \Hexmedia\ContentBundle\Entity\Page $page
-     * @internal param string $name #param string $defaultContent* #param string $defaultContent
-     * @internal param string $type
-     * @internal param string $defaultContent
-     * @internal param bool $isGlobal
-     * @internal param string $locale
      * @return string
      */
-    public function get(Page $entity, $field = "content",  $class = null)
+    public function get($entity, $type, $field, $tag = null, $class = null, $language = null)
     {
         /**
          * @var \Symfony\Component\HttpFoundation\Request
          */
         $request = $this->service->get('request');
+
+        if ($tag == null) {
+            $tag = 'div';
+        }
 
         $slug = $request->get('ident');
 
@@ -73,32 +74,30 @@ class PageExtension extends \Twig_Extension
 
         $getter = "get" . strtoupper($field);
 
-        return $entity->$getter();
-
         $twig = $this->service->get("twig");
-
-        if ($twig instanceof \Twig_Environment) {
-            ;
-        }
 
         if ($this->service->get('session')->get('hexmedia_content_edit_mode')) {
             $content = $twig->render(
-                "HexmediaContentBundle:Area:area-editable.html.twig",
+                "HexmediaContentBundle:Content:content-editable.html.twig",
                 [
-                    'content' => $entity->getContent(),
-                    'path' => $entity->getPath(),
-                    'type' => $type,
-                    'class' => $class
+                    'content' =>  $entity->$getter(),
+                    'tag' => $tag,
+                    'id' => $entity->getId(),
+                    'field' => $field,
+                    'class' => $class,
+                    'type' => $type
                 ]
             );
         } else {
             $content = $twig->render(
-                "HexmediaContentBundle:Area:area.html.twig",
+                "HexmediaContentBundle:Content:content.html.twig",
                 [
-                    'content' => $entity->getContent(),
-                    'path' => $entity->getPath(),
-                    'type' => $type,
-                    'class' => $class
+                    'content' =>  $entity->$getter(),
+                    'id' => $entity->getId(),
+                    'field' => $field,
+                    'tag' => $tag,
+                    'class' => $class,
+                    'type' => $type
                 ]
             );
         }

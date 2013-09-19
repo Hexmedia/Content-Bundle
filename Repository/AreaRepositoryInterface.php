@@ -9,6 +9,7 @@ interface AreaRepositoryInterface extends ListRepositoryInterface
     function getByNameAndPath($name, $path);
     function getGlobalByName($name);
     function getByPath($path);
+    function getByMd5($md5);
 }
 
 ?>

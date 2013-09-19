@@ -258,7 +258,7 @@ class Page
      */
     public function getSluggableFields()
     {
-        return ["title", "id"];
+        return ["title"];
     }
 
     public function __toString() {

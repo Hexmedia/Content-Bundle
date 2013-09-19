@@ -17,7 +17,7 @@ class Area
     use ORMBehaviors\Timestampable\Timestampable,
         ORMBehaviors\Blameable\Blameable,
         ORMBehaviors\Loggable\Loggable,
-        ORMBehaviors\Sluggable\Sluggable//     ORMBehaviors\Translatable\Translatable
+        ORMBehaviors\Sluggable\Sluggable //     ORMBehaviors\Translatable\Translatable
         ;
 
     /**
@@ -58,6 +58,11 @@ class Area
      * @ORM\Column(name="path", type="string", length=32)
      */
     private $path;
+    /**
+     * @var string
+     * @ORM\Column(name="md5", type="string", length=32)
+     */
+    private $md5;
     /**
      * @var string
      *
@@ -185,6 +190,22 @@ class Area
     }
 
     /**
+     * @return string
+     */
+    public function getMd5()
+    {
+        return $this->md5;
+    }
+
+    /**
+     * @param string $md5
+     */
+    public function setMd5($md5)
+    {
+        $this->md5 = $md5;
+    }
+
+    /**
      * Get area route
      *
      * @return string
@@ -229,7 +250,8 @@ class Area
         return ['name', 'locale'];
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getSlug();
     }
 }

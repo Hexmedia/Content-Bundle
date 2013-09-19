@@ -14,8 +14,8 @@ services:
         tags:
             - { name: twig.extension }
 
-    hexmedia.content.page_extension:
-        class: Hexmedia\ContentBundle\Twig\Extension\PageExtension
+    hexmedia.content.content_extension:
+        class: Hexmedia\ContentBundle\Twig\Extension\ContentExtension
         arguments: [ "@doctrine.orm.entity_manager", "@service_container" ]
         tags:
             - { name: twig.extension }
@@ -25,5 +25,11 @@ services:
         arguments: [ "@doctrine.orm.entity_manager" ]
         tags:
             - { name: form.type, alias: media }
+
+
+    hexmedia.content.edit_mode.area:
+        class: Hexmedia\ContentBundle\EditMode\Area
+        tags:
+            - { name: hexmedia.content }
 
 

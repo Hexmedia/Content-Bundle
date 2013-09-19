@@ -9,37 +9,38 @@ class AreaNode extends \Twig_Node
 {
     /**
      * @param \Twig_Node $content
-     * @param \Twig_Node $areaName
-     * @param \Twig_Node $type
+     * @param string $name
+     * @param \Twig_Node tag
      * @param \Twig_Node $class
      * @param \Twig_Node $language
      * @param bool $isGlobal
-     * @param int $lineno
-     * @param string $tag
+     * @param int $lineNumber
+     * @param string $tag2
+     * @internal param \Twig_Node $areaName
      */
     public function __construct(
         \Twig_Node $content,
-        \Twig_Node $areaName,
-        \Twig_Node $type = null,
+        $name,
+        \Twig_Node $tag = null,
         \Twig_Node $class = null,
         \Twig_Node $language = null,
         $isGlobal = false,
-        $lineno = 0,
-        $tag = null
+        $lineNumber = 0,
+        $tag2 = null
     ) {
         parent::__construct(
             [
                 'content' => $content,
                 'class' => $class,
-                'type' => $type,
-                'areaName' => $areaName,
+                'tag' => $tag,
                 'language' => $language
             ],
             [
+                'name' => $name,
                 'isGlobal' => $isGlobal
             ],
-            $lineno,
-            $tag
+            $lineNumber,
+            $tag2
         );
     }
 
@@ -51,18 +52,15 @@ class AreaNode extends \Twig_Node
     public function compile(\Twig_Compiler $compiler)
     {
         $languageNode = $this->getNode("language");
-        $typeNode = $this->getNode("type");
+        $tagNode = $this->getNode("tag");
         $classNode = $this->getNode("class");
 
         $compiler->write(
-            'echo($this->env->getExtension(\'content_area_extension\')->get('
+            'echo($this->env->getExtension(\'content_area_extension\')->get(\'' . $this->getAttribute('name') . '\', '
         );
 
-        $compiler->subcompile($this->getNode("areaName"));
-        $compiler->write(", ");
-
-        if ($typeNode instanceof \Twig_Node) {
-            $compiler->subcompile($typeNode);
+        if ($tagNode instanceof \Twig_Node) {
+            $compiler->subcompile($tagNode);
         } else {
             $compiler->write("'div'");
         }

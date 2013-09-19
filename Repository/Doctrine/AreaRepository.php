@@ -19,7 +19,7 @@ class AreaRepository extends EntityRepository implements AreaRepositoryInterface
 
     /**
      * @param $name
-     * @param $locale
+     * @param $path
      * @return mixed
      */
     public function getByNameAndPath($name, $path)
@@ -29,12 +29,12 @@ class AreaRepository extends EntityRepository implements AreaRepositoryInterface
         $queryBuilder
             ->where(
                 $queryBuilder->expr()->andX(
-                    $queryBuilder->expr()->eq('a.name', '?1'),
-                    $queryBuilder->expr()->eq('a.path', '?2')
+                    $queryBuilder->expr()->eq('a.name', ':name'),
+                    $queryBuilder->expr()->eq('a.path', ':path')
                 )
             )
-            ->setParameter('1', $name)
-            ->setParameter('2', $path);
+            ->setParameter(':name', $name)
+            ->setParameter(':path', $path);
 
         try {
             return $queryBuilder->getQuery()->getSingleResult();
@@ -48,8 +48,30 @@ class AreaRepository extends EntityRepository implements AreaRepositoryInterface
         return $this->findOneByPath($path);
     }
 
-    function getGlobalByName($name)
+    public function getGlobalByName($name)
     {
-        // TODO: Implement getGlobalByName() method.
+        $queryBuilder = $this->createQueryBuilder("a");
+
+        $queryBuilder
+            ->where(
+                $queryBuilder->expr()->andX(
+                    $queryBuilder->expr()->eq('a.name', ':name'),
+                    $queryBuilder->expr()->eq('a.global', 1)
+                )
+
+            )
+            ->setParameter(':name', $name);
+
+        try {
+            return $queryBuilder->getQuery()->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+
+    }
+
+    public function getByMd5($md5)
+    {
+        return $this->findOneByMd5($md5);
     }
 }

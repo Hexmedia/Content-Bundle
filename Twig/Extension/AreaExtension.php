@@ -47,14 +47,14 @@ class AreaExtension extends \Twig_Extension
     /**
      * @param string $name
      * #param string $defaultContent
-     * @param string $type
+     * @param string $tag
      * @param string $class
      * @param string $defaultContent
      * @param bool $isGlobal
      * @param string $locale
      * @return string
      */
-    public function get($name, $type, $class, $defaultContent = "", $isGlobal = false, $locale = null)
+    public function get($name, $tag, $class, $defaultContent = "", $isGlobal = false, $locale = null)
     {
         /**
          * @var AreaRepositoryInterface
@@ -109,6 +109,7 @@ class AreaExtension extends \Twig_Extension
             $entity->setPath($routePath ? $routePath : "");
             $entity->setPage($requestUri);
             $entity->setRoute($route ? $route : "");
+            $entity->setMd5(md5($entity->getPath() . $entity->getName()));
 
             $this->entityManager->persist($entity);
 
@@ -123,22 +124,26 @@ class AreaExtension extends \Twig_Extension
 
         if ($this->service->get('session')->get('hexmedia_content_edit_mode')) {
             $content = $twig->render(
-                "HexmediaContentBundle:Area:area-editable.html.twig",
+                "HexmediaContentBundle:Content:content-editable.html.twig",
                 [
                     'content' => $entity->getContent(),
-                    'path' => $entity->getPath(),
-                    'type' => $type,
-                    'class' => $class
+                    'id' => $entity->getMd5(),
+                    'field' => 'content',
+                    'tag' => $tag,
+                    'class' => $class,
+                    'type' => 'area'
                 ]
             );
         } else {
             $content = $twig->render(
-                "HexmediaContentBundle:Area:area.html.twig",
+                "HexmediaContentBundle:Content:content.html.twig",
                 [
                     'content' => $entity->getContent(),
-                    'path' => $entity->getPath(),
-                    'type' => $type,
-                    'class' => $class
+                    'id' => $entity->getMd5(),
+                    'field' => 'content',
+                    'tag' => $tag,
+                    'class' => $class,
+                    'type' => 'area'
                 ]
             );
         }
