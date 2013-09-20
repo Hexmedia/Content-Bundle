@@ -252,17 +252,25 @@ class Page
     }
 
     /**
-     * Returns an array of the fields used to generate the slug.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getSluggableFields()
     {
         return ["title"];
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getRegenerateSlugOnUpdate() {
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function __toString() {
-        return $this->getSlug();
+        return $this->getTitle();
     }
 }
 
