@@ -15,19 +15,22 @@ use Hexmedia\ContentBundle\Form\Type\Area\EditType;
  */
 class AreaController extends CrudController
 {
-    protected function getMainRoute() {
+    public function getMainRoute() {
         return "HexMediaContentArea";
     }
 
-    protected function getFieldsToDisplayOnList()
+    /**
+     * {@inheritdoc}
+     */
+    public function getFieldsToDisplayOnList()
     {
         return [
-            "number" => "number",
-            "id" => "getId",
-            "page" => "getPage",
-            "name" => "getName",
-            "route" => "getRoute",
-            "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat']
+            "number" => ['get' => "number", 'type' => 'number', 'label' => '#'],
+            "id" => ['get' => "getId", 'show' => false],
+            "page" => ['get' => "getPage", 'label' => 'Page'],
+            "name" => ['get' => "getName", 'label' => 'Name'],
+            "route" => ['get' => "getRoute", 'label' => 'Route'],
+            "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat', 'label' => 'Last Modified']
         ];
     }
 
@@ -105,7 +108,7 @@ class AreaController extends CrudController
         return $em->getRepository('HexmediaContentBundle:Area');
     }
 
-    protected function getEntityName() {
+    public function getEntityName() {
         return "Area";
     }
 

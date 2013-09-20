@@ -45,13 +45,13 @@ class SliderController extends CrudController
         return $em->getRepository('HexmediaContentBundle:Slider');
     }
 
-    protected function getFieldsToDisplayOnList()
+    public function getFieldsToDisplayOnList()
     {
         return [
-            "number" => "number",
-            "id" => "getId",
-            "name" => "getName",
-            "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat']
+            "number" => ['get' => "number", 'label' => '#'],
+            "id" => ['get' => "getId", 'show' => false],
+            "name" => ['get' => "getName", 'label' => 'Name'],
+            "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat', 'label' => 'Last modified']
         ];
     }
 
@@ -100,7 +100,7 @@ class SliderController extends CrudController
         return new Slider();
     }
 
-    protected function getMainRoute()
+    public function getMainRoute()
     {
         return "HexMediaContentSlider";
     }
@@ -110,7 +110,7 @@ class SliderController extends CrudController
         return new AddType();
     }
 
-    protected function getEntityName()
+    public function getEntityName()
     {
         return "Slider";
     }

@@ -109,16 +109,16 @@ class SlideController extends CrudController
         return $em->getRepository('HexmediaContentBundle:Slide');
     }
 
-    protected function getFieldsToDisplayOnList()
+    public function getFieldsToDisplayOnList()
     {
         return [
-            "number" => "number",
-            "id" => "getId",
-            "title" => "getTitle",
-            'published' => ['get' => 'getPublished', 'format' => 'bool'],
-            'publishedFrom' => ['get' => 'getPublishedFrom', 'format' => 'timeformat'],
-            'publishedTo' => ['get' => 'getPublishedTo', 'format' => 'timeformat'],
-            "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat']
+            "number" =>['get' =>  "number", 'label' => '#', 'sortable' => false],
+            "id" => ['get' => "getId", 'show' => false],
+            "title" => ['get' => "getTitle", 'label' => 'Title'],
+            'published' => ['get' => 'getPublished', 'format' => 'bool', 'label' => 'Published'],
+            'publishedFrom' => ['get' => 'getPublishedFrom', 'format' => 'timeformat', 'label' => 'Published From'],
+            'publishedTo' => ['get' => 'getPublishedTo', 'format' => 'timeformat', 'label' => 'Published To'],
+            "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat', 'label' => 'Last Modified']
         ];
     }
 
@@ -139,12 +139,12 @@ class SlideController extends CrudController
         return new AddType();
     }
 
-    protected function getMainRoute()
+    public function getMainRoute()
     {
         return "HexMediaContentSlide";
     }
 
-    protected function getEntityName()
+    public function getEntityName()
     {
         return "slide";
     }

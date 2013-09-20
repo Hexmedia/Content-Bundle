@@ -45,9 +45,7 @@ class AreaNode extends \Twig_Node
     }
 
     /**
-     * Compiles the node to PHP.
-     *
-     * @param \Twig_Compiler $compiler A Twig_Compiler instance
+     * {@inheritdoc}
      */
     public function compile(\Twig_Compiler $compiler)
     {

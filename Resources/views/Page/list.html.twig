@@ -1,8 +1,5 @@
 {% include "HexmediaAdministratorBundle:List:entities-data.html.twig" with {'entities': entities, 'entitiesCount' : entitiesCount }%}
 
-{% javascripts output='js/area-list.js'
-'@HexmediaContentBundle/Resources/public/js/page-list.js' %}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
+{% list_script hexmedia content page %}
 
 {% include "HexmediaAdministratorBundle:List:list.html.twig"  with {'addRouteName' : 'HexMediaContentPageAdd', 'editRouteName' : 'HexMediaContentPageEdit', 'removeRouteName' : 'HexMediaContentPageDelete'} %}

@@ -20,7 +20,7 @@ class MediaController extends CrudController
         $this->breadcrumbs = $this->get("white_october_breadcrumbs");
 
         $this->breadcrumbs->addItem($this->get('translator')->trans("Content"));
-        $this->breadcrumbs->addItem($this->get('translator')->trans("Media Library"), $this->get('router')->generate('HexMediaContentMediaLibrary'));
+        $this->breadcrumbs->addItem($this->get('translator')->trans("Media Library"), $this->get('router')->generate('HexMediaContentMedia'));
 
         return $this->breadcrumbs;
     }
@@ -59,20 +59,20 @@ class MediaController extends CrudController
     /**
      * {@inheritdoc}
      */
-    protected function getFieldsToDisplayOnList()
+    public function getFieldsToDisplayOnList()
     {
         return [
-            "number" => "number",
-            "id" => "getId",
-            "name" => "getName",
-            "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat'],
-            "miniature" => ['get' => 'self', 'call' => function ($entity) {
+            "number" => ['get' => "number", 'label' => '#', 'sortable' => false],
+            "id" => ['get' => "getId", 'show' => false],
+            "name" => ['get' => "getName", 'label' => 'Name'],
+            "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat', 'label' => 'Last Modified'],
+            "miniature" => ['get' => 'self', 'label' => 'Miniature', 'call' => function ($entity) {
                 $cacheManager = $this->container->get('liip_imagine.cache.manager');
                 $vichHelper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
 
                 return "<img src=\"" . $cacheManager->getBrowserPath($vichHelper->asset($entity, 'file'), 'small_admin_square') . "\" />";
             }],
-            'image' => ['get' => 'self', 'call' => function ($entity) {
+            'image' => ['get' => 'self', 'label' => 'Image', 'call' => function ($entity) {
                 $cacheManager = $this->container->get('liip_imagine.cache.manager');
                 $vichHelper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
 
@@ -125,7 +125,7 @@ class MediaController extends CrudController
         return new Media();
     }
 
-    protected function getMainRoute()
+    public function getMainRoute()
     {
         return "HexMediaContentMedia";
     }
@@ -135,7 +135,7 @@ class MediaController extends CrudController
         return new AddType();
     }
 
-    protected function getEntityName()
+    public function getEntityName()
     {
         return "Media";
     }

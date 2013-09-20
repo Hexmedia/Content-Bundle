@@ -1,10 +1,6 @@
 {% include "HexmediaAdministratorBundle:List:entities-data.html.twig" with {'entities': entities, 'entitiesCount' : entitiesCount }%}
 
-{% javascripts output='js/slider-list.js'
-'@HexmediaContentBundle/Resources/public/js/slider-list.js' %}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
-
+{% list_script hexmedia content slider %}
 
 {% include "HexmediaAdministratorBundle:List:list.html.twig"  with {'addRouteName' : 'HexMediaContentSliderAdd', 'editRouteName' : 'HexMediaContentSliderEdit', 'removeRouteName' : 'HexMediaContentSliderDelete'} %}
 

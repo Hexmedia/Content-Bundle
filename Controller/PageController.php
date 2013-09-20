@@ -44,17 +44,17 @@ class PageController extends CrudController
         return $em->getRepository('HexmediaContentBundle:Page');
     }
 
-    protected function getFieldsToDisplayOnList()
+    public function getFieldsToDisplayOnList()
     {
         return [
-            'id' => 'getId',
-            'number' => 'number',
-            'title' => 'getTitle',
-            'slug' => 'getSlug',
-            'published' => ['get' => 'getPublished', 'format' => 'bool'],
-            'publishedFrom' => ['get' => 'getPublishedFrom', 'format' => 'timeformat'],
-            'publishedTo' => ['get' => 'getPublishedTo', 'format' => 'timeformat'],
-            'lastModified' => ['get' => 'getUpdatedAt', 'format' => 'timeformat']
+            'id' => ['get' => 'getId', 'show' => false, 'sortable' => false],
+            'number' => ['get' => 'number', 'label' => '#' ],
+            'title' => ['get' => 'getTitle', 'label' => 'Title' ],
+            'slug' => ['get' => 'getSlug', 'label' => 'Slug' ],
+            'published' => ['get' => 'getPublished', 'format' => 'bool', 'label' => 'Published'],
+            'publishedFrom' => ['get' => 'getPublishedFrom', 'format' => 'timeformat', 'label' => 'Published From'],
+            'publishedTo' => ['get' => 'getPublishedTo', 'format' => 'timeformat', 'label' => 'Published To'],
+            'lastModified' => ['get' => 'getUpdatedAt', 'format' => 'timeformat', 'label' => 'Last Modified']
         ];
     }
 
@@ -98,7 +98,7 @@ class PageController extends CrudController
         return new Page();
     }
 
-    protected function getMainRoute()
+    public function getMainRoute()
     {
         return "HexMediaContentPage";
     }
@@ -108,7 +108,7 @@ class PageController extends CrudController
         return new AddType();
     }
 
-    protected function getEntityName()
+    public function getEntityName()
     {
         return "Page";
     }
