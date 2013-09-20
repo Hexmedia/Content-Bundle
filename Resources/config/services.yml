@@ -2,32 +2,32 @@ parameters:
 #    hexmedia_content.example.class: Hexmedia\ContentBundle\Example
 
 services:
-    hexmedia.content.menu.subscriber:
+    hexmedia_content.menu.subscriber:
         class: Hexmedia\ContentBundle\Menu\Subscriber
         arguments: [ "@translator" ]
         tags:
             - { name: kernel.event_subscriber }
 
-    hexmedia.content.area_extension:
+    hexmedia_content.area_extension:
         class: Hexmedia\ContentBundle\Twig\Extension\AreaExtension
         arguments: [ "@doctrine.orm.entity_manager", "@service_container" ]
         tags:
             - { name: twig.extension }
 
-    hexmedia.content.content_extension:
+    hexmedia_content.content_extension:
         class: Hexmedia\ContentBundle\Twig\Extension\ContentExtension
         arguments: [ "@doctrine.orm.entity_manager", "@service_container" ]
         tags:
             - { name: twig.extension }
 
-    hexmedia.content.fields.media:
+    hexmedia_content.fields.media:
         class: Hexmedia\ContentBundle\Form\Fields\MediaType
         arguments: [ "@doctrine.orm.entity_manager" ]
         tags:
             - { name: form.type, alias: media }
 
 
-    hexmedia.content.edit_mode.area:
+    hexmedia_content.edit_mode.area:
         class: Hexmedia\ContentBundle\EditMode\Area
         tags:
             - { name: hexmedia.content }

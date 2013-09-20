@@ -2,11 +2,11 @@
 
 namespace Hexmedia\ContentBundle\Form\Type\Media;
 
-use Hexmedia\ContentBundle\Form\Type\AbstractType as AbstractTypeBase;
+use Hexmedia\AdministratorBundle\Form\Type\CrudType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-abstract class AbstractType extends AbstractTypeBase
+abstract class AbstractType extends CrudType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)

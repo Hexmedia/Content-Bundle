@@ -1,19 +1,1 @@
-hexMedia_Content_Media:
-    resource: "@HexmediaContentBundle/Resources/config/routing/media.yml"
-    prefix:   /media/
 
-hexMedia_Content_Area:
-    resource: "@HexmediaContentBundle/Resources/config/routing/area.yml"
-    prefix:   /area/
-
-hexMedia_Content_Page:
-    resource: "@HexmediaContentBundle/Resources/config/routing/page.yml"
-    prefix:   /page/
-
-hexMedia_Content_Slider:
-    resource: "@HexmediaContentBundle/Resources/config/routing/slider.yml"
-    prefix:   /slider/
-
-hexMedia_Content_Slide:
-    resource: "@HexmediaContentBundle/Resources/config/routing/slide.yml"
-    prefix:   /slide/

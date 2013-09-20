@@ -1,0 +1,11 @@
+_hexmedia_content_media:
+    resource: "@HexmediaContentBundle/Resources/config/routing/admin/media.yml"
+    prefix:   /media/
+
+_hexmedia_content_area:
+    resource: "@HexmediaContentBundle/Resources/config/routing/admin/area.yml"
+    prefix:   /area/
+
+_hexmedia_content_page:
+    resource: "@HexmediaContentBundle/Resources/config/routing/admin/page.yml"
+    prefix:   /page/
