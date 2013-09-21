@@ -14,16 +14,20 @@ use Hexmedia\AdministratorBundle\EditMode\EntityUpdater;
 
 class Area extends EntityUpdater {
 
-    public function findByPath($path)
+    public function find($path)
     {
         $repository = $this->entityManager->getRepository("HexmediaContentBundle:Area");
 
-        $md5 = substr($path, 0, strpos($path, ":"));
-
-        return $repository->getByMd5($md5);
+        return $repository->getByMd5($path);
     }
 
-    public function getField($path)
+    /**
+     * Always content
+     *
+     * @param $field
+     * @return string
+     */
+    public function getField($field)
     {
         return "content";
     }

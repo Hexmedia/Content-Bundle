@@ -13,12 +13,9 @@ use Hexmedia\AdministratorBundle\EditMode\EntityUpdater;
 
 class Page extends EntityUpdater {
 
-    public function findByPath($path)
+    public function find($id)
     {
         $repository = $this->entityManager->getRepository("HexmediaContentBundle:Page");
-
-        $pos = strpos($path, ":");
-        $id = substr($path, 0, $pos);
 
         return $repository->findOneById($id);
     }
