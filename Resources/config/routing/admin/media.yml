@@ -1,20 +1,20 @@
 HexMediaContentMediaAdd:
     pattern: /add
-    defaults: { _controller: HexmediaContentBundle:Media:add }
+    defaults: { _controller: HexmediaContentBundle:AdminMedia:add }
     methods: [ GET ]
     options:
         expose: true
 
 HexMediaContentMediaCreate:
     pattern: /add
-    defaults: { _controller: HexmediaContentBundle:Media:create }
+    defaults: { _controller: HexmediaContentBundle:AdminMedia:create }
     methods: [ PUT, POST ]
     options:
         expose: true
 
 HexMediaContentMediaEdit:
     pattern: /{id}/edit
-    defaults: { _controller: HexmediaContentBundle:Media:edit }
+    defaults: { _controller: HexmediaContentBundle:AdminMedia:edit }
     methods: [ GET ]
     requirements:
         id: \d+
@@ -23,7 +23,7 @@ HexMediaContentMediaEdit:
 
 HexMediaContentMediaUpdate:
     pattern: /{id}/edit
-    defaults: { _controller: HexmediaContentBundle:Media:update }
+    defaults: { _controller: HexmediaContentBundle:AdminMedia:update }
     methods: [ PUT, POST ]
     requirements:
         id: \d+
@@ -32,7 +32,7 @@ HexMediaContentMediaUpdate:
 
 HexMediaContentMediaDelete:
     pattern: /{id}/delete
-    defaults: { _controller: HexmediaContentBundle:Media:delete }
+    defaults: { _controller: HexmediaContentBundle:AdminMedia:delete }
     methods: [ POST, PUT, DELETE ]
     requirements:
         id: \d+
@@ -57,7 +57,7 @@ HexMediaContentMediaUpload:
 
 HexMediaContentMediaAttach:
     pattern: /attach/{type}/{page}/{sort}/{pageSize}/{sortDirection}
-    defaults: { _controller: HexmediaContentBundle:Media:attach, type: image, page: 1, sort: id, pageSize: 10, sortDirection: asc }
+    defaults: { _controller: HexmediaContentBundle:AdminMedia:attach, type: image, page: 1, sort: id, pageSize: 10, sortDirection: asc }
     requirements:
         type: image|video|document
         page: \d+
@@ -66,16 +66,16 @@ HexMediaContentMediaAttach:
     options:
         expose: true
 
-HexMediaContentMediaLibrary:
+HexMediaContentMedia:
     pattern: /library
-    defaults: { _controller: HexmediaContentBundle:Media:index }
+    defaults: { _controller: HexmediaContentBundle:AdminMedia:index }
     methods: [ GET ]
     options:
         expose: true
 
 HexMediaContentMediaList:
     pattern: /list/{page}/{sort}/{pageSize}/{sortDirection}
-    defaults: { _controller: HexmediaContentBundle:Media:list, page: 1, sort: id, pageSize: 10, sortDirection: asc }
+    defaults: { _controller: HexmediaContentBundle:AdminMedia:list, page: 1, sort: id, pageSize: 10, sortDirection: asc }
     requirements:
         page: \d+
         pageSize: \d+

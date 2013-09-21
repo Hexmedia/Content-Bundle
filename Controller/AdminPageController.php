@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * Page controller.
  *
  */
-class PageController extends CrudController
+class AdminPageController extends CrudController
 {
     protected function registerBreadcrubms()
     {
@@ -61,7 +61,7 @@ class PageController extends CrudController
     /**
      * Creates a new Page entity.
      *
-     * @Rest\View(template="HexmediaContentBundle:Page:add.html.twig")
+     * @Rest\View(template="HexmediaContentBundle:AdminPage:add.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -70,7 +70,7 @@ class PageController extends CrudController
     /**
      * Edits an existing Page entity.
      *
-     * @Rest\View(template="HexmediaContentBundle:Page:edit.html.twig")
+     * @Rest\View(template="HexmediaContentBundle:AdminPage:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {

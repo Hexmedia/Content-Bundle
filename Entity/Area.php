@@ -49,7 +49,7 @@ class Area
     /**
      * @var string
      *
-     * @ORM\Column(name="locale", type="string", length=5)
+     * @ORM\Column(name="locale", type="string", length=5, nullable=true)
      */
     private $locale;
     /**

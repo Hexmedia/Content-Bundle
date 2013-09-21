@@ -16,7 +16,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  * @ORM\Entity(repositoryClass="Hexmedia\ContentBundle\Repository\Doctrine\MediaRepository")
  * @ORM\Table(name="media")
  */
-class Media implements LocaleEntity
+class Media
 {
 
     use ORMBehaviors\Timestampable\Timestampable,

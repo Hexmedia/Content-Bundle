@@ -1,13 +1,13 @@
 HexMediaContentAreaAdd:
     pattern: /add
-    defaults: { _controller: HexmediaContentBundle:Area:add }
+    defaults: { _controller: HexmediaContentBundle:AdminArea:add }
     methods: [GET]
     options:
         expose: true
 
 HexMediaContentAreaCreate:
     pattern: /add
-    defaults: { _controller: HexmediaContentBundle:Area:create }
+    defaults: { _controller: HexmediaContentBundle:AdminArea:create }
     methods: [POST]
     options:
         expose: true
@@ -15,7 +15,7 @@ HexMediaContentAreaCreate:
 
 HexMediaContentAreaEdit:
     pattern: /{id}/edit
-    defaults: { _controller: HexmediaContentBundle:Area:edit }
+    defaults: { _controller: HexmediaContentBundle:AdminArea:edit }
     methods: [GET]
     requirements:
         id: \d+
@@ -24,7 +24,7 @@ HexMediaContentAreaEdit:
 
 HexMediaContentAreaUpdate:
     pattern: /{id}/edit
-    defaults: { _controller: HexmediaContentBundle:Area:update }
+    defaults: { _controller: HexmediaContentBundle:AdminArea:update }
     methods: [ PUT, POST ]
     requirements:
         id: \d+
@@ -33,7 +33,7 @@ HexMediaContentAreaUpdate:
 
 HexMediaContentAreaDelete:
     pattern: /{id}/delete
-    defaults: { _controller: HexmediaContentBundle:Area:delete }
+    defaults: { _controller: HexmediaContentBundle:AdminArea:delete }
     methods: [ POST, PUT, DELETE ]
     requirements:
         id: \d+
@@ -42,14 +42,14 @@ HexMediaContentAreaDelete:
 
 HexMediaContentArea:
     pattern: /
-    defaults: { _controller: HexmediaContentBundle:Area:index }
+    defaults: { _controller: HexmediaContentBundle:AdminArea:index }
     methods: [ GET ]
     options:
         expose: true
 
 HexMediaContentAreaList:
     pattern: /list/{page}/{sort}/{pageSize}/{sortDirection}
-    defaults: { _controller: HexmediaContentBundle:Area:list, page: 1, sort: id, pageSize: 10, sortDirection: asc }
+    defaults: { _controller: HexmediaContentBundle:AdminArea:list, page: 1, sort: id, pageSize: 10, sortDirection: asc }
     requirements:
         page: \d+
         pageSize: \d+

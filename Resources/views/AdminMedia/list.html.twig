@@ -1,6 +1,6 @@
 {% include "HexmediaAdministratorBundle:List:entities-data.html.twig" with {'entities': entities, 'entitiesCount' : entitiesCount } %}
 
-{% list_script hexmedia content media %}
+{% list_script hexmedia content adminMedia %}
 
 {% include "HexmediaAdministratorBundle:List:list.html.twig" with {'addRouteName' : 'HexMediaContentMediaAdd', 'editRouteName' : 'HexMediaContentMediaEdit', 'removeRouteName' : 'HexMediaContentMediaDelete'} %}
 

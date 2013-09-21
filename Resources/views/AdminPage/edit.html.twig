@@ -21,12 +21,12 @@
 {% block body -%}
     {{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
     <div class="buttons-bar">
-        <a class="btn btn-warning" href="{{ path('HexMediaContentArea') }}"
+        <a class="btn btn-warning" href="{{ path('HexMediaContentPage') }}"
            title="{{ 'Exit without edit'|trans }}">{{ 'Exit'|trans }}</a>
         {{ form_widget(form.saveAndExit) }}
+        {{ form_widget(form.saveAndPublish) }}
         {{ form_widget(form.save) }}
         {{ form_widget(form.delete) }}
-        {{ form_widget(form.publish) }}
     </div>
     <div class="row">
         <div class="col-md-12">

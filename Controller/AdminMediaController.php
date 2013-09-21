@@ -10,7 +10,7 @@ use Hexmedia\ContentBundle\Form\Type\Media\EditType;
 use Hexmedia\ContentBundle\Entity\Media;
 use Symfony\Component\HttpFoundation\Request;
 
-class MediaController extends CrudController
+class AdminMediaController extends CrudController
 {
     /**
      * {@inheritDoc}
@@ -28,11 +28,11 @@ class MediaController extends CrudController
     /**
      * Creates a new Media entity.
      *
-     * @Rest\View(template="HexmediaContentBundle:Media:add.html.twig")
+     * @Rest\View(template="HexmediaContentBundle:AdminMedia:add.html.twig")
      */
     public function createAction(Request $request)
     {
-
+        return parent::createAction($request);
     }
 
     /**
@@ -41,10 +41,11 @@ class MediaController extends CrudController
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @Rest\View(template="HexmediaContentBundle:Media:edit")
+     * @Rest\View(template="HexmediaContentBundle:AdminMedia:edit")
      */
     public function updateAction(Request $request, $id)
     {
+        return parent::createAction($request, $id);
     }
 
 

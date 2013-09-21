@@ -1,6 +1,6 @@
 HexMediaContentPageList:
     pattern:  /list/{page}/{sort}/{pageSize}/{sortDirection}
-    defaults: { _controller: "HexmediaContentBundle:Page:list", page: 1, sort: id, pageSize: 10, sortDirection: asc }
+    defaults: { _controller: "HexmediaContentBundle:AdminPage:list", page: 1, sort: id, pageSize: 10, sortDirection: asc }
     requirements:
         page: \d+
         pageSize: \d+
@@ -11,30 +11,30 @@ HexMediaContentPageList:
 
 HexMediaContentPage:
     pattern:  /
-    defaults: { _controller: "HexmediaContentBundle:Page:index"}
+    defaults: { _controller: "HexmediaContentBundle:AdminPage:index"}
     methods: [ GET, POST ]
     options:
         expose: true
 
 HexMediaContenPageShow:
     pattern:  /{id}/show
-    defaults: { _controller: "HexmediaContentBundle:Page:show" }
+    defaults: { _controller: "HexmediaContentBundle:AdminPage:show" }
 
 HexMediaContentPageAdd:
     pattern:  /add
-    defaults: { _controller: "HexmediaContentBundle:Page:add" }
+    defaults: { _controller: "HexmediaContentBundle:AdminPage:add" }
     methods: [ GET ]
     options:
         expose: true
 
 HexMediaContentPageCreate:
     pattern:  /add
-    defaults: { _controller: "HexmediaContentBundle:Page:create" }
+    defaults: { _controller: "HexmediaContentBundle:AdminPage:create" }
     methods: [ POST]
 
 HexMediaContentPageEdit:
     pattern:  /{id}/edit
-    defaults: { _controller: "HexmediaContentBundle:Page:edit" }
+    defaults: { _controller: "HexmediaContentBundle:AdminPage:edit" }
     methods: [ GET ]
     requirements:
         id: \d+
@@ -43,7 +43,7 @@ HexMediaContentPageEdit:
 
 HexMediaContentPageUpdate:
     pattern:  /{id}/edit
-    defaults: { _controller: "HexmediaContentBundle:Page:update" }
+    defaults: { _controller: "HexmediaContentBundle:AdminPage:update" }
     methods: [ POST, PUT ]
     requirements:
         id: \d+
@@ -52,7 +52,7 @@ HexMediaContentPageUpdate:
 
 HexMediaContentPageDelete:
     pattern:  /{id}/delete
-    defaults: { _controller: "HexmediaContentBundle:Page:delete" }
+    defaults: { _controller: "HexmediaContentBundle:AdminPage:delete" }
     methods: [ POST, DELETE ]
     requirements:
         id: \d+

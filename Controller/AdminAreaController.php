@@ -13,7 +13,7 @@ use Hexmedia\ContentBundle\Form\Type\Area\EditType;
 /**
  * Area controller.
  */
-class AreaController extends CrudController
+class AdminAreaController extends CrudController
 {
     public function getMainRoute() {
         return "HexMediaContentArea";
@@ -81,7 +81,7 @@ class AreaController extends CrudController
      *
      * @return array|\Symfony\Component\HttpFoundation\Response
 
-     * @Rest\View(template="HexmediaContentBundle:Area:edit.html.twig")
+     * @Rest\View(template="HexmediaContentBundle:AdminArea:edit.html.twig")
      */
     public function updateAction(Request $request, $id) {
         return parent::updateAction($request, $id);
@@ -92,7 +92,7 @@ class AreaController extends CrudController
      *
      * @return array|\Symfony\Component\HttpFoundation\Response
      *
-     * @Rest\View(template="HexmediaContentBundle:Area:add.html.twig")
+     * @Rest\View(template="HexmediaContentBundle:AdminArea:add.html.twig")
      */
     public function createAction(Request $request) {
         return parent::createAction($request);
