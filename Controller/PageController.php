@@ -9,8 +9,7 @@
 
 namespace Hexmedia\ContentBundle\Controller;
 
-use FOS\RestBundle\Controller\FOSRestController as Controller;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageController extends Controller
@@ -19,7 +18,7 @@ class PageController extends Controller
      * @param string $ident
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Rest\View
+     * @Sensio\Bundle\FrameworkExtraBundle\Configuration\Template
      */
     public function displayAction($ident)
     {
