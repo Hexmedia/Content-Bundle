@@ -20,10 +20,8 @@ class Page extends EntityUpdater {
         return $repository->findOneById($id);
     }
 
-    public function getField($path)
+    public function getField($field)
     {
-        $pos = strpos($path, ":");
-        $field = substr($path, $pos + 1);
         return $field;
     }
 }

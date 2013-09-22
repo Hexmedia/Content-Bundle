@@ -1,6 +1,7 @@
 {% block media_widget %}
     {% spaceless %}
-            <input type="hidden" name="{{ name }}" value="{{ value }}" id="{{ id }}"/>
+            {%  set type='hidden' %}
+            {{ block('form_widget_simple') }}
 
             {% if value and value is not empty %}
                 {% if preview is defined %}
