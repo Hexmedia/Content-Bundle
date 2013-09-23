@@ -1,6 +1,6 @@
 {% extends 'HexmediaContentBundle::admin.html.twig' %}
 
-{% block title %}Area Creation{% endblock title %}
+{% block title %}Page Edit{% endblock title %}
 
 {% block head_script %}
     {% javascripts filter="?yui_js" output='js/page-edit.js'
@@ -21,12 +21,7 @@
 {% block body -%}
     {{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
     <div class="buttons-bar">
-        <a class="btn btn-warning" href="{{ path('HexMediaContentPage') }}"
-           title="{{ 'Exit without edit'|trans }}">{{ 'Exit'|trans }}</a>
-        {{ form_widget(form.saveAndExit) }}
-        {{ form_widget(form.saveAndPublish) }}
-        {{ form_widget(form.save) }}
-        {{ form_widget(form.delete) }}
+        {%  include "HexmediaAdministratorBundle:Form:buttons.html.twig" with {'form' : form, 'exit': 'HexMediaContentPage'} only %}
     </div>
     <div class="row">
         <div class="col-md-12">

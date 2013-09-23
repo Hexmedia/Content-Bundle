@@ -5,7 +5,6 @@ namespace Hexmedia\ContentBundle\Entity;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-use Hexmedia\ContentBundle\Locale\Entity as LocaleEntity;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**

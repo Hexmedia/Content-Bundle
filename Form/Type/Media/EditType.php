@@ -14,7 +14,7 @@ class EditType extends AbstractType
 
     public function getName()
     {
-        return 'hexmedia_content_mediatype_edit';
+        return 'bergway_training_method_edit';
     }
 
 }

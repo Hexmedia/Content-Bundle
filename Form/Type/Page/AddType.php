@@ -6,6 +6,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class AddType extends AbstractType
 {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
+        parent::buildForm($builder, $options);
+        $this->addAddNextButton($builder);
+    }
+
 
     /**
      * Returns the name of this type.
@@ -17,7 +22,4 @@ class AddType extends AbstractType
         return "content_page_type_add";
     }
 
-    protected function doBuildForm(FormBuilderInterface $buildier, array $options)
-    {
-    }
 }

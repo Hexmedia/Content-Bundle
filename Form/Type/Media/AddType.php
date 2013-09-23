@@ -18,7 +18,7 @@ class AddType extends AbstractType
 
     public function getName()
     {
-        return 'hexmedia_mediabundle_mediatype_add';
+        return 'bergway_training_method_add';
     }
 
 }

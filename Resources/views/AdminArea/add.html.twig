@@ -21,10 +21,7 @@
 {% block body -%}
     {{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
     <div class="buttons-bar">
-        <a class="btn btn-warning" href="{{ path('HexMediaContentArea') }}"
-           title="{{ 'Exit without edit'|trans }}">{{ 'Exit'|trans }}</a>
-        {{ form_widget(form.saveAndExit) }}
-        {{ form_widget(form.save) }}
+        {%  include "HexmediaAdministratorBundle:Form:buttons.html.twig" with {'form' : form, 'exit': 'HexMediaContentArea'} only %}
     </div>
     {{ form_end(form) }}
 {% endblock %}
