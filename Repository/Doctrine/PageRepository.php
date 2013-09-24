@@ -14,4 +14,11 @@ use Hexmedia\ContentBundle\Repository\PageRepositoryInterface;
  */
 class PageRepository extends EntityRepository implements PageRepositoryInterface {
     use ListTrait;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createPageQueryBuilder($alias) {
+        return $this->createQueryBuilder($alias)->where($alias . ".special = 0");
+    }
 }

@@ -43,7 +43,7 @@ class Area
     /**
      * @var string
      *
-     * @ORM\Column(name="content", type="string", length=5000)
+     * @ORM\Column(name="content", type="text")
      */
     private $content;
     /**

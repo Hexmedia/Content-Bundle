@@ -19,7 +19,7 @@ class Page
         AdmModel\PublicationTrait,
         ORMBehaviors\Blameable\Blameable,
         ORMBehaviors\Loggable\Loggable,
-        ORMBehaviors\Sluggable\Sluggable//     ORMBehaviors\Translatable\Translatable
+        ORMBehaviors\Sluggable\Sluggable //     ORMBehaviors\Translatable\Translatable
         ;
 
     /**
@@ -45,9 +45,17 @@ class Page
     /**
      * @var string
      *
-     * @ORM\Column(name="content", type="string", length=10000)
+     * @ORM\Column(name="content", type="text")
      */
     private $content;
+    /**
+     * If special do not display on page list
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="special", type="boolean", nullable=false)
+     */
+    private $special = false;
     /**
      * @var Media
      *
@@ -158,8 +166,21 @@ class Page
         return $this;
     }
 
+    /**
+     * @param boolean $special
+     */
+    public function setSpecial($special)
+    {
+        $this->special = $special;
+    }
 
-
+    /**
+     * @return boolean
+     */
+    public function getSpecial()
+    {
+        return $this->special;
+    }
 
     /**
      * Get admin
@@ -262,14 +283,16 @@ class Page
     /**
      * {@inheritdoc}
      */
-    public function getRegenerateSlugOnUpdate() {
+    public function getRegenerateSlugOnUpdate()
+    {
         return false;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getTitle();
     }
 }
