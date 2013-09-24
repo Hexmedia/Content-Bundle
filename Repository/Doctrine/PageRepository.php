@@ -18,7 +18,7 @@ class PageRepository extends EntityRepository implements PageRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function createPageQueryBuilder($alias) {
+    public function createListQueryBuilder($alias) {
         return $this->createQueryBuilder($alias)->where($alias . ".special = 0");
     }
 }
