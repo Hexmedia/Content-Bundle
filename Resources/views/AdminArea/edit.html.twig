@@ -1,18 +1,9 @@
-{% extends 'HexmediaContentBundle::admin.html.twig' %}
+{% extends 'HexmediaAdministratorBundle:Layout:edit.html.twig' %}
 
-{% block title %}Area Creation{% endblock title %}
-
-{% block head_script %}
-    {% javascripts output='js/area-edit.js'
-    '@HexmediaAdministratorBundle/Resources/public/js/bootstrap-datepicker.js'
-    '@HexmediaAdministratorBundle/Resources/public/js/lib/raptor.js'
-    '@HexmediaAdministratorBundle/Resources/public/js/raptor-textarea.js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-{% endblock %}
+{% block title %}{% trans with {'name': entity.name} %}Edit Area "%name%"{% endtrans %}{% endblock title %}
 
 {% block head_style %}
-    {% stylesheets filter='assetsurl,?yui_css' output='css/adrea-edit.css'
+    {% stylesheets
     '@HexmediaAdministratorBundle/Resources/public/css/raptor.css' %}
     <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
     {% endstylesheets %}

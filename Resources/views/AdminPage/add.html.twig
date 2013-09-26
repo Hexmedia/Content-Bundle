@@ -1,22 +1,6 @@
-{% extends 'HexmediaContentBundle::admin.html.twig' %}
+{% extends 'HexmediaAdministratorBundle:Layout:edit.html.twig' %}
 
-{% block title %}Page Creation{% endblock title %}
-
-{% block head_script %}
-    {% javascripts filter="?yui_js" output='js/page-edit.js'
-    '@HexmediaAdministratorBundle/Resources/public/js/bootstrap-datepicker.js'
-    '@HexmediaAdministratorBundle/Resources/public/js/lib/raptor.js'
-    '@HexmediaAdministratorBundle/Resources/public/js/raptor-textarea.js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-{% endblock %}
-
-{% block head_style %}
-    {% stylesheets filter='assetsurl,less,?yui_css' output='css/page-edit.css'
-    '@HexmediaAdministratorBundle/Resources/public/css/raptor.css' %}
-    <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
-    {% endstylesheets %}
-{% endblock %}
+{% block title %}{{ 'Page Creation'|trans }}{% endblock title %}
 
 {% block body -%}
     {{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
