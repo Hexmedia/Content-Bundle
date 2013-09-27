@@ -1,54 +1,58 @@
-{#{% block body %}#}
+{% extends "HexmediaAdministratorBundle:Layout:modal.html.twig" %}
 
+{% block head_script %}
     {% javascripts output='js/attach.js'
     '@HexmediaAdministratorBundle/Resources/public/js/own/knockout-bootstrap-grid.js'
-    '@HexmediaContentBundle/Resources/public/js/media-grid.js' %}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
+    '@HexmediaAdministratorBundle/Resources/public/js/model/grid.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
     {% include "HexmediaAdministratorBundle:List:entities-data.html.twig" with {'entities': entities, 'entitiesCount' : entitiesCount } %}
 
-{% stylesheets output='js/attach.css'
-'@HexmediaContentBundle/Resources/public/css/attach.css' %}
-<link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
-{% endstylesheets %}
+    {% javascripts output='js/media-grid.js'
+    '@HexmediaContentBundle/Resources/public/js/media-grid.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
-{#<a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg">Launch demo modal</a>#}
+    <script>
+        function callMediaFunction(id) {
+            window.opener.setMedia('{{ id }}', id);
+            window.close();
+        }
+    </script>
 
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-dialog-big">
-        <div class="modal-content">
-            <div class="modal-header">
-                {% include "HexmediaContentBundle:AdminMedia:uploadForm.html.twig" %}
-                <div class="float:left;"><a href="#" class="btn btn-primary add-multiple"><i class="icon-upload-alt"></i> Upload File</a></div>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="content data-area-grid">
-                    <div data-bind="grid: grid, gridTemplate: 'grid_radio'">
-                    </div>
+{% endblock head_script %}
+
+{% block head_style %}
+    {% stylesheets filter='assetsurl'
+    '@HexmediaContentBundle/Resources/public/css/attach.css' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock head_style %}
+
+{% block body %}
+    <div class="main">
+        <div class="content">
+            <div class="content data-area-grid">
+                <div data-bind="grid: grid, gridTemplate: 'grid_radio'">
                 </div>
-
-                <script type="text/knockout" id="grid_radio">
-                    <div class="row-fluid data-grid" data-bind="foreach: items">
-                        <div class="data-grid-element"
-                             data-bind="template: {'name':'grid_radio_element', 'data':$data}, click: $data.select, attr: {class: $data.class}"></div>
-                    </div>
-                </script>
-                <script type="text/knockout" id="grid_radio_element">
-                    <div class="border">
-                        <div class="img" data-bind="html:$data.image"></div>
-                        <h5 data-bind="text: $data.name"/>
-                        <input type="radio" name="element[$data.id]" data-bind="attr: {checked: $data.checked}"
-                               style="visibility: hidden;"/>
-                    </div>
-                </script>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="attach"><i class="icon-ok-sign"></i></a>
             </div>
         </div>
     </div>
-</div>
 
-{#{% endblock %}#}
+    <script type="text/knockout" id="grid_radio">
+        <div class="row-fluid data-grid" data-bind="foreach: items">
+            <div class="data-grid-element"
+                 data-bind="template: {'name':'grid_radio_element', 'data':$data}, click: $data.select, attr: {class: $data.class, 'data-id': $data.id}"></div>
+        </div>
+    </script>
+    <script type="text/knockout" id="grid_radio_element">
+        <div class="border">
+            <div class="img" data-bind="html:$data.image"></div>
+            {#<img src="" data-bind="attr: {'src': $data.image }" />#}
+            <h5 data-bind="text: $data.name"/>
+            <input type="radio" name="element[$data.id]" data-bind="attr: {checked: $data.checked}"
+                   style="visibility: hidden;"/>
+        </div>
+    </script>
+{% endblock body %}

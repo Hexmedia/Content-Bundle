@@ -146,9 +146,9 @@ class AdminMediaController extends CrudController
      *
      * @Rest\View
      */
-    public function attachAction($type, $page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC")
+    public function attachAction($type, $page = 1, $pageSize = 100, $sort = 'id', $sortDirection = "ASC")
     {
-        $entities = $this->getRepository()->getPage($page, $sort, $pageSize, $sortDirection);
+        $entities = $this->getRepository()->getPage($page, $sort, 100, $sortDirection);
         $entitiesCount = $this->getRepository()->getCount();
 
         $form = $this->createForm(new UploadForm());
@@ -158,7 +158,8 @@ class AdminMediaController extends CrudController
         return [
             'entities' => $this->prepareEntities($entities),
             'entitiesCount' => $entitiesCount,
-            'upload_form' => $formView
+            'upload_form' => $formView,
+            'id' => $this->getRequest()->get("id")
         ];
     }
 

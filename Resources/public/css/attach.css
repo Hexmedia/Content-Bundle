@@ -1,0 +1,16 @@
+.main > .content .data-area-grid .data-grid-element {
+    border: 1px solid #a1a1a1;
+    border-radius: 3px;
+    padding: 3px;
+    width: 160px;
+    height: 200px;
+    margin: 5px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.main > .content .data-area-grid .data-grid-element .img {
+    width: 150px;
+    height: 150px;
+    margin: auto;
+}
