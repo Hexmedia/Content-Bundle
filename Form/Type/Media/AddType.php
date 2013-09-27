@@ -7,18 +7,22 @@ use Symfony\Component\Form\FormBuilderInterface;
 class AddType extends AbstractType
 {
 
-	public function doBuildForm(FormBuilderInterface $builder, array $options)
+	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
 				->add('file', 'file', array(
 					'label' => 'File',
 					'required' => true
 		));
+
+        parent::buildForm($builder, $options);
+
+        $this->addAddNextButton($builder);
 	}
 
     public function getName()
     {
-        return 'bergway_training_method_add';
+        return 'hexmedia_media_add';
     }
 
 }

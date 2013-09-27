@@ -2,5 +2,6 @@
 
 {% list_script hexmedia content adminMedia %}
 
-{% include "HexmediaAdministratorBundle:List:list.html.twig" with {'addRouteName' : 'HexMediaContentMediaAdd', 'editRouteName' : 'HexMediaContentMediaEdit', 'removeRouteName' : 'HexMediaContentMediaDelete'} %}
+{% include "HexmediaContentBundle:AdminMedia:uploadForm.html.twig" %}
 
+{% include "HexmediaAdministratorBundle:List:list.html.twig" with {'route': 'HexMediaContentMedia', 'additionalHeaderActions': [{'class': 'icon-upload-alt add-multiple'}]} %}

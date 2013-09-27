@@ -3,42 +3,46 @@
 {% block title %}HexmediaContentBundle:Media:library{% endblock %}
 
 {% block head_script %}
-{#% javascripts output='js/media.js'
-'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/vendor/jquery.ui.widget.js'
-'@HexmediaContentBundle/Resources/public/JavaScript-Load-Image/load-image.min.js'
-'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.iframe-transport.js'
-'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload.js'
-'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-process.js'
-'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-image.js'
-'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-audio.js'
-'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-video.js'
-'@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-validate.js'
-'@HexmediaContentBundle/Resources/public/js/file-upload.js'
-%}
-<script type="text/javascript" src="{{ asset_url }}"></script>
-		{% endjavascripts %#}
+    {#% javascripts output='js/media.js'
+    '@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/vendor/jquery.ui.widget.js'
+    '@HexmediaContentBundle/Resources/public/JavaScript-Load-Image/load-image.min.js'
+    '@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.iframe-transport.js'
+    '@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload.js'
+    '@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-process.js'
+    '@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-image.js'
+    '@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-audio.js'
+    '@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-video.js'
+    '@HexmediaContentBundle/Resources/public/jQuery-File-Upload/js/jquery.fileupload-validate.js'
+    '@HexmediaContentBundle/Resources/public/js/file-upload.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %#}
+
+    {% javascripts
+        '@HexmediaContentBundleResources/public/js/multiupload.js' %}
+    {% endjavascript %}
 {% endblock %}
 {% block body %}
 
-<div class="row">
-	<div class="col-md-3">
-		<input type="text" name="search" placeholder="Search for ..." class="search-query" />
-		<button type="submit" class="btn">Search</button>
-	</div>
-	<div class="col-md-2">
-		<a href="#" class="icon-list btn"></a>
-		<a href="#" class="icon-th btn"></a>
-	</div>
+    <div class="row">
+        <div class="col-md-3">
+            <input type="text" name="search" placeholder="Search for ..." class="search-query"/>
+            <button type="submit" class="btn">Search</button>
+        </div>
+        <div class="col-md-2">
+            <a href="#" class="icon-list btn"></a>
+            <a href="#" class="icon-th btn"></a>
+        </div>
 
-	<div class="col-md-5">
+        <div class="col-md-5">
 		<span class="btn btn-success fileinput-button">
 			<i class="icon-plus icon-white"></i>
 			<span>Add files...</span>
 			<!-- The file input field used as target for the file upload widget -->
 			<input id="fileupload" type="file" name="files[]" multiple>
 		</span>
-	</div>
-</div>
+        </div>
+    </div>
 
 
 {% endblock %}

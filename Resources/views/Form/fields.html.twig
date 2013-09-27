@@ -1,29 +1,54 @@
 {% block media_widget %}
     {% spaceless %}
-            {%  set type='hidden' %}
+        {% set type='hidden' %}
+        <div class="media-selector">
             {{ block('form_widget_simple') }}
 
             {% if value and value is not empty %}
                 {% if preview is defined %}
-                    <img src="{{ vich_uploader_asset(entity, 'file')|imagine_filter(preview) }}" alt="{{ entity.name }}" id="{{ id }}_image" /> <br />
-                    <a href="{{ path('HexMediaContentMediaAttach', {'type':'image'}) }}" id="{{ id }}_imageSelect" class="btn btn-primary">
+                    <img src="{{ vich_uploader_asset(entity, 'file')|imagine_filter(preview) }}" alt="{{ entity.name }}"
+                         id="{{ id }}_image"/> <br/>
+                    <a href="{{ path('HexMediaContentMediaAttach', {'type':'image'}) }}" onclick="return false;" id="{{ id }}_imageSelect"
+                       class="btn btn-primary select-image">
                         <i class="icon-picture"></i> {{ change_label|trans }}
                     </a>
                 {% else %}
-                    <a href="#" id="{{ id }}_imageSelect" class="btn btn-primary">
+                    <a href="{{ path('HexMediaContentMediaAttach', {'type':'image'}) }}" onclick="return false;" id="{{ id }}_imageSelect"
+                       class="btn btn-primary select-image">
                         <i class="icon-picture"></i> {{ change_label|trans }}
                     </a>
                 {% endif %}
             {% else %}
-                <a href="#" id="{{ id }}_imageSelect" class="btn btn-primary">
+                <a href="{{ path('HexMediaContentMediaAttach', {'type':'image'}) }}" onclick="return false;" id="{{ id }}_imageSelect"
+                   class="btn btn-primary select-image">
                     <i class="icon-picture"></i> {{ select_label|trans }}
                 </a>
             {% endif %}
 
+            <div class="modal-space"></div>
 
-            <script type="text/javascript">
-                jQuery(document).ready(function () {
+        </div>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                $('.select-image').click(function () {
+                    var selector, mod;
+
+                    selector = $(this).parents("div.media-selector");
+                    mod = $(selector).find('.modal-space');
+
+                    $(mod).appendTo(selector);
+
+                    $(mod).modal({
+                        keyboard: false,
+                        remote: $(this).attr('href')
+                    });
+
+                    $(mod).modal("show");
+
+                    return false;
                 });
-            </script>
+            });
+        </script>
     {% endspaceless %}
 {% endblock %}E

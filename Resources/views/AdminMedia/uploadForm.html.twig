@@ -1,0 +1,12 @@
+{% javascripts
+'@HexmediaContentBundle/Resources/public/js/multiupload.js' %}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+<div class="multiple-file-upload" style="display: none;">
+    {{ form_start(upload_form, {'action':path('HexMediaContentMediaAddMultiple')}) }}
+    <div style="float: right;">{{ form_widget(upload_form.upload) }}</div>
+    <div style="float: right; margin-right: 10px;">{{ form_widget(upload_form.files) }}</div>
+    <div style="clear: both;"></div>
+    {{ form_end(upload_form) }}
+</div>

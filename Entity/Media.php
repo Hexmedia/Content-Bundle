@@ -14,10 +14,10 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  *
  * @ORM\Entity(repositoryClass="Hexmedia\ContentBundle\Repository\Doctrine\MediaRepository")
  * @ORM\Table(name="media")
+ * @ORM\HasLifecycleCallbacks
  */
 class Media
 {
-
     use ORMBehaviors\Timestampable\Timestampable,
         ORMBehaviors\Blameable\Blameable,
         ORMBehaviors\Loggable\Loggable,
@@ -249,6 +249,15 @@ class Media
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist() {
+        if (!$this->name) {
+            $this->name = $this->getFile()->getClientOriginalName();
+        }
     }
 
 

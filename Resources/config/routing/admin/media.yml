@@ -49,6 +49,12 @@ HexMediaContentMediaAttach:
     pattern: /attach/{type}/
     defaults: { _controller: HexmediaContentBundle:Attach:attach, type: image }
 
+HexMediaContentMediaAddMultiple:
+    pattern: /upload/multiple/
+    defaults:  { _controller: HexmediaContentBundle:AdminMedia:multiple }
+    options:
+        expose: true
+
 HexMediaContentMediaUpload:
     pattern: /upload
     defaults: { _controller: HexmediaContentBundle:Upload:upload }

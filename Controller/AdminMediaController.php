@@ -8,6 +8,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Hexmedia\ContentBundle\Form\Type\Media\AddType;
 use Hexmedia\ContentBundle\Form\Type\Media\EditType;
 use Hexmedia\ContentBundle\Entity\Media;
+use Hexmedia\ContentBundle\Form\Type\Media\UploadForm;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdminMediaController extends CrudController
@@ -48,6 +49,56 @@ class AdminMediaController extends CrudController
         return parent::createAction($request, $id);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Rest\View
+     */
+    public function multipleAction(Request $request) {
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(new UploadForm());
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            foreach ($form->getData("hexmedia_upload")["files"] as $file) {
+                $media = new Media();
+                $media->setFile($file);
+
+                $entityManager->persist($media);
+            }
+        }
+
+        $this->get('session')->getFlashBag()->add('notice', 'Files has beed uploaded.');
+
+        $entityManager->flush();
+
+        return $this->redirect($this->get("router")->generate("HexMediaContentMedia"));
+    }
+
+
+    /**
+     * @param int $page
+     * @param int $pageSize
+     * @param string $sort
+     * @param string $sortDirection
+     * @return array
+     *
+     * @Rest\View
+     */
+    public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC") {
+        $ret = parent::listAction($page, $pageSize, $sort, $sortDirection);
+
+        $form = $this->createForm(new UploadForm());
+        $formView = $form->createView();
+        $formView->children['files']->vars['full_name'] = "hexmedia_upload[files][]";
+        $ret['upload_form'] = $formView;
+
+        return $ret;
+    }
 
     /**
      * @return array
@@ -100,9 +151,14 @@ class AdminMediaController extends CrudController
         $entities = $this->getRepository()->getPage($page, $sort, $pageSize, $sortDirection);
         $entitiesCount = $this->getRepository()->getCount();
 
+        $form = $this->createForm(new UploadForm());
+        $formView = $form->createView();
+        $formView->children['files']->vars['full_name'] = "hexmedia_upload[files][]";
+
         return [
             'entities' => $this->prepareEntities($entities),
-            'entitiesCount' => $entitiesCount
+            'entitiesCount' => $entitiesCount,
+            'upload_form' => $formView
         ];
     }
 
