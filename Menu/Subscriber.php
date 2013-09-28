@@ -2,15 +2,15 @@
 
 namespace Hexmedia\ContentBundle\Menu;
 
+use Hexmedia\AdministratorBundle\Menu\Builder;
+use Hexmedia\AdministratorBundle\Menu\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Hexmedia\AdministratorBundle\Menu\Subscriber as SubscriberAbstract;
-use Hexmedia\AdministratorBundle\Menu\Builder as MenuBuilder;
-use Hexmedia\AdministratorBundle\Menu\Event as MenuEvent;
 
 class Subscriber extends SubscriberAbstract implements EventSubscriberInterface
 {
 
-	public function addPositions(MenuEvent $event)
+	public function addPositions(Event $event)
 	{
 
 		$menu = $event->getMenu()->addChild($this->translator->trans("Media Library"), ['route' => 'HexMediaContentMedia', 'id' => 'HexMediaContentMedia']);
@@ -31,7 +31,7 @@ class Subscriber extends SubscriberAbstract implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			MenuBuilder::MENU_BUILD_EVENT => array('addPositions', 4)
+			Builder::MENU_BUILD_EVENT => array('addPositions', 4)
 		);
 	}
 

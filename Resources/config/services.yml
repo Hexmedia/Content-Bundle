@@ -20,7 +20,6 @@ services:
         tags:
             - { name: form.type, alias: media }
 
-
     hexmedia_content.edit_mode.area:
         class: Hexmedia\ContentBundle\EditMode\Area
         arguments: [ "@doctrine.orm.entity_manager" ]
