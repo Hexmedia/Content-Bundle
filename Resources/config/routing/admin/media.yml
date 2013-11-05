@@ -63,7 +63,7 @@ HexMediaContentMediaUpload:
 
 HexMediaContentMediaAttach:
     pattern: /attach/{type}/{page}/{sort}/{pageSize}/{sortDirection}
-    defaults: { _controller: HexmediaContentBundle:AdminMedia:attach, type: image, page: 1, sort: id, pageSize: 10, sortDirection: asc }
+    defaults: { _controller: HexmediaContentBundle:AdminMedia:attach, type: image, page: 1, sort: id, pageSize: %per_page%, sortDirection: asc }
     requirements:
         type: image|video|document
         page: \d+
@@ -81,7 +81,7 @@ HexMediaContentMedia:
 
 HexMediaContentMediaList:
     pattern: /list/{page}/{sort}/{pageSize}/{sortDirection}
-    defaults: { _controller: HexmediaContentBundle:AdminMedia:list, page: 1, sort: id, pageSize: 10, sortDirection: asc }
+    defaults: { _controller: HexmediaContentBundle:AdminMedia:list, page: 1, sort: id, pageSize: %per_page%, sortDirection: asc }
     requirements:
         page: \d+
         pageSize: \d+

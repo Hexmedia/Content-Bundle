@@ -1,6 +1,6 @@
 HexMediaContentPageList:
     pattern:  /list/{page}/{sort}/{pageSize}/{sortDirection}
-    defaults: { _controller: "HexmediaContentBundle:AdminPage:list", page: 1, sort: id, pageSize: 10, sortDirection: asc }
+    defaults: { _controller: "HexmediaContentBundle:AdminPage:list", page: 1, sort: id, pageSize: %per_page%, sortDirection: asc }
     requirements:
         page: \d+
         pageSize: \d+
