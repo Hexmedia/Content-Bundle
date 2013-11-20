@@ -15,15 +15,14 @@ Content: Treść
 Global: Globalny
 Saving...: Zapisywanie...
 Deleting...: Usuwanie...
-
-
 Page: 'Strona'
 Pages: 'Strony'
-
 'Image': 'Obrazek'
-
 'Imave View': 'Podgląd obrazka'
 'Change Media': 'Zmień obrazek'
 'Select Media': 'Wybierz obrazek'
-
 'Add many': 'Dodaj wiele'
+'Title': 'Tytuł'
+'List of all pages': 'Lista stron'
+'Add page': 'Dodaj stronę'
+'Edit page': 'Modyfikuj stronę'
