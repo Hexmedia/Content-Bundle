@@ -46,8 +46,8 @@ HexMediaContentMediaCustomize:
         id: \d+
 
 HexMediaContentMediaAttach:
-    pattern: /attach/{type}/
-    defaults: { _controller: HexmediaContentBundle:Attach:attach, type: image }
+    pattern: /attach/{single}/{type}/{page}
+    defaults: { _controller: HexmediaContentBundle:Attach:attach, single: single, type: image, page: 1 }
 
 HexMediaContentMediaAddMultiple:
     pattern: /upload/multiple/
@@ -55,11 +55,9 @@ HexMediaContentMediaAddMultiple:
     options:
         expose: true
 
-HexMediaContentMediaUpload:
-    pattern: /upload
-    defaults: { _controller: HexmediaContentBundle:Upload:upload }
-    options:
-        expose: true
+HexMediaContentMediaMultiple:
+    pattern: /multiple
+    defaults: { _controller: HexmediaContentBundle:AdminMedia:multiple }
 
 HexMediaContentMediaAttach:
     pattern: /attach/{type}/{page}/{sort}/{pageSize}/{sortDirection}
@@ -73,8 +71,8 @@ HexMediaContentMediaAttach:
         expose: true
 
 HexMediaContentMedia:
-    pattern: /library
-    defaults: { _controller: HexmediaContentBundle:AdminMedia:index }
+    pattern: /library/{page}
+    defaults: { _controller: HexmediaContentBundle:AdminMedia:index, page: 1, sort: obj.updatedAt, direction: asc }
     methods: [ GET ]
     options:
         expose: true

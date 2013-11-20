@@ -2,21 +2,20 @@
 
 namespace Hexmedia\ContentBundle\Controller;
 
-use Hexmedia\AdministratorBundle\Controller\CrudController;
-use Hexmedia\AdministratorBundle\Controller\ListTrait;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Hexmedia\ContentBundle\Form\Type\Media\AddType;
 use Hexmedia\ContentBundle\Form\Type\Media\EditType;
 use Hexmedia\ContentBundle\Entity\Media;
 use Hexmedia\ContentBundle\Form\Type\Media\UploadForm;
 use Symfony\Component\HttpFoundation\Request;
+use Hexmedia\AdministratorBundle\Controller\CrudController as Controller;
 
-class AdminMediaController extends CrudController
+class AdminMediaController extends Controller
 {
     /**
      * {@inheritDoc}
      */
-    public function registerBreadcrubms()
+    protected function registerBreadcrubms()
     {
         $this->breadcrumbs = $this->get("white_october_breadcrumbs");
 
@@ -27,109 +26,39 @@ class AdminMediaController extends CrudController
     }
 
     /**
-     * Creates a new Media entity.
+     * @param int $page
      *
-     * @Rest\View(template="HexmediaContentBundle:AdminMedia:add.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        return parent::createAction($request);
-    }
-
-    /**
-     * @param Request $request
-     * @param $id
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @Rest\View(template="HexmediaContentBundle:AdminMedia:edit")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        return parent::createAction($request, $id);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @Rest\View
      */
-    public function multipleAction(Request $request) {
+    public function indexAction($page = 1)
+    {
 
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $form = $this->createForm(new UploadForm());
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            foreach ($form->getData("hexmedia_upload")["files"] as $file) {
-                $media = new Media();
-                $media->setFile($file);
-
-                $entityManager->persist($media);
-            }
-        }
-
-        $this->get('session')->getFlashBag()->add('notice', 'Files has beed uploaded.');
-
-        $entityManager->flush();
-
-        return $this->redirect($this->get("router")->generate("HexMediaContentMedia"));
     }
-
 
     /**
      * @param int $page
-     * @param int $pageSize
-     * @param string $sort
-     * @param string $sortDirection
-     * @return array
      *
      * @Rest\View
      */
-    public function listAction($page = 1, $pageSize = 10, $sort = 'id', $sortDirection = "ASC") {
-        $ret = parent::listAction($page, $pageSize, $sort, $sortDirection);
-
-        $form = $this->createForm(new UploadForm());
-        $formView = $form->createView();
-        $formView->children['files']->vars['full_name'] = "hexmedia_upload[files][]";
-        $ret['upload_form'] = $formView;
-
-        return $ret;
-    }
-
-    /**
-     * @return array
-     */
-    public function customizeAction()
+    public function listAction($page = 1)
     {
-        return [];
-    }
+        $query = $this->getRepository()->getToPaginator();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFieldsToDisplayOnList()
-    {
+        $paginator = $this->get("knp_paginator");
+
+        if ($paginator instanceof \Knp\Component\Pager\Paginator) ;
+
+        $pagination = $paginator->paginate(
+            $query,
+            $page,
+            30
+        );
+
+        $pagination->setTemplate('KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig');
+
         return [
-            "number" => ['get' => "number", 'label' => '#', 'sortable' => false],
-            "id" => ['get' => "getId", 'show' => false],
-            "name" => ['get' => "getName", 'label' => 'Name'],
-            "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat', 'label' => 'Last Modified'],
-            "miniature" => ['get' => 'self', 'label' => 'Miniature', 'call' => function ($entity) {
-                $cacheManager = $this->container->get('liip_imagine.cache.manager');
-                $vichHelper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
-
-                return "<img src=\"" . $cacheManager->getBrowserPath($vichHelper->asset($entity, 'file'), 'small_admin_square') . "\" />";
-            }],
-            'image' => ['get' => 'self', 'label' => 'Image', 'call' => function ($entity) {
-                $cacheManager = $this->container->get('liip_imagine.cache.manager');
-                $vichHelper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
-
-                return "<img src=\"" . $cacheManager->getBrowserPath($vichHelper->asset($entity, 'file'), 'attach_admin_square') . "\" />";
-            }]
+            'page' => $page,
+            'pagination' => $pagination
         ];
     }
 
@@ -146,46 +75,72 @@ class AdminMediaController extends CrudController
      *
      * @Rest\View
      */
-    public function attachAction($type, $page = 1, $pageSize = 100, $sort = 'id', $sortDirection = "ASC")
+    public function attachAction($page = 1, $single = 'single', $type = 'image')
     {
-        $entities = $this->getRepository()->getPage($page, $sort, 100, $sortDirection);
-        $entitiesCount = $this->getRepository()->getCount();
+        $query = $this->getRepository()->getToPaginator();
 
-        $form = $this->createForm(new UploadForm());
-        $formView = $form->createView();
-        $formView->children['files']->vars['full_name'] = "hexmedia_upload[files][]";
+        $paginator = $this->get("knp_paginator");
+
+        if ($paginator instanceof \Knp\Component\Pager\Paginator) ;
+
+        $pagination = $paginator->paginate(
+            $query,
+            $page,
+            12
+        );
+
+        $pagination->setTemplate('KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig');
 
         return [
-            'entities' => $this->prepareEntities($entities),
-            'entitiesCount' => $entitiesCount,
-            'upload_form' => $formView,
-            'id' => $this->getRequest()->get("id")
+            'page' => $page,
+            'pagination' => $pagination,
+            'single' => $single == 'single',
+            'type' => $type
         ];
     }
 
     /**
-     * @return \Hexmedia\ContentBundle\Repository\Doctrine\MediaRepository
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Rest\View
      */
+    public function multipleAction(Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(new UploadForm());
+
+        if ($form instanceof \Symfony\Component\Form\Form) ;
+
+        if ($request->getMethod() == "POST") {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                foreach ($form->getData("files") as $file) {
+                    $media = new Media();
+                    $media->setFile($file);
+
+                    $entityManager->persist($media);
+                }
+
+                $this->get('session')->getFlashBag()->add('notice', 'Files has beed uploaded.');
+
+                $entityManager->flush();
+
+                return $this->redirect($this->get("router")->generate("HexMediaContentMedia"));
+            } else {
+                $this->get('session')->getFlashBag()->add('error', 'Files has not beed uploaded.');
+            }
+        }
+
+        return [
+            'form' => $form
+        ];
+    }
+
     protected function getRepository()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        /**
-         * @var \Hexmedia\ContentBundle\Repository\Doctrine\MediaRepository
-         */
-        $repository = $em->getRepository('HexmediaContentBundle:Media');
-
-        return $repository;
-    }
-
-    protected function getNewEntity()
-    {
-        return new Media();
-    }
-
-    public function getMainRoute()
-    {
-        return "HexMediaContentMedia";
+        return $this->getDoctrine()->getRepository("HexmediaContentBundle:Media");
     }
 
     protected function getAddFormType()
@@ -193,13 +148,28 @@ class AdminMediaController extends CrudController
         return new AddType();
     }
 
+    protected function getEditFormType()
+    {
+        return new EditType();
+    }
+
+    public function getRouteName()
+    {
+        return "HexMediaContentMedia";
+    }
+
     public function getEntityName()
     {
         return "Media";
     }
 
-    protected function getEditFormType()
+    public function getListTemplate()
     {
-        return new EditType();
+        return "UNSUSED";
+    }
+
+    public function getNewEntity()
+    {
+        return new Media();
     }
 }

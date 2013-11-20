@@ -5,28 +5,30 @@
 {% block body %}
 
     {{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
-<div class="buttons-bar">
-        {%  include "HexmediaAdministratorBundle:Form:buttons.html.twig" with {'form' : form, 'exit': 'HexMediaContentMedia'} only %}
-</div>
+    <div class="buttons-bar">
+        {% include "HexmediaAdministratorBundle:Form:buttons.html.twig" with {'form' : form, 'exit': 'HexMediaContentMedia'} only %}
+    </div>
 
-<div class="content edit-content">
-	<div class="row">
-		<div class="col-md-8">
-			<fieldset class="box main-content">
-				<legend>{{ 'Additional Data'|trans }}</legend>
-
+    <div class="content edit-content">
+        <div class="row">
+            <div class="col-md-8">
+                <fieldset class="box main-content">
+                    <legend>{{ 'Additional Data'|trans }}</legend>
                     {{ form_row(form.name) }}
-
                     {{ form_widget(form.description) }}
-			</fieldset>
-		</div>
-		<div class="col-md-4">
-			<fieldset class="box">
-				<legend>{{ 'Image View'|trans }}</legend>
-				<a href="{{ asset(vich_uploader_asset(entity, 'file')|slice(1)) }}" title="{{ 'Open Orginal'|trans }}" target="_blank"><img src="{{ vich_uploader_asset(entity, 'file')|imagine_filter('big_admin_square') }}" alt=""/></a>
-			</fieldset>
-		</div>
-	</div>
-</div>
-    {{ form_end(form) }}symfo{
-% endblock %}
+                </fieldset>
+            </div>
+            <div class="col-md-4">
+                <fieldset class="box">
+                    <legend>{{ 'Image View'|trans }}</legend>
+                    <a href="{{ asset(vich_uploader_asset(entity, 'file')|slice(1)) }}"
+                       title="{{ 'Open Orginal'|trans }}"
+                       data-toggle="lightbox"><img
+                                src="{{ vich_uploader_asset(entity, 'file')|imagine_filter('big_admin_square') }}"
+                                alt=""/></a>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

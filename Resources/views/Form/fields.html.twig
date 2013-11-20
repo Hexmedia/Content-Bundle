@@ -4,43 +4,29 @@
         <div class="media-selector">
             {{ block('form_widget_simple') }}
 
-            {% if value and value is not empty %}
-                {% if preview is defined %}
-                    <img src="{{ vich_uploader_asset(entity, 'file')|imagine_filter(preview) }}" alt="{{ entity.name }}"
-                         id="{{ id }}_image"/> <br/>
-                    <a href="{{ path('HexMediaContentMediaAttach', {'type':'image'}) }}" onclick="return false;"
-                       id="{{ id }}_imageSelect"
-                       class="btn btn-primary select-image">
-                        <i class="icon-picture"></i> {{ change_label|trans }}
-                    </a>
-                {% else %}
-                    <a href="{{ path('HexMediaContentMediaAttach', {'type':'image'}) }}" onclick="return false;"
-                       id="{{ id }}_imageSelect"
-                       class="btn btn-primary select-image">
-                        <i class="icon-picture"></i> {{ change_label|trans }}
-                    </a>
-                {% endif %}
-            {% else %}
-                <a href="{{ path('HexMediaContentMediaAttach', {'type':'image'}) }}" onclick="return false;"
+            {#{% if value and value is not empty %}#}
+                {#{% if preview is defined %}#}
+                    {#<img src="{{ vich_uploader_asset(entity, 'file')|imagine_filter(preview) }}" alt="{{ entity.name }}"#}
+                         {#id="{{ id }}_image"/> <br/>#}
+                    {#<a href="{{ path('HexMediaContentMediaAttach', {'type':'image'}) }}" onclick="return false;"#}
+                       {#id="{{ id }}_imageSelect"#}
+                       {#class="btn btn-primary select-image">#}
+                        {#<i class="icon-picture"></i> {{ change_label|trans }}#}
+                    {#</a>#}
+                {#{% else %}#}
+                    {#<a href="{{ path('HexMediaContentMediaAttach', {'type':'image'}) }}" onclick="return false;"#}
+                       {#id="{{ id }}_imageSelect"#}
+                       {#class="btn btn-primary select-image">#}
+                        {#<i class="icon-picture"></i> {{ change_label|trans }}#}
+                    {#</a>#}
+                {#{% endif %}#}
+            {#{% else %}#}
+                <a href="{{ path('HexMediaContentMediaAttach', {'type':'image'}) }}" data-toggle="modal2" data-modal-class="media"
                    id="{{ id }}_imageSelect"
                    class="btn btn-primary select-image">
                     <i class="icon-picture"></i> {{ select_label|trans }}
                 </a>
-            {% endif %}
+            {#{% endif %}#}
         </div>
-
-        <script type="text/javascript">
-            function setMedia(name, id) {
-                $("#" + name).val(id);
-            }
-
-            jQuery(document).ready(function () {
-                $('.select-image').click(function () {
-                    var attachWindow = window.open('{{ path("HexMediaContentMediaAttach", {'id': id}) }}','','width=700,height=500');
-
-                    return false;
-                });
-            });
-        </script>
     {% endspaceless %}
-{% endblock %}E
+{% endblock %}

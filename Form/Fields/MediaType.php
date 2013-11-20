@@ -5,13 +5,13 @@ namespace Hexmedia\ContentBundle\Form\Fields;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\DoctrineType;
-use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class MediaType extends AbstractType
+class MediaType extends ChoiceType
 {
     /**
      * @var \Doctrine\Common\Persistence\ObjectManager
@@ -49,7 +49,7 @@ class MediaType extends AbstractType
             'change_label' => isset($options['change_label']) ? $options['change_label'] : "Change Media"
         ];
 
-        if ($vars['preview']) {
+        if ($vars['preview'] && $form->getViewData()) {
             $repository = $this->entityManager->getRepository("HexmediaContentBundle:Media");
 
             $entity = $repository->find($form->getViewData());

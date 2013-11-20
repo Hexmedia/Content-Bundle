@@ -1,0 +1,12 @@
+{{ form_start(form, {'action':path('HexMediaContentMediaAddMultiple')}) }}
+<div class="modal-header">
+    {{ 'Upload multiple files'|trans }}
+</div>
+<div class="modal-body">
+    {{ form_widget(form.files) }}
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'Cancel'|trans }}</button>
+    <button type="submit" class="btn btn-primary"><i class="icon-upload"></i> {{ 'Upload'|trans }}</button>
+</div>
+{{ form_end(form) }}

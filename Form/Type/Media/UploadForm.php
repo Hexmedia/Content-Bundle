@@ -25,14 +25,7 @@ class UploadForm extends AbstractType
                     'accept' => 'image/*',
                     'multiple' => 'multiple'
                 ]
-            ])
-            ->add('upload', 'submit', [
-                'label' => 'Upload',
-                'attr' => [
-                    'class' => 'btn-primary'
-                ]
-            ])
-        ;
+            ]);
     }
 
     public function getName()

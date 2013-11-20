@@ -15,25 +15,9 @@ use Hexmedia\ContentBundle\Form\Type\Area\EditType;
  */
 class AdminAreaController extends CrudController
 {
-    public function getMainRoute() {
+    public function getRouteName() {
         return "HexMediaContentArea";
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFieldsToDisplayOnList()
-    {
-        return [
-            "number" => ['get' => "number", 'type' => 'number', 'label' => '#'],
-            "id" => ['get' => "getId", 'show' => false],
-            "page" => ['get' => "getPage", 'label' => 'Page'],
-            "name" => ['get' => "getName", 'label' => 'Name'],
-            "route" => ['get' => "getRoute", 'label' => 'Route'],
-            "lastModified" => ['get' => "getUpdatedAt", 'format' => 'timeformat', 'label' => 'Last Modified']
-        ];
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -110,6 +94,10 @@ class AdminAreaController extends CrudController
 
     public function getEntityName() {
         return "Area";
+    }
+
+    public function getListTemplate() {
+        return "HexmediaContentBundle:AdminArea";
     }
 
 }
