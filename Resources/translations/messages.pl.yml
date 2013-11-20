@@ -7,23 +7,26 @@ Create: Stwórz
 'Media Library': 'Biblioteka mediów'
 Add: Dodaj
 Miniature: Miniatura
-Name: Nazwa
-'Last Modified': 'Ostatnia modyfikacja'
 Areas: Obszary
 Content: Treść
 'List of all areas': 'Lista wszystkich obszarów'
+'List of all pages': 'List stron'
+'Title': 'Tytuł'
 Global: Globalny
 Saving...: Zapisywanie...
 Deleting...: Usuwanie...
-
-
 Page: 'Strona'
 Pages: 'Strony'
-
 'Image': 'Obrazek'
-
 'Imave View': 'Podgląd obrazka'
 'Change Media': 'Zmień obrazek'
 'Select Media': 'Wybierz obrazek'
-
 'Add many': 'Dodaj wiele'
+'yes': 'tak'
+'no': 'nie'
+Name: Nazwa
+'Published until': 'Publiczne do'
+'Published since': 'Publiczne od'
+'Last modified': 'Ostatnia modyfikacja'
+'Add page': 'Dodaj stronę'
+'Edit page': 'Edytuj stronę'

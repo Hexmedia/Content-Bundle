@@ -1,6 +1,6 @@
 {% extends 'HexmediaAdministratorBundle:Layout:edit.html.twig' %}
 
-{% block title %}{% trans with {'name': entity.name} %}Page Edit "%name%"{% endtrans %}{% endblock title %}
+{% block title %}{{ 'Edit page'|trans }}{% endblock title %}
 
 {% block body -%}
     {{ form_start(form, {'attr' : { 'class' : 'form-horizontal' } }) }}
