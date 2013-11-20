@@ -82,7 +82,7 @@ class AdminPageController extends CrudController
         return new Page();
     }
 
-    public function getMainRoute()
+    public function getRouteName()
     {
         return "HexMediaContentPage";
     }
@@ -100,5 +100,9 @@ class AdminPageController extends CrudController
     protected function getEditFormType()
     {
         return new EditType();
+    }
+
+    protected function getListTemplate() {
+        return "HexmediaContentBundle:AdminPage";
     }
 }

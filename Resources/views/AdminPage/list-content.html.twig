@@ -1,0 +1,6 @@
+<td>{{ entity.title }}</td>
+<td>{{ entity.slug }}</td>
+<td>{% if entity.published %}{{ 'yes'|trans }}{% else %}{{ 'no'|trans }}{% endif %}</td>
+<td>{% if entity.publishedFrom %}{{ entity.publishedFrom|date("d.m.Y") }}{% else %}{{ 'not set'|trans }}{% endif %}</td>
+<td>{% if entity.publishedTo %}{{ entity.publishedTo|date("d.m.Y") }}{% else %}{{ 'not set'|trans }}{% endif %}</td>
+<td>{{ entity.updatedAt|simple_time_formatter }}</td>
