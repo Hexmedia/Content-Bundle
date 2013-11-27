@@ -86,7 +86,7 @@ class AdminMediaController extends Controller
         $pagination = $paginator->paginate(
             $query,
             $page,
-            12
+            1500
         );
 
         $pagination->setTemplate('KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig');

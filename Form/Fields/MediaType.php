@@ -4,14 +4,13 @@ namespace Hexmedia\ContentBundle\Form\Fields;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\DoctrineType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class MediaType extends ChoiceType
+class MediaType extends AbstractType
 {
     /**
      * @var \Doctrine\Common\Persistence\ObjectManager
