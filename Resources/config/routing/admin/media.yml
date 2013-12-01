@@ -46,8 +46,8 @@ HexMediaContentMediaCustomize:
         id: \d+
 
 HexMediaContentMediaAttach:
-    pattern: /attach/{single}/{type}/{page}
-    defaults: { _controller: HexmediaContentBundle:Attach:attach, single: single, type: image, page: 1 }
+    pattern: /attach/{preview}/{selected}/{type}/{single}/{page}/
+    defaults: { _controller: HexmediaContentBundle:AdminMedia:attach, preview: big_admin_square, selected: none, type: image, single: single, page: 1 }
 
 HexMediaContentMediaAddMultiple:
     pattern: /upload/multiple/
@@ -58,17 +58,6 @@ HexMediaContentMediaAddMultiple:
 HexMediaContentMediaMultiple:
     pattern: /multiple
     defaults: { _controller: HexmediaContentBundle:AdminMedia:multiple }
-
-HexMediaContentMediaAttach:
-    pattern: /attach/{type}/{page}/{sort}/{pageSize}/{sortDirection}
-    defaults: { _controller: HexmediaContentBundle:AdminMedia:attach, type: image, page: 1, sort: id, pageSize: %per_page%, sortDirection: asc }
-    requirements:
-        type: image|video|document
-        page: \d+
-        pageSize: \d+
-        sortDirection: asc|desc
-    options:
-        expose: true
 
 HexMediaContentMedia:
     pattern: /library/{page}

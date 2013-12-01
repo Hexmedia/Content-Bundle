@@ -16,7 +16,7 @@
                                 onclick="return false;"></a>
                         <a class="icon-edit" href="{{ path("HexMediaContentMediaEdit", {'id': entity.id}) }}"></a>
 
-                        <div class="img"><a href="{{ vich_uploader_asset(entity, 'file') }}" data-toggle="lightbox"><img
+                        <div class="img"><a href="{{ asset(vich_uploader_asset(entity, 'file')|slice(1)) }}" data-toggle="lightbox"><img
                                         src="{{ vich_uploader_asset(entity, 'file')|imagine_filter('attach_admin_square') }}"
                                         alt=""/></a></div>
                         <h5>{{ entity.name }}</h5>

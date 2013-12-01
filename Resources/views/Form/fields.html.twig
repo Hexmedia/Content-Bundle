@@ -1,25 +1,58 @@
 {% block media_widget %}
     {% spaceless %}
         {% set type='hidden' %}
-        <div class="media-selector">
-            {{ block('form_widget_simple') }}
+        <div class="media-selector" data-media-multiple="{% if multiple %}true{% else %}false{% endif %}"
+             data-media-id="{{ id }}" data-media-input-name="{{ name }}">
+            {% set attr = attr|merge({'data-media-input':'true'}) %}
+            {% if multiple %}
+                <div class="input-group" id="{{ id }}">
+                    {% for entity in entities %}
+                        <input name="{{ full_name }}" type="hidden" value="{{ entity.id }}"/>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <input name="{{ full_name }}" id="{{ id }}" type="hidden" value="{% if entity is defined %}{{ entity.id }}{% endif %}"/>
+            {% endif %}
             {% if value and value is not empty %}
                 {% if preview is defined %}
-                    <img src="{{ vich_uploader_asset(entity, 'file')|imagine_filter(preview) }}" alt="{{ entity.name }}" data-media-image="{{ id }}"/> <br/>
-                    <a href="{{ path('HexMediaContentMediaAttach', {'type':'image'}) }}" onclick="return false;" data-modal-class="media" data-media-modal="true" data-media-id="{{ id }}"
-                       class="btn btn-primary select-image">
-                        <i class="icon-picture"></i> {{ change_label|trans }}
-                    </a>
-                {% else %}
-                    <a href="{{ path('HexMediaContentMediaAttach', {'type':'image'}) }}" onclick="return false;" data-modal-class="media" data-media-modal="true" data-media-id="{{ id }}"
-                       class="btn btn-primary select-image">
-                        <i class="icon-picture"></i> {{ change_label|trans }}
-                    </a>
+                    {% if multiple %}
+                        <div class="attached-media preview-{{ preview }}">
+                            {% for entity in entities %}
+                                <div class="attached-img">
+                                    <img src="{{ vich_uploader_asset(entity, 'file')|imagine_filter(preview) }}"
+                                         alt=""/>
+                                    <i data-media-delete="{{ entity.id }}" class="icon-remove-sign"></i>
+                                </div>
+                            {% endfor %}
+                            <div class="clear"></div>
+                        </div>
+                    {% else %}
+                        <div class="attached-media preview-{{ preview }}">
+                            {% if entity is defined %}
+                                <div class="attached-img">
+                                    <img src="{{ vich_uploader_asset(entity, 'file')|imagine_filter(preview) }}"
+                                         alt=""/>
+                                </div>
+                            {% endif %}
+                            <div class="clear"></div>
+                        </div>
+                    {% endif %}
                 {% endif %}
-            {% else %}
-                <a href="{{ path('HexMediaContentMediaAttach', {'type':'image'}) }}" onclick="return false;" data-modal-class="media" data-media-modal="true" data-media-id="{{ id }}"
+                <a href="{{ path('HexMediaContentMediaAttach', {'type':'image', 'preview': preview, 'selected': '-selected-'}) }}"
+                   onclick="return false;"
+                   data-modal-class="media" data-media-modal="true" data-media-id="{{ id }}"
+                   data-media-multiple="{% if multiple %}true{% else %}false{% endif %}"
                    class="btn btn-primary select-image">
-                    <i class="icon-picture"></i> {{ select_label|trans }}
+                    <i class="icon-picture"></i> {% if multiple %}{{ change_multiple_label|trans }}{% else %}{{ change_label|trans }}{% endif %}
+                </a>
+            {% else %}
+                <div class="attached-media"></div>
+                <a href="{{ path('HexMediaContentMediaAttach', {'type':'image', 'preview': preview, 'selected': '-selected-'}) }}"
+                   onclick="return false;"
+                   data-modal-class="media" data-media-modal="true" data-media-id="{{ id }}"
+                   data-media-multiple="{% if multiple %}true{% else %}false{% endif %}"
+                   class="btn btn-primary select-image">
+                    <i class="icon-picture"></i> {% if multiple %}{{ select_multiple_label|trans }}{% else %}{{ select_label|trans }}{% endif %}
                 </a>
             {% endif %}
         </div>

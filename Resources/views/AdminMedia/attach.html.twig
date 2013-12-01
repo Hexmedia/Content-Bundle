@@ -5,21 +5,22 @@
                 <div class="data-area-grid">
                     <div class="row-fluid data-grid">
                         {% for entity in pagination %}
-                            <div class="border data-grid-element" data-media-chose="{{ entity.id }}" data-media-url="{{ vich_uploader_asset(entity, 'file')|imagine_filter('big_admin_square') }}">
-                                <a class="icon-remove remove"
-                                   href="{{ path("HexMediaContentMediaDelete", {'id': entity.id}) }}"
-                                   data-toggle="confirm"
-                                   data-confirm-title="{{ 'Delete file?'|trans }}"
-                                   data-confirm-body="{{ 'Do you want to delete this media file?' }}"
-                                   data-confirm-type="ajax" data-confirm-method="post"
-                                   onclick="return false;"></a>
-                                <a class="icon-edit"
-                                   href="{{ path("HexMediaContentMediaEdit", {'id': entity.id}) }}"></a>
+                            <div class="border data-grid-element" data-media-choosable="{{ entity.id }}"
+                                 data-media-url="{{ vich_uploader_asset(entity, 'file')|imagine_filter(preview) }}">
+                                {#<a class="icon-remove remove"#}
+                                   {#href="{{ path("HexMediaContentMediaDelete", {'id': entity.id}) }}"#}
+                                   {#data-toggle="confirm"#}
+                                   {#data-confirm-title="{{ 'Delete file?'|trans }}"#}
+                                   {#data-confirm-body="{{ 'Do you want to delete this media file?' }}"#}
+                                   {#data-confirm-type="ajax" data-confirm-method="post"#}
+                                   {#onclick="return false;"></a>#}
+                                {#<a class="icon-edit"#}
+                                   {#href="{{ path("HexMediaContentMediaEdit", {'id': entity.id}) }}"></a>#}
 
-                                <div class="img"><a href="{{ vich_uploader_asset(entity, 'file') }}"
-                                                    data-toggle="lightbox"><img
-                                                src="{{ vich_uploader_asset(entity, 'file')|imagine_filter('attach_admin_square') }}"
-                                                alt=""/></a></div>
+                                <div class="img">
+                                    <img src="{{ vich_uploader_asset(entity, 'file')|imagine_filter('attach_admin_square') }}"
+                                         alt=""/>
+                                </div>
                                 <h5>{{ entity.name }}</h5>
                             </div>
                         {% endfor %}
@@ -32,12 +33,12 @@
                 </div>
             </div>
             {#<div class="sidebar">#}
-                {#<div class="top">#}
+            {#<div class="top">#}
 
-                {#</div>#}
-                {#<div class="data">#}
+            {#</div>#}
+            {#<div class="data">#}
 
-                {#</div>#}
+            {#</div>#}
             {#</div>#}
         </div>
     </div>
