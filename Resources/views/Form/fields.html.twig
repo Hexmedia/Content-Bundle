@@ -6,24 +6,31 @@
             {% set attr = attr|merge({'data-media-input':'true'}) %}
             {% if multiple %}
                 <div class="input-group" id="{{ id }}">
-                    {% for entity in entities %}
-                        <input name="{{ full_name }}" type="hidden" value="{{ entity.id }}"/>
-                    {% endfor %}
+                    {% if entities is defined %}
+                        {% for entity in entities %}
+                            <input name="{{ full_name }}" type="hidden" value="{{ entity.id }}"/>
+                        {% endfor %}
+                    {% else %}
+                        <input name="{{ full_name }}" type="hidden"/>
+                    {% endif %}
                 </div>
             {% else %}
-                <input name="{{ full_name }}" id="{{ id }}" type="hidden" value="{% if entity is defined %}{{ entity.id }}{% endif %}"/>
+                <input name="{{ full_name }}" id="{{ id }}" type="hidden"
+                       value="{% if entity is defined %}{{ entity.id }}{% endif %}"/>
             {% endif %}
             {% if value and value is not empty %}
                 {% if preview is defined %}
                     {% if multiple %}
                         <div class="attached-media preview-{{ preview }}">
-                            {% for entity in entities %}
-                                <div class="attached-img">
-                                    <img src="{{ vich_uploader_asset(entity, 'file')|imagine_filter(preview) }}"
-                                         alt=""/>
-                                    <i data-media-delete="{{ entity.id }}" class="icon-remove-sign"></i>
-                                </div>
-                            {% endfor %}
+                            {% if entities is defined %}
+                                {% for entity in entities %}
+                                    <div class="attached-img">
+                                        <img src="{{ vich_uploader_asset(entity, 'file')|imagine_filter(preview) }}"
+                                             alt=""/>
+                                        <i data-media-delete="{{ entity.id }}" class="icon-remove-sign"></i>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
                             <div class="clear"></div>
                         </div>
                     {% else %}
