@@ -10,8 +10,6 @@
                         {% for entity in entities %}
                             <input name="{{ full_name }}" type="hidden" value="{{ entity.id }}"/>
                         {% endfor %}
-                    {% else %}
-                        <input name="{{ full_name }}" type="hidden"/>
                     {% endif %}
                 </div>
             {% else %}
