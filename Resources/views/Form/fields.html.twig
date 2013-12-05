@@ -25,7 +25,7 @@
                                     <div class="attached-img">
                                         <img src="{{ vich_uploader_asset(entity, 'file')|imagine_filter(preview) }}"
                                              alt=""/>
-                                        <i data-media-delete="{{ entity.id }}" class="icon-remove-sign"></i>
+                                        <i data-media-delete="{{ entity.id }}" class="fa fa-remove-sign"></i>
                                     </div>
                                 {% endfor %}
                             {% endif %}
@@ -48,7 +48,7 @@
                    data-modal-class="media" data-media-modal="true" data-media-id="{{ id }}"
                    data-media-multiple="{% if multiple %}true{% else %}false{% endif %}"
                    class="btn btn-primary select-image">
-                    <i class="icon-picture"></i> {% if multiple %}{{ change_multiple_label|trans }}{% else %}{{ change_label|trans }}{% endif %}
+                    <i class=fa fa--picture"></i> {% if multiple %}{{ change_multiple_label|trans }}{% else %}{{ change_label|trans }}{% endif %}
                 </a>
             {% else %}
                 <div class="attached-media"></div>
@@ -57,7 +57,7 @@
                    data-modal-class="media" data-media-modal="true" data-media-id="{{ id }}"
                    data-media-multiple="{% if multiple %}true{% else %}false{% endif %}"
                    class="btn btn-primary select-image">
-                    <i class="icon-picture"></i> {% if multiple %}{{ select_multiple_label|trans }}{% else %}{{ select_label|trans }}{% endif %}
+                    <i classfa fa-n-picture"></i> {% if multiple %}{{ select_multiple_label|trans }}{% else %}{{ select_label|trans }}{% endif %}
                 </a>
             {% endif %}
         </div>

@@ -88,7 +88,7 @@
 
                             mainElement.find(".input-group").append(input);
 
-                            img.append($('<i />').addClass('icon-remove-sign').attr('data-media-delete', $(this).data('mediaChoosable')));
+                            img.append($('<i />').addClass('fa fa-remove-sign').attr('data-media-delete', $(this).data('mediaChoosable')));
                         } else {
                             $("#" + mId).val($(this).data("mediaChoosable"));
                         }
