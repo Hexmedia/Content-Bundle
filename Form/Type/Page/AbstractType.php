@@ -47,12 +47,8 @@ abstract class AbstractType extends CrudType
                     ]
                 ]
             );
-            //            ->add('admin')
-//            ->add('media')
-//            ->add('categories')
-        ;
 
-        $this->doBuildForm($builder, $options);
+        parent::buildForm($builder, $options);
     }
 
     /**
