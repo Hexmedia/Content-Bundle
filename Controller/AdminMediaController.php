@@ -30,7 +30,7 @@ class AdminMediaController extends Controller
      *
      * @Rest\View
      */
-    public function indexAction($page = 1)
+    public function indexAction($page = 1, $sort = "obj.id", $direction = "desc")
     {
 
     }
