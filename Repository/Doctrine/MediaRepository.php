@@ -2,11 +2,11 @@
 
 namespace Hexmedia\ContentBundle\Repository\Doctrine;
 
-use Doctrine\ORM\EntityRepository;
 use Hexmedia\AdministratorBundle\Repository\Doctrine\ListTrait;
 use Hexmedia\ContentBundle\Repository\MediaRepositoryInterface;
+use Hexmedia\AdministratorBundle\Repository\Doctrine\CrudRepository;
 
-class MediaRepository extends EntityRepository implements MediaRepositoryInterface {
+class MediaRepository extends CrudRepository implements MediaRepositoryInterface {
     use ListTrait;
 
     public function findInBy(array $fields) {
