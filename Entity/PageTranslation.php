@@ -4,6 +4,7 @@ namespace Hexmedia\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Hexmedia\AdministratorBundle\Model as AdmModel;
 
 /**
  * Class PageTranslation
@@ -15,6 +16,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 class PageTranslation
 {
     use
+        AdmModel\SeoTrait,
         ORMBehaviors\Translatable\Translation,
         ORMBehaviors\Sluggable\Sluggable;
 

@@ -15,7 +15,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 class Page
 {
     use ORMBehaviors\Timestampable\Timestampable,
-        AdmModel\SeoTrait,
+        AdmModel\SeoProxyTrait,
         AdmModel\PublicationTrait,
         AdmModel\SluggableProxyTrait,
         ORMBehaviors\Blameable\Blameable,
