@@ -28,15 +28,17 @@ class AdminMediaController extends Controller
     /**
      * @param int $page
      *
+     * @param string $sort
+     * @param string $direction
+     * @return array|void
      * @Rest\View
      */
-    public function indexAction($page = 1)
+    public function indexAction($page = 1, $sort = 'obj.id', $direction = 'desc')
     {
 
     }
 
     /**
-     * @param int $page
      *
      * @Rest\View
      */
@@ -64,13 +66,9 @@ class AdminMediaController extends Controller
 
     /**
      * Attaching media
-     *
-     * @param string $type
      * @param int $page
-     * @param int $pageSize
-     * @param string $sort
-     * @param string $sortDirection
-     *
+     * @param string $single
+     * @param string $type
      * @return array
      *
      * @Rest\View
