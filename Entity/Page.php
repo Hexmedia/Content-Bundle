@@ -15,12 +15,12 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 class Page
 {
     use ORMBehaviors\Timestampable\Timestampable,
-        AdmModel\SeoTrait,
+        AdmModel\SeoProxyTrait,
         AdmModel\PublicationTrait,
+        AdmModel\SluggableProxyTrait,
         ORMBehaviors\Blameable\Blameable,
         ORMBehaviors\Loggable\Loggable,
-        ORMBehaviors\Sluggable\Sluggable //     ORMBehaviors\Translatable\Translatable
-        ;
+        ORMBehaviors\Translatable\Translatable;
 
     /**
      * @var integer
@@ -30,24 +30,6 @@ class Page
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=255)
-     */
-    private $title;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="teaser", type="string", length=500)
-     */
-    private $teaser;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="content", type="text")
-     */
-    private $content;
     /**
      * If special do not display on page list
      *
@@ -104,7 +86,7 @@ class Page
      */
     public function getTitle()
     {
-        return $this->title;
+        return $this->proxyCurrentLocaleTranslation("getTitle");
     }
 
     /**
@@ -115,7 +97,7 @@ class Page
      */
     public function setTitle($title)
     {
-        $this->title = $title;
+        $this->proxyCurrentLocaleTranslation("setTitle", [$title]);
 
         return $this;
     }
@@ -127,7 +109,7 @@ class Page
      */
     public function getTeaser()
     {
-        return $this->teaser;
+        return $this->proxyCurrentLocaleTranslation("getTeaser");
     }
 
     /**
@@ -138,7 +120,7 @@ class Page
      */
     public function setTeaser($teaser)
     {
-        $this->teaser = $teaser;
+        $this->proxyCurrentLocaleTranslation("setTeaser", [$teaser]);
 
         return $this;
     }
@@ -150,7 +132,7 @@ class Page
      */
     public function getContent()
     {
-        return $this->content;
+        return $this->proxyCurrentLocaleTranslation("getContent");
     }
 
     /**
@@ -161,7 +143,7 @@ class Page
      */
     public function setContent($content)
     {
-        $this->content = $content;
+        $this->proxyCurrentLocaleTranslation("setContent", [$content]);
 
         return $this;
     }
@@ -275,25 +257,13 @@ class Page
     /**
      * {@inheritdoc}
      */
-    public function getSluggableFields()
-    {
-        return ["title"];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRegenerateSlugOnUpdate()
-    {
-        return false;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function __toString()
     {
         return $this->getTitle();
+    }
+
+    public function getDefaultLanguage() {
+        return "pl";
     }
 }
 

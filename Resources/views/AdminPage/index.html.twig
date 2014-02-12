@@ -3,5 +3,5 @@
 {% block title %}{{ 'List of all pages'|trans }}{% endblock title %}
 
 {% block body %}
-    {{ render(controller('HexmediaContentBundle:AdminPage:list'), {page:page}) }}
+    {{ render(controller('HexmediaContentBundle:AdminPage:list'), {page:page,sort:sort,direction:direction}) }}
 {% endblock body %}

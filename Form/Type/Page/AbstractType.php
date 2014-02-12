@@ -16,43 +16,34 @@ abstract class AbstractType extends CrudType
     {
         $this->addButtons($builder);
         $this->addPublished($builder);
-        $this->addSeo($builder);
 
         $builder
-            ->add(
-                'title',
-                'text',
-                [
-                    'attr' => [
-                        'placeholder' => "Title",
-                        'class' => 'element-title'
-                    ]
-                ]
-            )
-            ->add(
-                'teaser',
-                'textarea',
-                [
-                    'attr' => [
-                        'class' => 'small-raptor'
-                    ]
-                ]
-            )
-            ->add(
-                'content',
-                'textarea',
-                [
-                    'attr' => [
-                        'class' => 'textarea-content'
+            ->add('translations', 'a2lix_translations', [
+                    'fields' => [
+                        'title' => [
+                            'field_type' => 'text',
+                            'attr' => [
+                                'placeholder' => 'Title',
+                                'class' => 'element-title'
+                            ]
+                        ],
+                        'teaser' => [
+                            'field_type' => 'raptor',
+                            'attr' => [
+                                'class' => 'small-raptor'
+                            ]
+                        ],
+                        'content' => [
+                            'field_type' => 'raptor',
+                            'attr' => [
+                                'class' => 'textarea-content'
+                            ]
+                        ]
                     ]
                 ]
             );
-            //            ->add('admin')
-//            ->add('media')
-//            ->add('categories')
-        ;
 
-        $this->doBuildForm($builder, $options);
+        parent::buildForm($builder, $options);
     }
 
     /**

@@ -18,7 +18,7 @@
 		"symfony/framework-bundle": ">=2.3",
 		"twig/twig": ">=1.13",
 		"knplabs/knp-gaufrette-bundle": "dev-master",
-		"vich/uploader-bundle": "dev-master",
+		"vich/uploader-bundle": "1.0.*@dev",
 		"knplabs/doctrine-behaviors": "1.0.*@dev"
 	},
 	"required-dev": {
