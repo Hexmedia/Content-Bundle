@@ -65,14 +65,6 @@ class AdminMediaController extends Controller
     /**
      * Attaching media
      *
-     * @param string $type
-     * @param int $page
-     * @param int $pageSize
-     * @param string $sort
-     * @param string $sortDirection
-     *
-     * @return array
-     *
      * @Rest\View
      */
     public function attachAction($page = 1, $single = 'single', $type = 'image')
