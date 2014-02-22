@@ -22,7 +22,7 @@ class PageController extends Controller
      */
     public function displayAction($ident)
     {
-        $entity = $this->getRepository()->findOneBySlug($ident);
+        $entity = $this->getRepository()->findOneByLocaleBy(array(), array('slug' => $ident), $this->getRequest()->getLocale());
 
         if (!$entity) {
             throw new NotFoundHttpException("Page was not found!");

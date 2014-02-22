@@ -8,22 +8,9 @@
         {%  include "HexmediaAdministratorBundle:Form:buttons.html.twig" with {'form' : form, 'exit': 'HexMediaContentPage'} only %}
     </div>
     <div class="row">
-        <div class="col-md-12">
-            {{ form_widget(form.title) }}
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-8">
-            <fieldset class="box main-content">
-                <legend>{{ 'Content'|trans }}</legend>
-                {{ form_row(form.teaser) }}
-            </fieldset>
-            <fieldset class="box main-content">
-                <legend>{{ 'SEO'|trans }}</legend>
-                {{ form_row(form.seoTitle) }}
-                {{ form_row(form.seoKeywords) }}
-                {{ form_row(form.seoDescription) }}
-            </fieldset>
+            {% form_theme form "HexmediaContentBundle:AdminPage:translations.html.twig" %}
+            {{ form_widget(form.translations) }}
         </div>
         <div class="col-md-4">
             <fieldset class="box">
@@ -31,14 +18,6 @@
                 {{ form_row(form.published) }}
                 {{ form_row(form.publishedFrom) }}
                 {{ form_row(form.publishedTo) }}
-            </fieldset>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <fieldset class="box main-content-full">
-                <legend>{{ 'Content'|trans }}</legend>
-                {{ form_widget(form.content) }}
             </fieldset>
         </div>
     </div>

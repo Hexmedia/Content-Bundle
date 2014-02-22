@@ -7,11 +7,11 @@ Create: Stwórz
 'Media Library': 'Biblioteka mediów'
 Add: Dodaj
 Miniature: Miniatura
-Name: Nazwa
-'Last Modified': 'Ostatnia modyfikacja'
 Areas: Obszary
 Content: Treść
 'List of all areas': 'Lista wszystkich obszarów'
+'List of all pages': 'List stron'
+'Title': 'Tytuł'
 Global: Globalny
 Saving...: Zapisywanie...
 Deleting...: Usuwanie...
@@ -22,7 +22,21 @@ Pages: 'Strony'
 'Change Media': 'Zmień obrazek'
 'Select Media': 'Wybierz obrazek'
 'Add many': 'Dodaj wiele'
+<<<<<<< HEAD
 'Title': 'Tytuł'
 'List of all pages': 'Lista stron'
 'Add page': 'Dodaj stronę'
 'Edit page': 'Modyfikuj stronę'
+=======
+'yes': 'tak'
+'no': 'nie'
+Name: Nazwa
+'Published until': 'Publiczne do'
+'Published since': 'Publiczne od'
+'Last modified': 'Ostatnia modyfikacja'
+'Add page': 'Dodaj stronę'
+'Edit page': 'Edytuj stronę'
+'Add catalog category': 'Dodaj kategorie'
+'Edit catalog category': 'Edytuj kategorie'
+
+>>>>>>> 002cfbc0fe221a4a64da8f053dbbdb7a3cfde7c6

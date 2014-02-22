@@ -28,15 +28,17 @@ class AdminMediaController extends Controller
     /**
      * @param int $page
      *
+     * @param string $sort
+     * @param string $direction
+     * @return array|void
      * @Rest\View
      */
-    public function indexAction($page = 1)
+    public function indexAction($page = 1, $sort = 'obj.id', $direction = 'desc')
     {
 
     }
 
     /**
-     * @param int $page
      *
      * @Rest\View
      */
@@ -64,12 +66,22 @@ class AdminMediaController extends Controller
 
     /**
      * Attaching media
+     * @param int $page
+     * @param string $single
+     * @param string $type
+     * @return array
      *
      * @Rest\View
      */
-    public function attachAction($page = 1, $single = 'single', $type = 'image')
+    public function attachAction($page = 1, $single = 'single', $type = 'image', $preview = 'big_admin_square', $selected = "none")
     {
         $query = $this->getRepository()->getToPaginator();
+
+        if ($selected && $selected != "none") {
+            $ids = explode("-", $selected);
+
+            $query->where($query->expr()->notIn("obj.id", $ids));
+        }
 
         $paginator = $this->get("knp_paginator");
 
@@ -78,7 +90,7 @@ class AdminMediaController extends Controller
         $pagination = $paginator->paginate(
             $query,
             $page,
-            12
+            1500
         );
 
         $pagination->setTemplate('KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig');
@@ -87,7 +99,8 @@ class AdminMediaController extends Controller
             'page' => $page,
             'pagination' => $pagination,
             'single' => $single == 'single',
-            'type' => $type
+            'type' => $type,
+            'preview' => $preview
         ];
     }
 
@@ -130,6 +143,9 @@ class AdminMediaController extends Controller
         ];
     }
 
+    /**
+     * @return \Hexmedia\ContentBundle\Repository\Doctrine\MediaRepository
+     */
     protected function getRepository()
     {
         return $this->getDoctrine()->getRepository("HexmediaContentBundle:Media");
