@@ -22,13 +22,10 @@ Pages: 'Strony'
 'Change Media': 'Zmień obrazek'
 'Select Media': 'Wybierz obrazek'
 'Add many': 'Dodaj wiele'
-<<<<<<< HEAD
 'Title': 'Tytuł'
 'List of all pages': 'Lista stron'
 'Add page': 'Dodaj stronę'
 'Edit page': 'Modyfikuj stronę'
-=======
-'yes': 'tak'
 'no': 'nie'
 Name: Nazwa
 'Published until': 'Publiczne do'
@@ -39,4 +36,3 @@ Name: Nazwa
 'Add catalog category': 'Dodaj kategorie'
 'Edit catalog category': 'Edytuj kategorie'
 
->>>>>>> 002cfbc0fe221a4a64da8f053dbbdb7a3cfde7c6
