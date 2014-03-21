@@ -122,11 +122,14 @@ class AreaExtension extends \Twig_Extension
             ;
         }
 
+        $content = preg_replace('/(\<(\/)?' . $tag . '[^\/>]*\>)/', "", $entity->getContent());
+
+
         if ($this->service->get('session')->get('hexmedia_content_edit_mode')) {
             $content = $twig->render(
                 "HexmediaContentBundle:Content:content-editable.html.twig",
                 [
-                    'content' => $entity->getContent(),
+                    'content' => $content,
                     'id' => $entity->getMd5(),
                     'field' => 'content',
                     'tag' => $tag,
@@ -138,7 +141,7 @@ class AreaExtension extends \Twig_Extension
             $content = $twig->render(
                 "HexmediaContentBundle:Content:content.html.twig",
                 [
-                    'content' => $entity->getContent(),
+                    'content' => $content,
                     'id' => $entity->getMd5(),
                     'field' => 'content',
                     'tag' => $tag,
