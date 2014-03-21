@@ -34,7 +34,7 @@ HexMediaContentAreaUpdate:
 HexMediaContentAreaDelete:
     pattern: /{id}/delete
     defaults: { _controller: HexmediaContentBundle:AdminArea:delete }
-    methods: [ POST, PUT, DELETE ]
+    methods: [ POST, PUT, DELETE, GET ]
     requirements:
         id: \d+
     options:

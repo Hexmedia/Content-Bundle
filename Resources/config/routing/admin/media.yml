@@ -33,7 +33,7 @@ HexMediaContentMediaUpdate:
 HexMediaContentMediaDelete:
     pattern: /{id}/delete
     defaults: { _controller: HexmediaContentBundle:AdminMedia:delete }
-    methods: [ POST, PUT, DELETE ]
+    methods: [ POST, PUT, DELETE, GET ]
     requirements:
         id: \d+
     options:
