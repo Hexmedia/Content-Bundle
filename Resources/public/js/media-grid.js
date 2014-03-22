@@ -12,19 +12,19 @@ var AdminGridModel;
 //        };
 //        columns[1] = {
 //            "name": "miniature",
-//            "display": Translator.get("Miniature"),
+//            "display": Translator.trans("Miniature"),
 //            "type": "text",
 //            "sortable": true
 //        };
 //        columns[2] = {
 //            "name": "name",
-//            "display": Translator.get("Name"),
+//            "display": Translator.trans("Name"),
 //            "type": "date",
 //            "sortable": true
 //        };
 //        columns[3] = {
 //            "name": "lastModified",
-//            "display": Translator.get("Last Modified"),
+//            "display": Translator.trans("Last Modified"),
 //            "type": "bool",
 //            "sortable": false
 //        };
