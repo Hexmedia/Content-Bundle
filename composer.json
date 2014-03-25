@@ -17,7 +17,7 @@
 		"php": ">=5.3.2",
 		"symfony/framework-bundle": ">=2.3",
 		"twig/twig": ">=1.13",
-		"knplabs/knp-gaufrette-bundle": "dev-master",
+		"knplabs/knp-gaufrette-bundle": "0.2.*@dev",
 		"knplabs/doctrine-behaviors": "1.0.*@dev"
 	},
 	"required-dev": {
